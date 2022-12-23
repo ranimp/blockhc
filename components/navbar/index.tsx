@@ -2,16 +2,19 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from "next/link";
 import { Fragment } from 'react';
+import Button from './../button/index';
 
-const Navbar = () => {
+const Navbar = ({home, konsultasi, tentang, dokter}) => {
 	const [navbarOpen, setNavbarOpen] = useState(false);
-  const [fiturOpen, setFiturOpen] = useState(false);
+
 	return (
 		<Fragment>
-      <nav className="sticky top-0 inset-x-0 z-50 py-3 lg:px-16 bg-white shadow-md">
+      <nav className="w-full fixed top-0 inset-x-0 z-50 py-3 lg:px-16 bg-white shadow-md">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-						<Image src='/icons/blockhc.svg' width={100} height={100} alt='logo'/>
+          <div className="relative w-full flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+            <Link href="/">
+						  <Image src='/icons/blockhc.svg' width={100} height={100} alt='logo'/>
+            </Link>
             <button
               className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
               type="button"
@@ -29,45 +32,41 @@ const Navbar = () => {
           >
             <ul className="flex flex-col items-center lg:flex-row list-none lg:ml-auto">
               <li className="nav-item">
-                <Link
-                  className="lg:px-3 py-2 flex items-center text-lg capitalize font-bold leading-snug text-medium-blue hover:opacity-75" href='/'      
+                <Link 
+                  className={"lg:px-3 py-2 flex items-center text-lg capitalize leading-snug text-medium-blue hover:opacity-75" + (home ? ' font-bold' : ' font-normal')} href='/'     
                 >
                   <i className="lg:text-lg leading-lg opacity-75"></i><span className="ml-2">beranda</span>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
-                  className="lg:px-3 py-2 flex items-center text-lg capitalize leading-snug text-medium-blue hover:opacity-75" href="/konsultasi"     
+                   className={"lg:px-3 py-2 flex items-center text-lg capitalize leading-snug text-medium-blue hover:opacity-75" + (konsultasi ? ' font-bold' : ' font-normal')}  href="/konsultasi"     
                 >
                   <i className="text-lg leading-lg opacity-75"></i><span className="ml-2">konsultasi</span>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
-                  className="lg:px-3 py-2 flex items-center text-lg capitalize leading-snug text-medium-blue hover:opacity-75" href="/"     
+                   className={"lg:px-3 py-2 flex items-center text-lg capitalize leading-snug text-medium-blue hover:opacity-75" + (dokter ? ' font-bold' : ' font-normal')}  href="/dokter"     
                 >
                   <i className="text-lg leading-lg opacity-75"></i><span className="ml-2">dokter</span>
                 </Link>
               </li>
               <li className="nav-item">
                 <Link
-                  className="lg:px-3 py-2 flex items-center text-lg capitalize leading-snug text-medium-blue hover:opacity-75" href="/"     
+                   className={"lg:px-3 py-2 flex items-center text-lg capitalize leading-snug text-medium-blue hover:opacity-75" + (tentang ? ' font-bold' : ' font-normal')}  href="/tentang"     
                 >
                   <i className="text-lg leading-lg opacity-75"></i><span className="ml-2">Tentang</span>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  className="lg:px-3 py-2 flex items-center text-lg capitalize leading-snug text-medium-blue hover:opacity-75" href="/"     
-                >
-                <button className="px-4 py-2 border-2 border-medium-blue text-medium-blue capitalize rounded-lg font-bold hover:bg-soft-blue w-80 lg:w-full">masuk</button>
+                <Link href="/login" className="lg:px-3 py-2 flex items-center">
+                  <Button type="btn-outline" title="masuk"/>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  className="lg:px-3 flex items-center text-lg capitalizeleading-snug text-white hover:opacity-75 py-2" href="/"             
-                >
-                <button className="px-4 py-2 text-white bg-medium-blue capitalize rounded-lg font-bold hover:bg-soft-blue hover:text-medium-blue hover:border-2 border-medium-blue w-80 lg:w-full">daftar</button>
+                <Link href="/" className="lg:px-3 py-2 flex items-center">
+                  <Button type="btn-normal" title="daftar"/>
                 </Link>
               </li>
             </ul>

@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 const Vision = () => {
   return (
     <Fragment>
-       <div className="bg-soft-blue mb-10 lg:mb-36 px-4">
+       <div className="bg-soft-blue mb-16 lg:mb-36 px-4">
         <div className="container mx-auto px-5">
           <div className="grid grid-cols-1 lg:grid-cols-6 lg:mx-12 items-center py-8 lg:py-16">
             <div className="col-span-1 lg:col-span-3" data-aos="fade-right" data-aos-duration="1500">

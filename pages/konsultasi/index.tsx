@@ -6,9 +6,9 @@ export default function Konsultasi() {
 	return (
 		<Fragment>
        <Head>
-        <title>BlockHC</title>
+        <title>Blockchain Health Care</title>
       </Head>
-      <Navbar/>
+      <Navbar konsultasi = {true} />
     </Fragment>
 	)
 }
