@@ -1,12 +1,12 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import Navbar from './../../components/navbar/index';
-import Footer from './../../components/footer/index';
-import Hero from './../../components/homepage/hero';
-import Vision from './../../components/homepage/vision';
-import Doctor from './../../components/homepage/doctor';
-import Button from './../../components/button/index';
+import Navbar from './../navbar/index';
+import Footer from './../footer/index';
+import Hero from './hero';
+import Vision from './vision';
+import Doctor from './doctor';
+import Button from './../button/index';
 
 export default function Homepage() {
 	return (

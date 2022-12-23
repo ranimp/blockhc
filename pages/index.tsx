@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import Head from "next/head";
-import Homepage from './home/index';
+import Homepage from './../components/homepage/index';
 
 export default function Home() {
 	return (
