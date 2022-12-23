@@ -9,9 +9,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        'sans': ['Poppins', ...defaultTheme.fontFamily.sans],
-      },
       colors: {
         'soft-blue': '#EEF8FF',
         'medium-blue' : '#0787CA',
