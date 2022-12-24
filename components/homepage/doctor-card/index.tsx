@@ -15,7 +15,6 @@ const DoctorCard = ({img, name, title, sch, sch2}) => {
             <h3 className="font-medium text-center md:text-lg">{name ? name : ''}</h3>
             <p className="text-center text-sm md:text-lg">{title ? title : ''}</p>
             <div className="hidden lg:block">
-              <p className="text-center text-sm md:text-base">Jadwal:</p>
               <p className="text-center text-sm md:text-base">{sch ? sch : ''}</p>
               <p className="text-center text-sm md:text-base">{sch2 ? sch2 : ''}</p>
             </div>
