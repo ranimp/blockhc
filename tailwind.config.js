@@ -11,6 +11,8 @@ module.exports = {
     extend: {
       colors: {
         'soft-blue': '#EEF8FF',
+        'odd-blue': '#F1F6FF',
+        'even-blue': '#D4EFFD',
         'medium-blue' : '#0787CA',
       }
     },
