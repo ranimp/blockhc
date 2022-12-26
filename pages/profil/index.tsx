@@ -17,7 +17,7 @@ export default function Profil() {
         <NavbarLogin profil={true} />
       </nav>
       <main className="px-4 lg:px-16 my-28">
-        <User />
+        <User name="Rani Meliyana Putri" role="pasien" username="ranimp" walletAddress="0x7c73d9eD23DDAd6353034F37" />
         <div className="flex justify-end mt-4 lg:mt-6">
           <Link href="/profil/update" className="w-32 lg:w-60 text-xs lg:text-base">
             <Button type="btn-normal" title="perbarui profil" />
