@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 import Head from "next/head";
-import Navbar from './../../components/navbar/index';
 import Footer from './../../components/footer/index';
 import Button from './../../components/button/index';
 import Link from 'next/link';
+import NavbarLogin from './../../components/navbar/login';
 
 export default function Konsultasi() {
 	return (
@@ -12,7 +12,7 @@ export default function Konsultasi() {
         <title>Blockchain Health Care</title>
       </Head>
       <nav>
-        <Navbar konsultasi = {true} />
+        <NavbarLogin konsultasi={true} />
       </nav>
       <main className="px-4 lg:px-16 my-36 min-h-screen">
       <div className="container mx-auto px-5">
