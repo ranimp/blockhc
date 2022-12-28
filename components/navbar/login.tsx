@@ -89,7 +89,7 @@ const NavbarLogin = ({home, konsultasi, tentang, dokter, profil, dashboard}) => 
                   </button>
                   <ul className="dropdown-menu absolute hidden text-black pt-1">
                     <li className=""><Link className={"rounded-t bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue" + (profil ? ' font-bold' : ' font-normal')} href="/profil">Profil</Link></li>
-                    <li className=""><Link className={"bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue" + (dashboard ? ' font-bold' : ' font-normal')} href="/profil">Dashboard</Link></li>
+                    <li className=""><Link className={"bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue" + (dashboard ? ' font-bold' : ' font-normal')} href="/dashboard">Dashboard</Link></li>
                     <li className=""><Link className="rounded-b bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue" href="/">Keluar</Link></li>
                   </ul>
                 </div>
