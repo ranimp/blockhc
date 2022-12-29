@@ -28,7 +28,7 @@ export default function DetailKonsultasi() {
             <div className="hidden md:block">
               <Profil name="Rani Meliyana Putri" role="pasien" />
             </div>
-            <Sidebar riwayat={active === 'riwayat' && true} onClickBukti={() => setActive('bukti')} onClickRiwayat={() => router.push('/dashboard')} bukti={active === 'bukti' && true} />
+            <Sidebar menu2={active === 'riwayat' && true} onClickMenu1={() => setActive('bukti')} onClickMenu2={() => router.push('/dashboard')} menu1={active === 'bukti' && true} title2="Riwayat Hasil Konsultasi" title1="Bukti Pendaftaran" />
           </div>
           <div className="w-full pl-6 sm:pl-8 lg::pl-12 flex flex-col gap-4">
             <div className="flex gap-4 border-2 border-slate-300 w-full p-2 md:p-3 text-xs md:text-base rounded-md">
