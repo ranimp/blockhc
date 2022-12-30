@@ -72,9 +72,12 @@ const UpdateKonsultasiDokter = (props) => {
             </tr>
           </tbody>
         </table>
-        <div className="flex justify-end mt-2">
-          <div className="w-32 lg:w-60">
+        <div className="flex justify-end mt-2 gap-2">
+          <div className="w-24 lg:w-48">
             <Button type="btn-outline" title="kembali" onClick={() => router.back()}/>
+          </div>
+          <div className="w-24 lg:w-48">
+            <Button type="btn-normal" title="simpan" onClick={() => router.back()}/>
           </div>
         </div>
       </div>
