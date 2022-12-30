@@ -6,13 +6,12 @@ import NavbarLogin from './../../components/navbar/login';
 import Profil from './../../components/dashboard/profil';
 import Footer from './../../components/footer/index';
 import Sidebar from './../../components/dashboard/sidebar';
-import RiwayatKonsultasiDokter from './../../components/dashboard-dokter/dok-riwayat-konsultasi';
-import HasilKonsultasiDokter from './../../components/dashboard-dokter/dok-hasil-konsultasi';
-import DetailRiwayatDokter from './../../components/dashboard-dokter/dok-detail-riwayat';
+import TambahKonsultasiDokter from './../../components/dashboard-dokter/dok-tambah-konsultasi';
+import DaftarPasienDokter from './../../components/dashboard-dokter/dok-daftar-pasien';
 
-export default function DetailRiwayatKonsultasi() {
+export default function TambahKonsultasi() {
   const router = useRouter()
-  const [active, setActive] = useState('daftar-pasien');
+  const [active, setActive] = useState('hasil-konsultasi');
   return (
     <Fragment>
       <Head>
@@ -37,8 +36,8 @@ export default function DetailRiwayatKonsultasi() {
               <input type="text" placeholder="Pencarian" className="w-full focus:outline-none"/>
             </div>
             <div>
-              {active === 'daftar-pasien' && <DetailRiwayatDokter name="Rani Meliyana Putri" doctor="dr. rani" cat="Umum" keluhan="Batuk, pilek, demam" diagnosa="Pasien terindikasi covid-19. Pasien dirujuk ke rumah sakit x untuk penanganan lebih lanjut." date="12/12/2022" />} 
-              {active === 'hasil-konsultasi' && <HasilKonsultasiDokter />}
+              {active === 'daftar-pasien' && <DaftarPasienDokter />} 
+              {active === 'hasil-konsultasi' && <TambahKonsultasiDokter /> }
             </div>
           </div>
         </div>
