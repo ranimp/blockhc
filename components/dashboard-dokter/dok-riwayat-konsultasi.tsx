@@ -1,7 +1,10 @@
 import { Fragment } from 'react';
-import Table from './table';
+import { useRouter } from 'next/router';
+import Table from './../dashboard/table';
+import Button from './../button/index';
 
-const Riwayat = () => {
+const RiwayatKonsultasiDokter = () => {
+  const router = useRouter()
   return (
     <Fragment>
       <div className="overflow-x-auto">
@@ -15,16 +18,19 @@ const Riwayat = () => {
             </tr>
           </thead>
           <tbody>
-            <Table no="1" date="29/10/2022" doctor="dr.rani" link="/dashboard/detail-konsultasi" />
-            <Table no="1" date="29/10/2022" doctor="dr.rani" link="/dashboard/detail-konsultasi" />
-            <Table no="1" date="29/10/2022" doctor="dr.rani" link="/dashboard/detail-konsultasi" />
-            <Table no="1" date="29/10/2022" doctor="dr.rani" link="/dashboard/detail-konsultasi" />
-            <Table no="1" date="29/10/2022" doctor="dr.rani" link="/dashboard/detail-konsultasi" />
+            <Table no="1" date="29/10/2022" doctor="dr.rani" link="/dashboard-dokter/detail-riwayat-konsultasi" />
+            <Table no="1" date="29/10/2022" doctor="dr.rani" link="/dashboard-dokter/detail-riwayat-konsultasi" />
+            <Table no="1" date="29/10/2022" doctor="dr.rani" link="/dashboard-dokter/detail-riwayat-konsultasi" />
           </tbody>
         </table>
+        <div className="flex justify-end mt-2">
+          <div className="w-32 lg:w-60">
+            <Button type="btn-outline" title="kembali" onClick={() => router.back()}/>
+          </div>
+        </div>
       </div>
     </Fragment>
   )
 }
 
-export default Riwayat;
+export default RiwayatKonsultasiDokter;

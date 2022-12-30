@@ -1,18 +1,18 @@
 import { Fragment, useState } from 'react';
+import { useRouter } from 'next/router'
 import Head from 'next/head';
+import Image from 'next/image';
 import NavbarLogin from './../../components/navbar/login';
-import Footer from './../../components/footer/index';
 import Profil from './../../components/dashboard/profil';
 import Sidebar from './../../components/dashboard/sidebar';
-import Search from './../../components/dokter/search';
-import Button from './../../components/button/index';
-import Riwayat from './../../components/dashboard/riwayat';
-import Image from 'next/image';
-import DetailRiwayat from './../../components/dashboard/detail-riwayat';
-import BuktiPendaftaran from './../../components/dashboard/bukti-pendaftaran';
+import RiwayatKonsultasiDokter from './../../components/dashboard-dokter/dok-riwayat-konsultasi';
+import HasilKonsultasiDokter from './../../components/dashboard-dokter/dok-hasil-konsultasi';
+import Footer from './../../components/footer/index';
 
-export default function DashboardUser() {
-  const [active, setActive] = useState('bukti');
+
+export default function RiwayatKonsultasi() {
+  const router = useRouter()
+  const [active, setActive] = useState('daftar-pasien');
   return (
     <Fragment>
       <Head>
@@ -25,9 +25,9 @@ export default function DashboardUser() {
         <div className="flex justify-start">
           <div className="w-1/9 md:w-1/3">
             <div className="hidden md:block">
-              <Profil name="Rani Meliyana Putri" role="pasien" />
+              <Profil name="Rani Meliyana Putri" role="dokter" />
             </div>
-            <Sidebar onClickMenu2={() => setActive("riwayat")} menu2={active === 'riwayat' && true}onClickMenu1={() => setActive("bukti")} menu1={active === 'bukti' && true} title2='Riwayat Hasil Konsultasi' title1='Bukti Pendaftaran' />
+            <Sidebar menu2={active === 'hasil-konsultasi' && true} onClickMenu1={() => router.push('/dashboard-dokter')} onClickMenu2={() => setActive('hasil-konsultasi')} menu1={active === 'daftar-pasien' && true} title2="manajemen hasil konsultasi" title1="daftar pasien" />
           </div>
           <div className="w-full pl-6 sm:pl-8 lg::pl-12 flex flex-col gap-4">
             <div className="flex gap-4 border-2 border-slate-300 w-full p-2 md:p-3 text-xs md:text-base rounded-md">
@@ -37,8 +37,8 @@ export default function DashboardUser() {
               <input type="text" placeholder="Pencarian" className="w-full focus:outline-none"/>
             </div>
             <div>
-              {active === 'riwayat' && <Riwayat />}
-              {active === 'bukti' && <BuktiPendaftaran name="Rani Meliyana Putri" doctor="Dr. Rani" cat="umum" keluhan="batuk, pilek, demam" date="12/12/2022" time="09.00" antri="5" trx="0xadfabb0c86b6523ac4a00ba78ebb04532ff863bd2cd292fa8f6c570e0b57f8b7"/>}              
+              {active === 'daftar-pasien' && <RiwayatKonsultasiDokter />} 
+              {active === 'hasil-konsultasi' && <HasilKonsultasiDokter />}
             </div>
           </div>
         </div>
