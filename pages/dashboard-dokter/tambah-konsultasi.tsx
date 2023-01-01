@@ -6,8 +6,8 @@ import NavbarLogin from '../../components/navbar/login';
 import Profil from '../../components/dashboard/profil';
 import Footer from '../../components/footer/index';
 import Sidebar from '../../components/dashboard/sidebar';
-import TambahKonsultasiDokter from '../../components/dashboard-dokter/dok-tambah-konsultasi';
-import DaftarPasienDokter from '../../components/dashboard-dokter/dok-daftar-pasien';
+import TambahKonsultasiDokter from '../../components/dashboard-dokter/manajemen-hasil-konsultasi/dok-tambah-konsultasi';
+import DaftarPasienDokter from '../../components/dashboard-dokter/daftar-pasien/dok-daftar-pasien';
 
 export default function TambahKonsultasi() {
   const router = useRouter();

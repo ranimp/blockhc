@@ -1,4 +1,4 @@
-import TableDashboardDokter from './table';
+import TableDashboardDokter from '../table';
 
 const DaftarPasienDokter = () => (
   <div className="overflow-x-auto">

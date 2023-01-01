@@ -3,10 +3,10 @@ import Head from 'next/head';
 import Image from 'next/image';
 import NavbarLogin from '../../components/navbar/login';
 import Sidebar from '../../components/dashboard/sidebar';
-import DaftarPasienDokter from '../../components/dashboard-dokter/dok-daftar-pasien';
 import Footer from '../../components/footer/index';
 import Profil from '../../components/dashboard/profil';
-import HasilKonsultasiDokter from '../../components/dashboard-dokter/dok-hasil-konsultasi';
+import DaftarPasienDokter from '../../components/dashboard-dokter/daftar-pasien/dok-daftar-pasien';
+import HasilKonsultasiDokter from '../../components/dashboard-dokter/daftar-pasien/dok-hasil-konsultasi';
 
 export default function DashboardDokter() {
   const [active, setActive] = useState('daftar-pasien');

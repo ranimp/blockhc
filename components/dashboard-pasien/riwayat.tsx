@@ -1,4 +1,4 @@
-import Table from './table';
+import Table from '../dashboard/table';
 
 const Riwayat = () => (
   <div className="overflow-x-auto">

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import Button from '../button/index';
+import Button from '../../button/index';
 
 const DetailRiwayatDokter = ({
   date, name, doctor, cat, keluhan, diagnosa, tekanan, gula,

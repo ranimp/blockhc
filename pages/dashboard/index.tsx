@@ -5,8 +5,8 @@ import NavbarLogin from '../../components/navbar/login';
 import Footer from '../../components/footer/index';
 import Profil from '../../components/dashboard/profil';
 import Sidebar from '../../components/dashboard/sidebar';
-import Riwayat from '../../components/dashboard/riwayat';
-import BuktiPendaftaran from '../../components/dashboard/bukti-pendaftaran';
+import Riwayat from '../../components/dashboard-pasien/riwayat';
+import BuktiPendaftaran from '../../components/dashboard-pasien/bukti-pendaftaran';
 
 export default function DashboardUser() {
   const [active, setActive] = useState('bukti');

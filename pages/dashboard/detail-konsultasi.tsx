@@ -6,8 +6,8 @@ import NavbarLogin from '../../components/navbar/login';
 import Footer from '../../components/footer/index';
 import Profil from '../../components/dashboard/profil';
 import Sidebar from '../../components/dashboard/sidebar';
-import DetailRiwayat from '../../components/dashboard/detail-riwayat';
-import BuktiPendaftaran from '../../components/dashboard/bukti-pendaftaran';
+import DetailRiwayat from '../../components/dashboard-pasien/detail-riwayat';
+import BuktiPendaftaran from '../../components/dashboard-pasien/bukti-pendaftaran';
 
 export default function DetailKonsultasi() {
   const router = useRouter();

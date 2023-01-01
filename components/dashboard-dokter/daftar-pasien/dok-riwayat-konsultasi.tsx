@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import Table from '../dashboard/table';
-import Button from '../button/index';
+import Table from '../../dashboard/table';
+import Button from '../../button/index';
 
 const RiwayatKonsultasiDokter = () => {
   const router = useRouter();
