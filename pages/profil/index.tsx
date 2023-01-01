@@ -1,20 +1,20 @@
 import { Fragment } from 'react';
-import NavbarLogin from './../../components/navbar/login';
 import Head from 'next/head';
-import Footer from './../../components/footer/index';
-import User from './../../components/profil/user';
-import Data from './../../components/profil/data';
-import Button from './../../components/button/index';
 import Link from 'next/link';
+import NavbarLogin from '../../components/navbar/login';
+import Footer from '../../components/footer/index';
+import User from '../../components/profil/user';
+import Data from '../../components/profil/data';
+import Button from '../../components/button/index';
 
 export default function Profil() {
   return (
-    <Fragment>
+    <>
       <Head>
         <title>Blockchain Health Care</title>
       </Head>
       <nav>
-        <NavbarLogin profil={true} />
+        <NavbarLogin profil />
       </nav>
       <main className="px-4 lg:px-16 my-28">
         <User name="Rani Meliyana Putri" role="pasien" username="ranimp" walletAddress="0x7c73d9eD23DDAd6353034F37" />
@@ -28,6 +28,6 @@ export default function Profil() {
       <footer>
         <Footer />
       </footer>
-    </Fragment>
-  )
+    </>
+  );
 }

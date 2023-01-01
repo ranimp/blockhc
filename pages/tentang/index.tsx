@@ -1,22 +1,22 @@
-import { Fragment } from "react";
-import Head from "next/head";
-import Image from "next/image";
-import Navbar from './../../components/navbar/index';
-import Footer from './../../components/footer/index';
-import Button from './../../components/button/index';
+import { Fragment } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import Navbar from '../../components/navbar/index';
+import Footer from '../../components/footer/index';
+import Button from '../../components/button/index';
 
 export default function Tentang() {
-	return (
-		<Fragment>
+  return (
+    <>
       <Head>
         <title>Blockchain Health Care</title>
       </Head>
       <nav>
-        <Navbar tentang={true}/>
+        <Navbar tentang />
       </nav>
       <main className="md:mt-12">
         <figure className="h-80 md:h-96 lg:h-screen relative">
-          <Image src="/images/about.svg" alt="about" fill /> 
+          <Image src="/images/about.svg" alt="about" fill />
         </figure>
         <section className="px-4 lg:px-16 container mx-auto mb-16 lg:mb-36">
           <h3 className="text-medium-blue font-bold text-xl lg:text-3xl mb-4 lg:mb-8">Founder</h3>
@@ -38,6 +38,6 @@ export default function Tentang() {
       <footer>
         <Footer />
       </footer>
-    </Fragment>
-	)
+    </>
+  );
 }

@@ -2,20 +2,20 @@ import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
-import NavbarLogin from './../../components/navbar/login';
-import Footer from './../../components/footer/index';
-import Button from './../../components/button/index';
-import EditData from './../../components/profil/edit-data';
+import NavbarLogin from '../../components/navbar/login';
+import Footer from '../../components/footer/index';
+import Button from '../../components/button/index';
+import EditData from '../../components/profil/edit-data';
 
 export default function EditProfil() {
-  const router = useRouter()
+  const router = useRouter();
   return (
-    <Fragment>
+    <>
       <Head>
         <title>Blockchain Health Care</title>
       </Head>
       <nav>
-        <NavbarLogin profil={true} />
+        <NavbarLogin profil />
       </nav>
       <main className="px-4 lg:px-16 my-28">
         <div className="flex justify-center">
@@ -35,6 +35,6 @@ export default function EditProfil() {
       <footer>
         <Footer />
       </footer>
-    </Fragment>
-  )
+    </>
+  );
 }

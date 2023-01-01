@@ -1,24 +1,24 @@
 import { Fragment, useState } from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
-import NavbarLogin from './../../components/navbar/login';
-import Profil from './../../components/dashboard/profil';
-import Footer from './../../components/footer/index';
-import Sidebar from './../../components/dashboard/sidebar';
-import HasilKonsultasiDokter from './../../components/dashboard-dokter/dok-hasil-konsultasi';
-import DetailRiwayatDokter from './../../components/dashboard-dokter/dok-detail-riwayat';
+import NavbarLogin from '../../components/navbar/login';
+import Profil from '../../components/dashboard/profil';
+import Footer from '../../components/footer/index';
+import Sidebar from '../../components/dashboard/sidebar';
+import HasilKonsultasiDokter from '../../components/dashboard-dokter/dok-hasil-konsultasi';
+import DetailRiwayatDokter from '../../components/dashboard-dokter/dok-detail-riwayat';
 
 export default function DetailRiwayatKonsultasi() {
-  const router = useRouter()
+  const router = useRouter();
   const [active, setActive] = useState('daftar-pasien');
   return (
-    <Fragment>
+    <>
       <Head>
         <title>Blockchain Health Care</title>
       </Head>
       <nav>
-        <NavbarLogin dashboard={true} />
+        <NavbarLogin dashboard />
       </nav>
       <main className="px-4 lg:px-16 mt-28 flex flex-col min-h-screen justify-between">
         <div className="flex justify-start">
@@ -33,10 +33,10 @@ export default function DetailRiwayatKonsultasi() {
               <figure>
                 <Image src="/icons/search.svg" alt="search" width={20} height={20} />
               </figure>
-              <input type="text" placeholder="Pencarian" className="w-full focus:outline-none"/>
+              <input type="text" placeholder="Pencarian" className="w-full focus:outline-none" />
             </div>
             <div>
-              {active === 'daftar-pasien' && <DetailRiwayatDokter name="Rani Meliyana Putri" doctor="dr. rani" cat="Umum" keluhan="Batuk, pilek, demam" diagnosa="Pasien terindikasi covid-19. Pasien dirujuk ke rumah sakit x untuk penanganan lebih lanjut." date="12/12/2022" />} 
+              {active === 'daftar-pasien' && <DetailRiwayatDokter name="Rani Meliyana Putri" doctor="dr. rani" cat="Umum" keluhan="Batuk, pilek, demam" diagnosa="Pasien terindikasi covid-19. Pasien dirujuk ke rumah sakit x untuk penanganan lebih lanjut." date="12/12/2022" />}
               {active === 'hasil-konsultasi' && <HasilKonsultasiDokter />}
             </div>
           </div>
@@ -45,6 +45,6 @@ export default function DetailRiwayatKonsultasi() {
       <footer>
         <Footer />
       </footer>
-    </Fragment>
-  )
+    </>
+  );
 }

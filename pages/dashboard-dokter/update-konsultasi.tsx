@@ -1,24 +1,24 @@
 import { Fragment, useState } from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
-import NavbarLogin from './../../components/navbar/login';
-import Profil from './../../components/dashboard/profil';
-import Footer from './../../components/footer/index';
-import Sidebar from './../../components/dashboard/sidebar';
-import DaftarPasienDokter from './../../components/dashboard-dokter/dok-daftar-pasien';
-import UpdateKonsultasiDokter from './../../components/dashboard-dokter/dok-update-konsultasi';
+import NavbarLogin from '../../components/navbar/login';
+import Profil from '../../components/dashboard/profil';
+import Footer from '../../components/footer/index';
+import Sidebar from '../../components/dashboard/sidebar';
+import DaftarPasienDokter from '../../components/dashboard-dokter/dok-daftar-pasien';
+import UpdateKonsultasiDokter from '../../components/dashboard-dokter/dok-update-konsultasi';
 
 export default function UpdateKonsultasi() {
-  const router = useRouter()
+  const router = useRouter();
   const [active, setActive] = useState('hasil-konsultasi');
   return (
-    <Fragment>
+    <>
       <Head>
         <title>Blockchain Health Care</title>
       </Head>
       <nav>
-        <NavbarLogin dashboard={true} />
+        <NavbarLogin dashboard />
       </nav>
       <main className="px-4 lg:px-16 mt-28 flex flex-col min-h-screen justify-between">
         <div className="flex justify-start">
@@ -33,10 +33,10 @@ export default function UpdateKonsultasi() {
               <figure>
                 <Image src="/icons/search.svg" alt="search" width={20} height={20} />
               </figure>
-              <input type="text" placeholder="Pencarian" className="w-full focus:outline-none"/>
+              <input type="text" placeholder="Pencarian" className="w-full focus:outline-none" />
             </div>
             <div>
-              {active === 'daftar-pasien' && <DaftarPasienDokter />} 
+              {active === 'daftar-pasien' && <DaftarPasienDokter />}
               {active === 'hasil-konsultasi' && <UpdateKonsultasiDokter /> }
             </div>
           </div>
@@ -45,6 +45,6 @@ export default function UpdateKonsultasi() {
       <footer>
         <Footer />
       </footer>
-    </Fragment>
-  )
+    </>
+  );
 }
