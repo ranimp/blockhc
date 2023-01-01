@@ -1,14 +1,11 @@
 import { Fragment, useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import NavbarLogin from './../../components/navbar/login';
 import Footer from './../../components/footer/index';
 import Profil from './../../components/dashboard/profil';
 import Sidebar from './../../components/dashboard/sidebar';
-import Search from './../../components/dokter/search';
-import Button from './../../components/button/index';
 import Riwayat from './../../components/dashboard/riwayat';
-import Image from 'next/image';
-import DetailRiwayat from './../../components/dashboard/detail-riwayat';
 import BuktiPendaftaran from './../../components/dashboard/bukti-pendaftaran';
 
 export default function DashboardUser() {

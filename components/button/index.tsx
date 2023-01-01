@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { ButtonType } from "./style";
 
-export default function Button({def, type, title, onClick}) {
+export default function Button({type, title, onClick}) {
   const classNames = ButtonType[type]
   return (
     <>

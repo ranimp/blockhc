@@ -1,10 +1,7 @@
 import { Fragment } from "react";
-import Link from "next/link";
 import Head from "next/head";
-import Image from "next/image";
 import Navbar from './../../components/navbar/index';
 import Footer from './../../components/footer/index';
-import Button from './../../components/button/index';
 import Search from './../../components/dokter/search';
 import Card from './../../components/dokter/card';
 

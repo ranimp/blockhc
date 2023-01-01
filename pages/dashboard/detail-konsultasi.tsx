@@ -5,8 +5,6 @@ import NavbarLogin from './../../components/navbar/login';
 import Footer from './../../components/footer/index';
 import Profil from './../../components/dashboard/profil';
 import Sidebar from './../../components/dashboard/sidebar';
-import Search from './../../components/dokter/search';
-import Button from './../../components/button/index';
 import Image from 'next/image';
 import DetailRiwayat from './../../components/dashboard/detail-riwayat';
 import BuktiPendaftaran from './../../components/dashboard/bukti-pendaftaran';

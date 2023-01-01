@@ -141,7 +141,7 @@ export default function Konsultasi() {
     
                   {/* keluhan */}
                   <div className="mt-3">
-                    <label for="message"
+                    <label htmlFor="message"
                       className="label text-sm lg:text-sm font-bold text-black block font-montserrat">Keluhan</label>
                     <textarea id="message" name="message" 
                     // value={values.message} 

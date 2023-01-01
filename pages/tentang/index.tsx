@@ -1,5 +1,4 @@
 import { Fragment } from "react";
-import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
 import Navbar from './../../components/navbar/index';

@@ -6,7 +6,6 @@ import NavbarLogin from './../../components/navbar/login';
 import Profil from './../../components/dashboard/profil';
 import Footer from './../../components/footer/index';
 import Sidebar from './../../components/dashboard/sidebar';
-import RiwayatKonsultasiDokter from './../../components/dashboard-dokter/dok-riwayat-konsultasi';
 import HasilKonsultasiDokter from './../../components/dashboard-dokter/dok-hasil-konsultasi';
 import DetailRiwayatDokter from './../../components/dashboard-dokter/dok-detail-riwayat';
 

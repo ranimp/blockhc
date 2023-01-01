@@ -13,7 +13,7 @@ const Navbar = ({home, konsultasi, tentang, dokter}) => {
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="relative w-full flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link href="/">
-						  <Image src='/icons/blockhc.svg' width={100} height={100} alt='logo'/>
+              <Image src='/icons/blockhc.svg' width={100} height={100} alt='logo'/>
             </Link>
             <button
               className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"

@@ -1,7 +1,6 @@
 import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Link from 'next/link';
 import Image from 'next/image';
 import NavbarLogin from './../../components/navbar/login';
 import Footer from './../../components/footer/index';

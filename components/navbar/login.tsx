@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from "next/link";
 import { Fragment } from 'react';
-import Button from './../button/index';
 
 const NavbarLogin = ({home, konsultasi, tentang, dokter, profil, dashboard}) => {
 	const [navbarOpen, setNavbarOpen] = useState(false);
@@ -14,7 +13,7 @@ const NavbarLogin = ({home, konsultasi, tentang, dokter, profil, dashboard}) => 
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="relative w-full flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link href="/">
-						  <Image src='/icons/blockhc.svg' width={100} height={100} alt='logo'/>
+              <Image src='/icons/blockhc.svg' width={100} height={100} alt='logo'/>
             </Link>
             <button
               className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"

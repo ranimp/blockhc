@@ -1,10 +1,6 @@
 import { Fragment } from 'react';
 import Head from 'next/head';
-import Navbar from './../../components/navbar/index';
 import Image from 'next/image';
-import Link from 'next/link';
-import Button from './../../components/button/index';
-import Footer from './../../components/footer/index';
 
 export default function Login() {
   return (

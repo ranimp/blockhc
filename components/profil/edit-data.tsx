@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-const EditData = ({name, gender, ttl, email, phone, address}) => {
+const EditData = ({name, ttl, email, phone, address}) => {
   return (
     <Fragment>
       <div className="mt-2 lg:mt-4">

@@ -1,5 +1,4 @@
 import { Fragment } from "react";
-import Link from "next/link";
 import DoctorCard from './doctor-card/index';
 
 const Doctor = () => {
