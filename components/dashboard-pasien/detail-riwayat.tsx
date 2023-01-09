@@ -50,7 +50,7 @@ const DetailRiwayat = ({
               <p>:</p>
             </td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <p />
+              <p className="invisible">empty</p>
               <p>{tekanan || '' }</p>
               <p>{gula || '' }</p>
             </td>
