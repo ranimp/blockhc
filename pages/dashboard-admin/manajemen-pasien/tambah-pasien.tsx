@@ -6,14 +6,14 @@ import Link from 'next/link';
 import NavbarLogin from '../../../components/navbar/login';
 import Profil from '../../../components/dashboard/profil';
 import Sidebar from '../../../components/dashboard/sidebar';
+import HasilKonsultasiAdmin from '../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-hasil-konsultasi';
 import DaftarDokterAdmin from '../../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
 import Footer from '../../../components/footer/index';
-import DaftarPasienAdmin from '../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
-import TambahKonsultasiAdmin from '../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-tambah-konsultasi';
+import TambahPasienAdmin from '../../../components/dashboard-admin/manajemen-pasien/adm-tambah-pasien';
 import Button from '../../../components/button/index';
 
-export default function RiwayatKonsultasiAdminPage() {
-  const [active, setActive] = useState('hasil-konsultasi');
+export default function DetailPasienAdminPage() {
+  const [active, setActive] = useState('manajemen-pasien');
   const router = useRouter();
   return (
     <>
@@ -29,7 +29,7 @@ export default function RiwayatKonsultasiAdminPage() {
             <div className="hidden md:block">
               <Profil name="Rani Meliyana Putri" role="admin" />
             </div>
-            <Sidebar menu3Show onClickMenu1={() => setActive('manajemen-pasien')} menu1={active === 'manajemen-pasien' && true} title1="manajemen pasien" onClickMenu2={() => router.push('/dashboard-admin')} menu2={active === 'hasil-konsultasi' && true} title2="manajemen hasil konsultasi" onClickMenu3={() => setActive('manajemen-dokter')} menu3={active === 'manajemen-dokter' && true} title3="manajemen dokter" />
+            <Sidebar menu3Show onClickMenu1={() => router.push('/dashboard-admin')} menu1={active === 'manajemen-pasien' && true} title1="manajemen pasien" onClickMenu2={() => setActive('hasil-konsultasi')} menu2={active === 'hasil-konsultasi' && true} title2="manajemen hasil konsultasi" onClickMenu3={() => setActive('manajemen-dokter')} menu3={active === 'manajemen-dokter' && true} title3="manajemen dokter" />
           </div>
           <div className="w-full pl-6 sm:pl-8 lg::pl-12 flex flex-col gap-4">
             <div className="flex gap-4 items-center">
@@ -51,8 +51,8 @@ export default function RiwayatKonsultasiAdminPage() {
               )}
             </div>
             <div>
-              {active === 'manajemen-pasien' && <DaftarPasienAdmin />}
-              {active === 'hasil-konsultasi' && <TambahKonsultasiAdmin />}
+              {active === 'manajemen-pasien' && <TambahPasienAdmin name="Rani Meliyana Putri" gender="perempuan" ttl="09/09/2009" email="rani@mail.com" phone="0987654321" address="jalan jendral sudirman" linkRiwayat={() => router.push('/dashboard-admin/manajemen-pasien/riwayat-konsultasi')} />}
+              {active === 'hasil-konsultasi' && <HasilKonsultasiAdmin />}
               {active === 'manajemen-dokter' && <DaftarDokterAdmin />}
             </div>
           </div>

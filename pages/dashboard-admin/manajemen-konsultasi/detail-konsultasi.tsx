@@ -8,11 +8,11 @@ import Profil from '../../../components/dashboard/profil';
 import Sidebar from '../../../components/dashboard/sidebar';
 import DaftarDokterAdmin from '../../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
 import Footer from '../../../components/footer/index';
-import DaftarPasienAdmin from '../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
-import TambahKonsultasiAdmin from '../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-tambah-konsultasi';
+import DetailRiwayatAdmin from '../../../components/dashboard-admin/manajemen-pasien/adm-detail-riwayat-pasien';
 import Button from '../../../components/button/index';
+import DaftarPasienAdmin from '../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
 
-export default function RiwayatKonsultasiAdminPage() {
+export default function DetailKonsultasiAdminPage() {
   const [active, setActive] = useState('hasil-konsultasi');
   const router = useRouter();
   return (
@@ -52,7 +52,7 @@ export default function RiwayatKonsultasiAdminPage() {
             </div>
             <div>
               {active === 'manajemen-pasien' && <DaftarPasienAdmin />}
-              {active === 'hasil-konsultasi' && <TambahKonsultasiAdmin />}
+              {active === 'hasil-konsultasi' && <DetailRiwayatAdmin name="Rani Meliyana Putri" doctor="dr. rani" cat="Umum" keluhan="Batuk, pilek, demam" diagnosa="Pasien terindikasi covid-19. Pasien dirujuk ke rumah sakit x untuk penanganan lebih lanjut." date="12/12/2022" tekanan="156/80" gula="200" />}
               {active === 'manajemen-dokter' && <DaftarDokterAdmin />}
             </div>
           </div>
