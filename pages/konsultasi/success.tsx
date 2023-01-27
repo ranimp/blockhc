@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Navbar from '../../components/navbar/index';
 import Footer from '../../components/footer/index';
 import Button from '../../components/button/index';
+import withAuth from '../../lib/withAuth';
 
 const Success = () => (
   <>
@@ -31,4 +32,4 @@ const Success = () => (
   </>
 );
 
-export default Success;
+export default withAuth(Success);

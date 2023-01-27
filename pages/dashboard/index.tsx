@@ -1,6 +1,7 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import NavbarLogin from '../../components/navbar/login';
 import Footer from '../../components/footer/index';
 import Profil from '../../components/dashboard/profil';
@@ -10,39 +11,55 @@ import BuktiPendaftaran from '../../components/dashboard-pasien/bukti-pendaftara
 
 export default function DashboardUser() {
   const [active, setActive] = useState('bukti');
+  const [isLogged, setIsLogged] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const dataFromStorage = localStorage.getItem('address');
+    if (dataFromStorage) {
+      setIsLogged(JSON.parse(dataFromStorage));
+    } else {
+      router.push('/login');
+    }
+  }, []);
+
   return (
     <>
       <Head>
         <title>Blockchain Health Care</title>
       </Head>
-      <nav>
-        <NavbarLogin dashboard />
-      </nav>
-      <main className="px-4 lg:px-16 mt-28 flex flex-col min-h-screen justify-between">
-        <div className="flex justify-start">
-          <div className="w-1/9 md:w-1/3">
-            <div className="hidden md:block">
-              <Profil name="Rani Meliyana Putri" role="pasien" />
+      {isLogged ? (
+        <div>
+          <nav>
+            <NavbarLogin dashboard />
+          </nav>
+          <main className="px-4 lg:px-16 mt-28 flex flex-col min-h-screen justify-between">
+            <div className="flex justify-start">
+              <div className="w-1/9 md:w-1/3">
+                <div className="hidden md:block">
+                  <Profil name="Rani Meliyana Putri" role="pasien" />
+                </div>
+                <Sidebar onClickMenu2={() => setActive('riwayat')} menu2={active === 'riwayat' && true} onClickMenu1={() => setActive('bukti')} menu1={active === 'bukti' && true} title2="Riwayat Hasil Konsultasi" title1="Bukti Pendaftaran" />
+              </div>
+              <div className="w-full pl-6 sm:pl-8 lg::pl-12 flex flex-col gap-4">
+                <div className="flex gap-4 border-2 border-slate-300 w-full p-2 md:p-3 text-xs md:text-base rounded-md">
+                  <figure>
+                    <Image src="/icons/search.svg" alt="search" width={20} height={20} />
+                  </figure>
+                  <input type="text" placeholder="Pencarian" className="w-full focus:outline-none" />
+                </div>
+                <div>
+                  {active === 'riwayat' && <Riwayat />}
+                  {active === 'bukti' && <BuktiPendaftaran name="Rani Meliyana Putri" doctor="Dr. Rani" cat="umum" keluhan="batuk, pilek, demam" date="12/12/2022" time="09.00" antri="5" trx="0xadfabb0c86b6523ac4a00ba78ebb04532ff863bd2cd292fa8f6c570e0b57f8b7" />}
+                </div>
+              </div>
             </div>
-            <Sidebar onClickMenu2={() => setActive('riwayat')} menu2={active === 'riwayat' && true} onClickMenu1={() => setActive('bukti')} menu1={active === 'bukti' && true} title2="Riwayat Hasil Konsultasi" title1="Bukti Pendaftaran" />
-          </div>
-          <div className="w-full pl-6 sm:pl-8 lg::pl-12 flex flex-col gap-4">
-            <div className="flex gap-4 border-2 border-slate-300 w-full p-2 md:p-3 text-xs md:text-base rounded-md">
-              <figure>
-                <Image src="/icons/search.svg" alt="search" width={20} height={20} />
-              </figure>
-              <input type="text" placeholder="Pencarian" className="w-full focus:outline-none" />
-            </div>
-            <div>
-              {active === 'riwayat' && <Riwayat />}
-              {active === 'bukti' && <BuktiPendaftaran name="Rani Meliyana Putri" doctor="Dr. Rani" cat="umum" keluhan="batuk, pilek, demam" date="12/12/2022" time="09.00" antri="5" trx="0xadfabb0c86b6523ac4a00ba78ebb04532ff863bd2cd292fa8f6c570e0b57f8b7" />}
-            </div>
-          </div>
+          </main>
+          <footer>
+            <Footer />
+          </footer>
         </div>
-      </main>
-      <footer>
-        <Footer />
-      </footer>
+      ) : null }
     </>
   );
 }

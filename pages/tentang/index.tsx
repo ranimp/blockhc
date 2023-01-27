@@ -1,18 +1,27 @@
-import { Fragment } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Navbar from '../../components/navbar/index';
 import Footer from '../../components/footer/index';
 import Button from '../../components/button/index';
+import { AuthContext } from '../../lib/auth';
+import NavbarLogin from '../../components/navbar/login';
 
 export default function Tentang() {
+  const { isLogged, loginStatus } = useContext(AuthContext);
+
+  useEffect(() => {
+    loginStatus();
+  }, []);
+
   return (
     <>
       <Head>
         <title>Blockchain Health Care</title>
       </Head>
       <nav>
-        <Navbar tentang />
+        {isLogged
+          ? <NavbarLogin tentang /> : <Navbar tentang />}
       </nav>
       <main className="md:mt-12">
         <figure className="h-80 md:h-96 lg:h-screen relative">

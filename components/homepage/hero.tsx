@@ -9,7 +9,7 @@ const Hero = () => (
       <div className="lg:w-1/2 flex flex-col gap-6">
         <h2 className="font-bold text-3xl lg:text-5xl lg:leading-snug w-full ">
           Periksakan
-          <span className="text-medium-blue">Kondisi Kesehatanmu</span>
+          <span className="text-medium-blue"> Kondisi Kesehatanmu</span>
         </h2>
         <p className="md:text-xl md:leading-relaxed">Bagi kamu yang mengalami gejala penyakit tertentu dan ingin berkonsultasi atau memeriksakan diri, segera daftarkan diri disini dan dapatkan bantuan dari para dokter yang profesional.</p>
         <Link href="/">

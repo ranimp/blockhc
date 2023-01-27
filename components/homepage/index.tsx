@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import Navbar from '../navbar/index';
@@ -7,15 +7,25 @@ import Hero from './hero';
 import Vision from './vision';
 import Doctor from './doctor';
 import Button from '../button/index';
+import NavbarLogin from '../navbar/login';
+import { AuthContext } from '../../lib/auth';
 
 export default function Homepage() {
+  const { isLogged, loginStatus } = useContext(AuthContext);
+
+  useEffect(() => {
+    loginStatus();
+  }, []);
+
   return (
     <>
       <Head>
         <title>Blockchain Health Care</title>
       </Head>
       <nav>
-        <Navbar home />
+        {isLogged
+          ? <NavbarLogin home />
+          : <Navbar home />}
       </nav>
       <section>
         <Hero />

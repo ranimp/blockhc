@@ -8,6 +8,11 @@ const NavbarLogin = ({
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [profilOpen, setProfilOpen] = useState(false);
 
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.href = '/';
+  };
+
   return (
     <nav className="w-full fixed top-0 inset-x-0 z-50 py-3 lg:px-16 bg-white shadow-md">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
@@ -42,7 +47,7 @@ const NavbarLogin = ({
           <ul className="flex flex-col items-center lg:hidden list-none">
             <li className=""><Link className={`rounded-t bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue${profil ? ' font-bold' : ' font-normal'}`} href="/profil">Profil</Link></li>
             <li className=""><Link className={`bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue${dashboard ? ' font-bold' : ' font-normal'}`} href="/profil">Dashboard</Link></li>
-            <li className=""><Link className="rounded-b bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue" href="/">Keluar</Link></li>
+            <li className=""><button className="rounded-b bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue" onClick={handleLogout}>Keluar</button></li>
           </ul>
         </div>
         <div
@@ -95,9 +100,9 @@ const NavbarLogin = ({
                   <Image src="/images/profile.png" width={32} height={32} alt="prof-pic" className="rounded-full" />
                 </button>
                 <ul className="dropdown-menu absolute hidden text-black pt-1">
-                  <li className=""><Link className={`rounded-t bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue${profil ? ' font-bold' : ' font-normal'}`} href="/profil">Profil</Link></li>
-                  <li className=""><Link className={`bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue${dashboard ? ' font-bold' : ' font-normal'}`} href="/dashboard">Dashboard</Link></li>
-                  <li className=""><Link className="rounded-b bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue" href="/">Keluar</Link></li>
+                  <li className=""><Link className={`rounded-t bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue ${profil ? ' font-bold' : ' font-normal'}`} href="/profil">Profil</Link></li>
+                  <li className=""><Link className={`bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue ${dashboard ? ' font-bold' : ' font-normal'}`} href="/dashboard">Dashboard</Link></li>
+                  <li className=""><button className="rounded-b bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue w-full text-left" onClick={handleLogout}>Keluar</button></li>
                 </ul>
               </div>
             </li>

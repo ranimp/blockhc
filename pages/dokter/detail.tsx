@@ -1,19 +1,27 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
 import Navbar from '../../components/navbar/index';
 import Footer from '../../components/footer/index';
 import Button from '../../components/button/index';
+import { AuthContext } from '../../lib/auth';
+import NavbarLogin from '../../components/navbar/login';
 
 export default function DetailDokter() {
+  const { isLogged, loginStatus } = useContext(AuthContext);
+
+  useEffect(() => {
+    loginStatus();
+  }, []);
   return (
     <>
       <Head>
         <title>Blockchain Health Care</title>
       </Head>
       <nav>
-        <Navbar dokter />
+        {isLogged
+          ? <NavbarLogin dokter /> : <Navbar dokter />}
       </nav>
       <main className="px-4 lg:px-32 my-36 min-h-screen mx-auto">
         <h2 className=" text-medium-blue text-2xl md:text-4xl font-medium mb-4 md:mb-8">Drg. Rio Dewantara</h2>
