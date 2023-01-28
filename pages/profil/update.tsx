@@ -6,8 +6,9 @@ import NavbarLogin from '../../components/navbar/login';
 import Footer from '../../components/footer/index';
 import Button from '../../components/button/index';
 import EditData from '../../components/profil/edit-data';
+import withAuth from '../../lib/withAuth';
 
-export default function EditProfil() {
+function EditProfil() {
   const router = useRouter();
   return (
     <>
@@ -38,3 +39,5 @@ export default function EditProfil() {
     </>
   );
 }
+
+export default withAuth(EditProfil);

@@ -11,8 +11,9 @@ import DaftarDokterAdmin from '../../../components/dashboard-admin/manajemen-dok
 import Footer from '../../../components/footer/index';
 import RiwayatKonsultasiAdmin from '../../../components/dashboard-admin/manajemen-pasien/adm-riwayat-pasien';
 import Button from '../../../components/button/index';
+import withAuth from '../../../lib/withAuth';
 
-export default function RiwayatKonsultasiAdminPage() {
+function RiwayatKonsultasiAdminPage() {
   const [active, setActive] = useState('manajemen-pasien');
   const router = useRouter();
   return (
@@ -64,3 +65,5 @@ export default function RiwayatKonsultasiAdminPage() {
     </>
   );
 }
+
+export default withAuth(RiwayatKonsultasiAdminPage);

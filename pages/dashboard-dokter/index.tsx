@@ -7,8 +7,9 @@ import Footer from '../../components/footer/index';
 import Profil from '../../components/dashboard/profil';
 import DaftarPasienDokter from '../../components/dashboard-dokter/daftar-pasien/dok-daftar-pasien';
 import HasilKonsultasiDokter from '../../components/dashboard-dokter/daftar-pasien/dok-hasil-konsultasi';
+import withAuth from '../../lib/withAuth';
 
-export default function DashboardDokter() {
+function DashboardDokter() {
   const [active, setActive] = useState('daftar-pasien');
   return (
     <>
@@ -46,3 +47,5 @@ export default function DashboardDokter() {
     </>
   );
 }
+
+export default withAuth(DashboardDokter);

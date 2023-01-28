@@ -1,12 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import { useRouter } from 'next/router';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
-  const router = useRouter();
   const [address, setAddress] = useState(null);
   const [redirect, setRedirect] = useState({
     isRedirect: true,
@@ -22,7 +20,6 @@ export const AuthProvider = ({ children }) => {
       const network = await provider.getNetwork();
       if (network.name === 'goerli') {
         setAddress(addressUser);
-        router.push('/');
       } else {
         alert('Please change your network to Goerli');
       }

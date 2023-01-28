@@ -6,8 +6,9 @@ import Footer from '../../components/footer/index';
 import User from '../../components/profil/user';
 import Data from '../../components/profil/data';
 import Button from '../../components/button/index';
+import withAuth from '../../lib/withAuth';
 
-export default function Profil() {
+function Profil() {
   return (
     <>
       <Head>
@@ -31,3 +32,5 @@ export default function Profil() {
     </>
   );
 }
+
+export default withAuth(Profil);

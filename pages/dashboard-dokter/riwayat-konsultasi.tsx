@@ -8,8 +8,9 @@ import Sidebar from '../../components/dashboard/sidebar';
 import Footer from '../../components/footer/index';
 import RiwayatKonsultasiDokter from '../../components/dashboard-dokter/daftar-pasien/dok-riwayat-konsultasi';
 import HasilKonsultasiDokter from '../../components/dashboard-dokter/daftar-pasien/dok-hasil-konsultasi';
+import withAuth from '../../lib/withAuth';
 
-export default function RiwayatKonsultasi() {
+function RiwayatKonsultasi() {
   const router = useRouter();
   const [active, setActive] = useState('daftar-pasien');
   return (
@@ -48,3 +49,5 @@ export default function RiwayatKonsultasi() {
     </>
   );
 }
+
+export default withAuth(RiwayatKonsultasi);

@@ -11,8 +11,9 @@ import DaftarPasienAdmin from '../../../components/dashboard-admin/manajemen-pas
 import TambahDokterAdmin from '../../../components/dashboard-admin/manajemen-dokter/tambah-dokter';
 import HasilKonsultasiAdmin from '../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-hasil-konsultasi';
 import Button from '../../../components/button/index';
+import withAuth from '../../../lib/withAuth';
 
-export default function TambahDokterAdminPage() {
+function TambahDokterAdminPage() {
   const [active, setActive] = useState('manajemen-dokter');
   const router = useRouter();
   return (
@@ -64,3 +65,5 @@ export default function TambahDokterAdminPage() {
     </>
   );
 }
+
+export default withAuth(TambahDokterAdminPage);

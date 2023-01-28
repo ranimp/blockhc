@@ -10,8 +10,9 @@ import DaftarPasienAdmin from '../../components/dashboard-admin/manajemen-pasien
 import HasilKonsultasiAdmin from '../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-hasil-konsultasi';
 import DaftarDokterAdmin from '../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
 import Button from '../../components/button/index';
+import withAuth from '../../lib/withAuth';
 
-export default function DashboardAdmin() {
+function DashboardAdmin() {
   const [active, setActive] = useState('manajemen-pasien');
   return (
     <>
@@ -62,3 +63,5 @@ export default function DashboardAdmin() {
     </>
   );
 }
+
+export default withAuth(DashboardAdmin);

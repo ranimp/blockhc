@@ -8,8 +8,9 @@ import Footer from '../../components/footer/index';
 import Sidebar from '../../components/dashboard/sidebar';
 import DaftarPasienDokter from '../../components/dashboard-dokter/daftar-pasien/dok-daftar-pasien';
 import UpdateKonsultasiDokter from '../../components/dashboard-dokter/manajemen-hasil-konsultasi/dok-update-konsultasi';
+import withAuth from '../../lib/withAuth';
 
-export default function UpdateKonsultasi() {
+function UpdateKonsultasi() {
   const router = useRouter();
   const [active, setActive] = useState('hasil-konsultasi');
   return (
@@ -48,3 +49,5 @@ export default function UpdateKonsultasi() {
     </>
   );
 }
+
+export default withAuth(UpdateKonsultasi);

@@ -3,16 +3,19 @@ import {
 } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { AuthContext } from '../../lib/auth';
 
 export default function Login() {
   const { handleLogin, loginStatus, address } = useContext(AuthContext);
+  const router = useRouter();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     localStorage.setItem('address', JSON.stringify(address));
     loginStatus();
     handleLogin();
+    router.push('/');
   };
 
   return (

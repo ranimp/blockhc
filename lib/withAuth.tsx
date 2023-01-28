@@ -1,14 +1,12 @@
 import { useRouter } from 'next/router';
-import { useContext, useEffect } from 'react';
-import { AuthContext } from './auth';
+import { useEffect } from 'react';
 
 // eslint-disable-next-line func-names
 const withAuth = (WrappedComponent) => function (props) {
-  const { isLogged, redirect } = useContext(AuthContext);
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLogged && redirect.isRedirect) {
+    if (localStorage.getItem('address') === null) {
       router?.replace('/login');
     }
   }, []);
