@@ -2,5 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { ConsultationRegist } from "./ConsultationRegist";
-export * as factories from "./factories";
-export { ConsultationRegist__factory } from "./factories/ConsultationRegist__factory";

@@ -18,10 +18,10 @@ export const AuthProvider = ({ children }) => {
       const signer = provider.getSigner();
       const addressUser = await signer.getAddress();
       const network = await provider.getNetwork();
-      if (network.name === 'goerli') {
+      if (network.name === 'maticmum') {
         setAddress(addressUser);
       } else {
-        alert('Please change your network to Goerli');
+        alert('Please change your network to Mumbai');
       }
     } else {
       alert('Please install MetaMask');

@@ -13,15 +13,42 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
+      name: "ConsultationResult",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ConsultationResult__factory>;
+    getContractFactory(
       name: "ConsultationRegist",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ConsultationRegist__factory>;
+    getContractFactory(
+      name: "UserRoles",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.UserRoles__factory>;
+    getContractFactory(
+      name: "UserData",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.UserData__factory>;
 
+    getContractAt(
+      name: "ConsultationResult",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ConsultationResult>;
     getContractAt(
       name: "ConsultationRegist",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ConsultationRegist>;
+    getContractAt(
+      name: "UserRoles",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.UserRoles>;
+    getContractAt(
+      name: "UserData",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.UserData>;
 
     // default types
     getContractFactory(
