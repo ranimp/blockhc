@@ -39,8 +39,8 @@
       ]
     },
     "D:\\TA\\project\\fe-blockhc\\contracts\\roles.sol": {
-      "lastModificationDate": 1676555272897,
-      "contentHash": "85413e01e9eb71777c0eab7207f872c2",
+      "lastModificationDate": 1676609979833,
+      "contentHash": "a6cb7d45ad98b6e769c258b5f809c035",
       "sourceName": "contracts/roles.sol",
       "solcConfig": {
         "version": "0.8.17",
@@ -111,8 +111,8 @@
       ]
     },
     "D:\\TA\\project\\fe-blockhc\\contracts\\registrasi.sol": {
-      "lastModificationDate": 1676471977000,
-      "contentHash": "ff8811dab5d18f384460211f4feda43d",
+      "lastModificationDate": 1676628874982,
+      "contentHash": "139c47316d4791be408cae1ceb0fb723",
       "sourceName": "contracts/registrasi.sol",
       "solcConfig": {
         "version": "0.8.17",

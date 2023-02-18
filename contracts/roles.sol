@@ -7,7 +7,7 @@ contract UserRoles {
     mapping(address => bool) public pasien;
 
     constructor() {
-        admin = 0x7c73d9eD23DDAd6353034F371aCa808b8a58744E;
+        admin = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
     }
 
     modifier onlyAdmin() {
