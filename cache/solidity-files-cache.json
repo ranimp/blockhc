@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\TA\\project\\blockhc\\contracts\\roles.sol": {
-      "lastModificationDate": 1677405643839,
-      "contentHash": "ab0d47bf34c241c04063b2766455a127",
+      "lastModificationDate": 1677496754316,
+      "contentHash": "4f26e1238ef76c055d6557e239d12449",
       "sourceName": "contracts/roles.sol",
       "solcConfig": {
         "version": "0.8.17",
