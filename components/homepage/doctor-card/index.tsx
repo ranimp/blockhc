@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import React from 'react';
+import { DoctorCardType } from '../../../types/user';
 
-const DoctorCard = ({
-  img, name, title, sch, sch2,
+const DoctorCard: React.FC<DoctorCardType> = ({
+  img, name, title, sch,
 }) => (
   <div className="flex lg:flex-none px-3">
     <Link href="/">
@@ -15,7 +17,6 @@ const DoctorCard = ({
           <p className="text-center text-sm md:text-lg">{title || ''}</p>
           <div className="hidden lg:block">
             <p className="text-center text-sm md:text-base">{sch || ''}</p>
-            <p className="text-center text-sm md:text-base">{sch2 || ''}</p>
           </div>
           <div className="flex justify-center mt-2">
             <button className="p-1 w-fit text-white bg-medium-blue capitalize rounded-lg font-medium text-xs lg:text-sm hover:bg-soft-blue hover:text-medium-blue hover:border-2 border-medium-blue">read more</button>

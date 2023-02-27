@@ -1,46 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "D:\\TA\\project\\fe-blockhc\\contracts\\konsultasi.sol": {
-      "lastModificationDate": 1676471971690,
-      "contentHash": "d0925e99fd0efed6481a8b7d9f9eb8f7",
-      "sourceName": "contracts/konsultasi.sol",
-      "solcConfig": {
-        "version": "0.8.17",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./roles.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.7"
-      ],
-      "artifacts": [
-        "ConsultationResult"
-      ]
-    },
-    "D:\\TA\\project\\fe-blockhc\\contracts\\roles.sol": {
-      "lastModificationDate": 1676609979833,
-      "contentHash": "a6cb7d45ad98b6e769c258b5f809c035",
+    "D:\\TA\\project\\blockhc\\contracts\\roles.sol": {
+      "lastModificationDate": 1677405643839,
+      "contentHash": "ab0d47bf34c241c04063b2766455a127",
       "sourceName": "contracts/roles.sol",
       "solcConfig": {
         "version": "0.8.17",
@@ -73,9 +36,9 @@
         "UserRoles"
       ]
     },
-    "D:\\TA\\project\\fe-blockhc\\contracts\\user.sol": {
-      "lastModificationDate": 1676471992795,
-      "contentHash": "75f9e18cd16721032f0908153a439e68",
+    "D:\\TA\\project\\blockhc\\contracts\\user.sol": {
+      "lastModificationDate": 1677489718798,
+      "contentHash": "03ca3aceb269880bfbfcca6d1d16fa67",
       "sourceName": "contracts/user.sol",
       "solcConfig": {
         "version": "0.8.17",
@@ -110,10 +73,10 @@
         "UserData"
       ]
     },
-    "D:\\TA\\project\\fe-blockhc\\contracts\\registrasi.sol": {
-      "lastModificationDate": 1676628874982,
-      "contentHash": "139c47316d4791be408cae1ceb0fb723",
-      "sourceName": "contracts/registrasi.sol",
+    "D:\\TA\\project\\blockhc\\contracts\\registration.sol": {
+      "lastModificationDate": 1677492683274,
+      "contentHash": "5e879f0885fc019ab2a9d5559252a9aa",
+      "sourceName": "contracts/registration.sol",
       "solcConfig": {
         "version": "0.8.17",
         "settings": {
@@ -145,6 +108,43 @@
       ],
       "artifacts": [
         "ConsultationRegist"
+      ]
+    },
+    "D:\\TA\\project\\blockhc\\contracts\\consultation.sol": {
+      "lastModificationDate": 1677495453333,
+      "contentHash": "c1102067e63e18b6d00e0ff1f74920cd",
+      "sourceName": "contracts/consultation.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./roles.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.7"
+      ],
+      "artifacts": [
+        "ConsultationResult"
       ]
     }
   }

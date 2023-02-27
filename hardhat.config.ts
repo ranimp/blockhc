@@ -11,7 +11,7 @@ const config: HardhatUserConfig = {
   },
   networks: {
     polygon: {
-      url: `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+      url: 'https://polygon-mumbai.infura.io/v3/4458cf4d1689497b9a38b1d6bbf05e78',
       accounts: [PRIVATE_KEY],
     },
     hardhat: {},

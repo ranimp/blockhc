@@ -2,18 +2,21 @@ import { ethers } from 'hardhat';
 import { expect } from 'chai';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { UserData } from '../typechain-types/user.sol/UserData';
+import { UserRoles } from '../typechain-types/roles.sol/UserRoles';
 
 describe('UserData', () => {
   let userData: UserData;
+  let userRoles : UserRoles;
   let admin: SignerWithAddress;
   let user1: SignerWithAddress;
   let user2: SignerWithAddress;
+  let nonUser: SignerWithAddress;
 
   before(async () => {
-    [admin, user1, user2] = await ethers.getSigners();
+    [admin, user1, user2, nonUser] = await ethers.getSigners();
 
     const UserRolesFactory = await ethers.getContractFactory('UserRoles');
-    const userRoles = await UserRolesFactory.deploy();
+    userRoles = await UserRolesFactory.deploy();
     await userRoles.deployed();
 
     const UserDataFactory = await ethers.getContractFactory('UserData');
@@ -21,7 +24,7 @@ describe('UserData', () => {
     await userData.deployed();
   });
 
-  describe('addUser & getUser', () => {
+  describe('add & get user', () => {
     const nama = 'Alice';
     const email = 'alice@example.com';
     const telepon = '1234567890';
@@ -29,15 +32,16 @@ describe('UserData', () => {
     const tanggalLahir = '2000-01-01';
     const status = true;
     it('should add a user', async () => {
+      await userRoles.connect(admin).setRole(await user1.getAddress(), 'pasien');
       await userData.connect(user1).addUser(nama, email, telepon, gender, tanggalLahir, status);
     });
     it('should get a user', async () => {
-      const user = await userData.getUser(await user1.getAddress());
+      const user = await userData.connect(user1).getUser(await user1.getAddress());
       expect(user).to.eql([nama, email, telepon, gender, tanggalLahir, status]);
     });
   });
 
-  describe('updateUser & getUser', () => {
+  describe('update & get user', () => {
     const nama = 'Alice Updated';
     const email = 'alice.updated@example.com';
     const telepon = '0987654321';
@@ -54,15 +58,14 @@ describe('UserData', () => {
     });
   });
 
-  describe('addUserAdmin', () => {
-    it('should add a user for admin', async () => {
-      const nama = 'Bob';
-      const email = 'bob@example.com';
-      const telepon = '1234567890';
-      const gender = 'male';
-      const tanggalLahir = '2000-01-01';
-      const status = true;
-
+  describe('add user from admin', () => {
+    const nama = 'Bob';
+    const email = 'bob@example.com';
+    const telepon = '1234567890';
+    const gender = 'male';
+    const tanggalLahir = '2000-01-01';
+    const status = true;
+    it('should add a user from admin', async () => {
       await userData.connect(admin).addUserAdmin(
         await user2.getAddress(),
         nama,
@@ -72,21 +75,21 @@ describe('UserData', () => {
         tanggalLahir,
         status,
       );
-
-      const user = await userData.getUser(await user2.getAddress());
+    });
+    it('should get a user from admin', async () => {
+      const user = await userData.connect(admin).getUser(await user2.getAddress());
       expect(user).to.eql([nama, email, telepon, gender, tanggalLahir, status]);
     });
   });
 
-  describe('updateUserAdmin', () => {
-    it('should update a user for admin', async () => {
-      const nama = 'Bob Updated';
-      const email = 'bob.updated@example.com';
-      const telepon = '0987654321';
-      const gender = 'female';
-      const tanggalLahir = '1990-01-01';
-      const status = false;
-
+  describe('update user from admin', () => {
+    const nama = 'Bob Updated';
+    const email = 'bob.updated@example.com';
+    const telepon = '0987654321';
+    const gender = 'female';
+    const tanggalLahir = '1990-01-01';
+    const status = false;
+    it('should update a user from admin', async () => {
       await userData.connect(admin).updateUserAdmin(
         await user2.getAddress(),
         nama,
@@ -96,16 +99,92 @@ describe('UserData', () => {
         tanggalLahir,
         status,
       );
-
-      const user = await userData.getUser(await user2.getAddress());
+    });
+    it('should get a updated user from admin', async () => {
+      const user = await userData.connect(admin).getUser(await user2.getAddress());
       expect(user).to.eql([nama, email, telepon, gender, tanggalLahir, status]);
+    });
+    it('should only allow update for existing user from admin', async () => {
+      await expect(
+        userData.connect(admin).updateUserAdmin(
+          await nonUser.getAddress(),
+          nama,
+          email,
+          telepon,
+          gender,
+          tanggalLahir,
+          status,
+        ),
+      ).to.be.revertedWith('User tidak ditemukan.');
     });
   });
 
-  describe('getUserAdmin', () => {
+  describe('get all user for admin', () => {
     it('should get all users for admin', async () => {
-      const users = await userData.getUserAdmin();
+      const users = await userData.connect(admin).getUserAdmin();
       expect(users.length).to.equal(2);
+    });
+  });
+
+  describe('modifier', () => {
+    it('should only allow admin to use addUserAdmin()', async () => {
+      const nama = 'Alice';
+      const email = 'alice@example.com';
+      const telepon = '1234567890';
+      const gender = 'female';
+      const tanggalLahir = '2000-01-01';
+      const status = true;
+      await expect(userData.connect(user1).addUserAdmin(
+        await user1.getAddress(),
+        nama,
+        email,
+        telepon,
+        gender,
+        tanggalLahir,
+        status,
+      )).to.be.revertedWith(
+        'Hanya admin yang diizinkan untuk mengakses.',
+      );
+    });
+    it('should only allow admin to use updateUserAdmin()', async () => {
+      const nama = 'Alice Updated';
+      const email = 'alice@update.com';
+      const telepon = '12345670';
+      const gender = 'male';
+      const tanggalLahir = '2001-01-01';
+      const status = true;
+      await expect(userData.connect(user1).updateUserAdmin(
+        await user1.getAddress(),
+        nama,
+        email,
+        telepon,
+        gender,
+        tanggalLahir,
+        status,
+      )).to.be.revertedWith(
+        'Hanya admin yang diizinkan untuk mengakses.',
+      );
+    });
+    it('should only allow admin to use getAllUser()', async () => {
+      await expect(
+        userData.connect(user1).getUserAdmin(),
+      ).to.be.revertedWith('Hanya admin yang diizinkan untuk mengakses.');
+    });
+    it('should only allow pasien to use updateUser()', async () => {
+      const nama = 'Alice Updated';
+      const email = 'alice.updated@example.com';
+      const telepon = '0987654321';
+      const gender = 'male';
+      const tanggalLahir = '1990-01-01';
+      const status = false;
+      await expect(
+        userData.connect(admin).updateUser(nama, email, telepon, gender, tanggalLahir, status),
+      ).to.be.revertedWith('Hanya pasien yang diizinkan untuk mengakses.');
+    });
+    it('should only allow registered user to use getUser()', async () => {
+      await expect(
+        userData.connect(nonUser).getUser(await user1.getAddress()),
+      ).to.be.revertedWith('Hanya pengguna terdaftar yang diizinkan untuk mengakses.');
     });
   });
 });

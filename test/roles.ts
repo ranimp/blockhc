@@ -17,10 +17,13 @@ describe('UserRoles', () => {
     await userRoles.deployed();
   });
 
-  describe('setRole & getRole', () => {
+  describe('set & get role', () => {
+    it('should get admin role from the specified address', async () => {
+      expect(await userRoles.isAdmin(admin.getAddress())).to.be.true;
+    });
     it('admin should set and get dokter role', async () => {
       await expect(userRoles.connect(nonAdmin).setRole(nonAdmin.getAddress(), 'dokter'))
-        .to.be.revertedWith('Hanya admin yang diizinkan untuk mengkases.');
+        .to.be.revertedWith('Hanya admin yang diizinkan untuk mengakses.');
 
       await userRoles.connect(admin).setRole(nonAdmin.getAddress(), 'dokter');
 
@@ -29,7 +32,7 @@ describe('UserRoles', () => {
     });
     it('admin should set and get pasien role', async () => {
       await expect(userRoles.connect(nonAdmin).setRole(nonAdmin.getAddress(), 'pasien'))
-        .to.be.revertedWith('Hanya admin yang diizinkan untuk mengkases.');
+        .to.be.revertedWith('Hanya admin yang diizinkan untuk mengakses.');
 
       await userRoles.connect(admin).setRole(nonAdmin.getAddress(), 'pasien');
 
@@ -38,10 +41,10 @@ describe('UserRoles', () => {
     });
   });
 
-  describe('removeRole & getRole', () => {
+  describe('remove & get role', () => {
     it('admin should remove dokter role', async () => {
       await expect(userRoles.connect(nonAdmin).setRole(nonAdmin.getAddress(), 'dokter'))
-        .to.be.revertedWith('Hanya admin yang diizinkan untuk mengkases.');
+        .to.be.revertedWith('Hanya admin yang diizinkan untuk mengakses.');
 
       await userRoles.connect(admin).setRole(nonAdmin.getAddress(), 'dokter');
       await userRoles.connect(admin).removeRole(nonAdmin.getAddress(), 'dokter');
@@ -50,7 +53,7 @@ describe('UserRoles', () => {
     });
     it('admin should remove pasien role', async () => {
       await expect(userRoles.connect(nonAdmin).setRole(nonAdmin.getAddress(), 'pasien'))
-        .to.be.revertedWith('Hanya admin yang diizinkan untuk mengkases.');
+        .to.be.revertedWith('Hanya admin yang diizinkan untuk mengakses.');
 
       await userRoles.connect(admin).setRole(nonAdmin.getAddress(), 'pasien');
       await userRoles.connect(admin).removeRole(nonAdmin.getAddress(), 'pasien');
@@ -59,7 +62,7 @@ describe('UserRoles', () => {
     });
   });
 
-  describe('setDefaultRole', () => {
+  describe('set default role', () => {
     it('should set default pasien role', async () => {
       await userRoles.setDefaultRole();
 
@@ -67,10 +70,15 @@ describe('UserRoles', () => {
     });
   });
 
-  describe('modifier onlyAdmin', () => {
+  describe('modifier', () => {
     it('should only allow admin to set roles', async () => {
       await expect(userRoles.connect(nonAdmin).setRole(nonAdmin.getAddress(), 'dokter')).to.be.revertedWith(
-        'Hanya admin yang diizinkan untuk mengkases.',
+        'Hanya admin yang diizinkan untuk mengakses.',
+      );
+    });
+    it('should only allow admin to remove roles', async () => {
+      await expect(userRoles.connect(nonAdmin).removeRole(nonAdmin.getAddress(), 'dokter')).to.be.revertedWith(
+        'Hanya admin yang diizinkan untuk mengakses.',
       );
     });
   });

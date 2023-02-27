@@ -28,7 +28,7 @@ contract ConsultationRegist {
     modifier onlyPasien() {
         require(
             roles.isPasien(msg.sender),
-            "Hanya pasien yang diizinkan untuk mengakses"
+            "Hanya pasien yang diizinkan untuk mengakses."
         );
         _;
     }
@@ -37,6 +37,16 @@ contract ConsultationRegist {
         require(
             roles.isAdmin(msg.sender) || roles.isDokter(msg.sender),
             "Hanya admin atau dokter yang diizinkan untuk mengakses."
+        );
+        _;
+    }
+
+    modifier onlyUser() {
+        require(
+            roles.isAdmin(msg.sender) ||
+                roles.isDokter(msg.sender) ||
+                roles.isPasien(msg.sender),
+            "Hanya pengguna terdaftar yang diizinkan untuk mengakses."
         );
         _;
     }
@@ -51,7 +61,7 @@ contract ConsultationRegist {
         string memory _tanggal,
         string memory _keluhan,
         string memory _gender
-    ) public {
+    ) public onlyUser {
         registrations[_wallet].push(
             Data(
                 _nama,
@@ -64,7 +74,9 @@ contract ConsultationRegist {
                 _wallet
             )
         );
-        accountsWithRegistrations.push(_wallet);
+        if (registrations[_wallet].length == 1) {
+            accountsWithRegistrations.push(_wallet);
+        }
         registrationCount++;
     }
 
@@ -79,28 +91,19 @@ contract ConsultationRegist {
     }
 
     // get data pendaftaran untuk admin & dokter
-    function getAllRegistrations(uint256 offset)
+    function getAllRegistrations()
         public
         view
         onlyAdminOrDokter
-        returns (Data[] memory)
+        returns (Data[][] memory)
     {
-        uint256 maxRegistrationsPerAccount = 10;
-        Data[] memory allRegistrations = new Data[](
-            10 * maxRegistrationsPerAccount
-        );
-        uint256 counter = 0;
-        for (uint256 i = offset; i < accountsWithRegistrations.length; i++) {
-            Data[] memory data = registrations[accountsWithRegistrations[i]];
-            for (
-                uint256 j = 0;
-                j < data.length && counter < maxRegistrationsPerAccount * 10;
-                j++
-            ) {
-                allRegistrations[counter] = data[j];
-                counter++;
-            }
+        uint256 length = accountsWithRegistrations.length;
+        Data[][] memory result = new Data[][](length);
+
+        for (uint256 i = 0; i < length; i++) {
+            result[i] = registrations[accountsWithRegistrations[i]];
         }
-        return allRegistrations;
+
+        return result;
     }
 }

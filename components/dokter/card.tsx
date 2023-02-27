@@ -1,8 +1,10 @@
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { DoctorCardType } from '../../types/user';
 
-const Card = ({
-  img, name, title, sch, sch2,
+const Card: React.FC<DoctorCardType> = ({
+  img, name, title, sch,
 }) => (
   <Link className="shadow-md w-5/12 sm:w-1/4 lg:w-1/5" href="/dokter/detail">
     <figure className="h-32 lg:h-52 relative">
@@ -12,7 +14,6 @@ const Card = ({
       <h3 className="font-medium text-medium-blue lg:text-xl">{name}</h3>
       <p className="text-xs lg:text-base">{title}</p>
       <p className="text-xs lg:text-sm">{sch}</p>
-      <p className="text-xs lg:text-sm">{sch2}</p>
     </div>
   </Link>
 );

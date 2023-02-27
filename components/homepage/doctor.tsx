@@ -6,7 +6,7 @@ const Doctor = () => (
     <div className="relative rounded-xl overflow-auto">
       <div className="mx-auto min-w-0 max-w-screen-xl">
         <div className="overflow-x-auto flex gap-12 scrollbar-hide">
-          <DoctorCard img="/images/doctor.png" name="Drg. Rio Dewantara" title="Dokter Gigi" sch="Senin - Jumat : 13.00 - 17.00" />
+          <DoctorCard img="/images/doctor.png" name={false} title="Dokter Gigi" sch="Senin - Jumat : 13.00 - 17.00" />
           <DoctorCard img="/images/doctor.png" name="Drg. Rio Dewantara" title="Dokter Gigi" sch="Senin - Jumat : 13.00 - 17.00" />
           <DoctorCard img="/images/doctor.png" name="Drg. Rio Dewantara" title="Dokter Gigi" sch="Senin - Jumat : 13.00 - 17.00" />
           <DoctorCard img="/images/doctor.png" name="Drg. Rio Dewantara" title="Dokter Gigi" sch="Senin - Jumat : 13.00 - 17.00" />

@@ -34,7 +34,25 @@ contract UserData {
     modifier onlyAdmin() {
         require(
             msg.sender == roles.admin(),
-            "Only the admin can perform this action."
+            "Hanya admin yang diizinkan untuk mengakses."
+        );
+        _;
+    }
+
+    modifier onlyUser() {
+        require(
+            roles.isPasien(msg.sender) ||
+                roles.isAdmin(msg.sender) ||
+                roles.isDokter(msg.sender),
+            "Hanya pengguna terdaftar yang diizinkan untuk mengakses."
+        );
+        _;
+    }
+
+    modifier onlyPasien() {
+        require(
+            roles.isPasien(msg.sender),
+            "Hanya pasien yang diizinkan untuk mengakses."
         );
         _;
     }
@@ -77,7 +95,7 @@ contract UserData {
         string memory _gender,
         string memory _tanggalLahir,
         bool _status
-    ) public {
+    ) public onlyPasien {
         for (uint256 i = 0; i < users.length; i++) {
             if (users[i].wallet == msg.sender) {
                 users[i].nama = _nama;
@@ -95,6 +113,7 @@ contract UserData {
     function getUser(address _wallet)
         public
         view
+        onlyUser
         returns (
             string memory,
             string memory,
@@ -160,8 +179,10 @@ contract UserData {
         string memory _tanggalLahir,
         bool _status
     ) public onlyAdmin {
+        bool userExists = false;
         for (uint256 i = 0; i < users.length; i++) {
             if (users[i].wallet == _wallet) {
+                userExists = true;
                 users[i].nama = _nama;
                 users[i].email = _email;
                 users[i].telepon = _telepon;
@@ -171,6 +192,7 @@ contract UserData {
                 break;
             }
         }
+        require(userExists, "User tidak ditemukan.");
     }
 
     // get user for admin
