@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\TA\\project\\blockhc\\contracts\\roles.sol": {
-      "lastModificationDate": 1677496754316,
-      "contentHash": "4f26e1238ef76c055d6557e239d12449",
+      "lastModificationDate": 1677678899864,
+      "contentHash": "ab0d47bf34c241c04063b2766455a127",
       "sourceName": "contracts/roles.sol",
       "solcConfig": {
         "version": "0.8.17",
@@ -37,8 +37,8 @@
       ]
     },
     "D:\\TA\\project\\blockhc\\contracts\\user.sol": {
-      "lastModificationDate": 1677489718798,
-      "contentHash": "03ca3aceb269880bfbfcca6d1d16fa67",
+      "lastModificationDate": 1677675090959,
+      "contentHash": "96711aa1cc1ef6b6c0a64f69219c42ab",
       "sourceName": "contracts/user.sol",
       "solcConfig": {
         "version": "0.8.17",

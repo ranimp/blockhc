@@ -33,11 +33,19 @@ describe('UserData', () => {
     const status = true;
     it('should add a user', async () => {
       await userRoles.connect(admin).setRole(await user1.getAddress(), 'pasien');
-      await userData.connect(user1).addUser(nama, email, telepon, gender, tanggalLahir, status);
+      await userData.connect(user1).addUser(
+        nama,
+        email,
+        telepon,
+        gender,
+        tanggalLahir,
+        status,
+      );
     });
     it('should get a user', async () => {
       const user = await userData.connect(user1).getUser(await user1.getAddress());
-      expect(user).to.eql([nama, email, telepon, gender, tanggalLahir, status]);
+      expect(user).to.eql([await user1.getAddress(), nama, email, telepon,
+        gender, tanggalLahir, status]);
     });
   });
 
@@ -49,12 +57,27 @@ describe('UserData', () => {
     const tanggalLahir = '1990-01-01';
     const status = false;
     it('should update a user', async () => {
-      await userData.connect(user1).updateUser(nama, email, telepon, gender, tanggalLahir, status);
+      await userData.connect(user1).updateUser(
+        nama,
+        email,
+        telepon,
+        gender,
+        tanggalLahir,
+        status,
+      );
     });
     it('should get a updated user', async () => {
-      await userData.connect(user1).updateUser(nama, email, telepon, gender, tanggalLahir, status);
+      await userData.connect(user1).updateUser(
+        nama,
+        email,
+        telepon,
+        gender,
+        tanggalLahir,
+        status,
+      );
       const user = await userData.getUser(await user1.getAddress());
-      expect(user).to.eql([nama, email, telepon, gender, tanggalLahir, status]);
+      expect(user).to.eql([await user1.getAddress(), nama, email, telepon,
+        gender, tanggalLahir, status]);
     });
   });
 
@@ -78,7 +101,8 @@ describe('UserData', () => {
     });
     it('should get a user from admin', async () => {
       const user = await userData.connect(admin).getUser(await user2.getAddress());
-      expect(user).to.eql([nama, email, telepon, gender, tanggalLahir, status]);
+      expect(user).to.eql([await user2.getAddress(), nama, email, telepon,
+        gender, tanggalLahir, status]);
     });
   });
 
@@ -102,7 +126,8 @@ describe('UserData', () => {
     });
     it('should get a updated user from admin', async () => {
       const user = await userData.connect(admin).getUser(await user2.getAddress());
-      expect(user).to.eql([nama, email, telepon, gender, tanggalLahir, status]);
+      expect(user).to.eql([await user2.getAddress(), nama, email, telepon,
+        gender, tanggalLahir, status]);
     });
     it('should only allow update for existing user from admin', async () => {
       await expect(

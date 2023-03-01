@@ -233,7 +233,7 @@ export interface UserData extends BaseContract {
     getUser(
       _wallet: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[string, string, string, string, string, boolean]>;
+    ): Promise<[string, string, string, string, string, string, boolean]>;
 
     getUserAdmin(
       overrides?: CallOverrides
@@ -302,7 +302,7 @@ export interface UserData extends BaseContract {
   getUser(
     _wallet: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<[string, string, string, string, string, boolean]>;
+  ): Promise<[string, string, string, string, string, string, boolean]>;
 
   getUserAdmin(overrides?: CallOverrides): Promise<UserData.UserStructOutput[]>;
 
@@ -369,7 +369,7 @@ export interface UserData extends BaseContract {
     getUser(
       _wallet: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[string, string, string, string, string, boolean]>;
+    ): Promise<[string, string, string, string, string, string, boolean]>;
 
     getUserAdmin(
       overrides?: CallOverrides

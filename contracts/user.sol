@@ -115,6 +115,7 @@ contract UserData {
         view
         onlyUser
         returns (
+            address,
             string memory,
             string memory,
             string memory,
@@ -126,6 +127,7 @@ contract UserData {
         for (uint256 i = 0; i < users.length; i++) {
             if (users[i].wallet == _wallet) {
                 return (
+                    users[i].wallet,
                     users[i].nama,
                     users[i].email,
                     users[i].telepon,
@@ -135,7 +137,7 @@ contract UserData {
                 );
             }
         }
-        return ("", "", "", "", "", true);
+        return (address(0), "", "", "", "", "", false);
     }
 
     // add user for admin

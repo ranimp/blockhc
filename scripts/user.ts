@@ -3,7 +3,7 @@ const hre = require('hardhat');
 
 async function main() {
   const MyContract = await hre.ethers.getContractFactory('UserData');
-  const myContract = await MyContract.deploy('0x2797B92d2C03e880310Ac00a3440e8ef0cDbbE21');
+  const myContract = await MyContract.deploy('0x143Cab622c54a7537841779b79856DD58bE584A8');
 
   await myContract.deployed();
 

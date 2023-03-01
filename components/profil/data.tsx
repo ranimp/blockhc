@@ -1,5 +1,5 @@
 const Data = ({
-  name, gender, ttl, email, phone, address,
+  name, gender, ttl, email, phone,
 }) => (
   <div className="mt-2 lg:mt-4">
     <table className="w-full text-black border-separate border-spacing-y-2">
@@ -28,11 +28,6 @@ const Data = ({
           <td className="py-3 pl-3 text-xs lg:text-base">No. Telepon</td>
           <td className="text-xs sm:text-sm lg:text-base">:</td>
           <td className="text-xs sm:text-sm lg:text-base">{phone || ''}</td>
-        </tr>
-        <tr className="odd:bg-odd-blue even:bg-even-blue">
-          <td className="py-3 pl-3 text-xs lg:text-base">Alamat</td>
-          <td className="text-xs sm:text-sm lg:text-base">:</td>
-          <td className="text-xs sm:text-sm lg:text-base">{address || ''}</td>
         </tr>
       </tbody>
     </table>
