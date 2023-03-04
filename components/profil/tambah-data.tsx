@@ -42,7 +42,7 @@ const TambahData = ({
           <td className="py-3 pl-3 text-xs lg:text-base">Tanggal Lahir</td>
           <td className="text-xs sm:text-sm lg:text-base">:</td>
           <td className="text-xs sm:text-sm lg:text-base">
-            <input type="text" name={ttlName} value={ttl} onChange={ttlChange} placeholder="01/01/2001" className="focus:outline-none bg-transparent w-full" />
+            <input type="date" name={ttlName} value={ttl} onChange={ttlChange} className="focus:outline-none bg-transparent w-fit" />
           </td>
         </tr>
         <tr className="odd:bg-odd-blue even:bg-even-blue">

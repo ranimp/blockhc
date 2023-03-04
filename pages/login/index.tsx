@@ -1,5 +1,5 @@
 import {
-  Fragment, useContext,
+  Fragment, useContext, useEffect,
 } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -10,13 +10,17 @@ export default function Login() {
   const { handleLogin, loginStatus, address } = useContext(AuthContext);
   const router = useRouter();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    localStorage.setItem('address', JSON.stringify(address));
-    loginStatus();
-    handleLogin();
+    await handleLogin();
+    await loginStatus();
+    await localStorage.setItem('address', JSON.stringify(address));
     router.push('/');
   };
+
+  useEffect(() => {
+    handleLogin();
+  }, []);
 
   return (
     <>

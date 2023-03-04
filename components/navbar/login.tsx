@@ -1,17 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { AuthContext } from '../../lib/auth';
 
 const NavbarLogin = ({
   home, konsultasi, tentang, dokter, profil, dashboard,
 }) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [profilOpen, setProfilOpen] = useState(false);
-
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.href = '/';
-  };
+  const { handleLogout } = useContext(AuthContext);
 
   return (
     <nav className="w-full fixed top-0 inset-x-0 z-50 py-3 lg:px-16 bg-white shadow-md">

@@ -32,6 +32,9 @@ export const AuthProvider = ({ children }) => {
     if (localStorage.getItem('address') !== null) {
       setIsLogged(true);
       setRedirect({ isRedirect: false, path: '/login' });
+    } else {
+      setIsLogged(false);
+      setRedirect({ isRedirect: true, path: '/login' });
     }
   };
 
@@ -39,10 +42,9 @@ export const AuthProvider = ({ children }) => {
     handleLogin();
   }, []);
 
-  const handleLogout = () => {
-    setIsLogged(false);
-    localStorage.setItem('isLogged', false);
-    setRedirect({ isRedirect: true, path: '/login' });
+  const handleLogout = async () => {
+    await localStorage.removeItem('address');
+    window.location.href = '/';
   };
 
   return (

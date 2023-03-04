@@ -5,10 +5,11 @@ import contractAbi from '../../artifacts/contracts/registration.sol/Consultation
 import Footer from '../../components/footer/index';
 import Button from '../../components/button/index';
 import NavbarLogin from '../../components/navbar/login';
+import withAuth from '../../lib/withAuth';
 
 const contractAddress = '0x44798f719A26DA247c7097D954f7b32340dF0b7F';
 
-export default function MyForm() {
+function Konsultasi() {
   const [walletAddress, setWalletAddress] = useState('');
   const [nama, setNama] = useState('');
   const [telepon, setTelepon] = useState('');
@@ -239,3 +240,5 @@ export default function MyForm() {
     </>
   );
 }
+
+export default withAuth(Konsultasi);

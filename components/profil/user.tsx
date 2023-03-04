@@ -10,7 +10,11 @@ const User = ({
       <h3 className="font-bold text-medium-blue text-base lg:text-2xl">{name}</h3>
       <p className="text-xs sm:text-sm lg:text-base capitalize">{role}</p>
       <p className="text-xs sm:text-sm lg:text-base">{username}</p>
-      <p className="text-xs sm:text-sm lg:text-base">{walletAddress}</p>
+      <div className="text-xs sm:text-sm lg:text-base w-40 lg:w-full">
+        <p className="overflow-hidden truncate lg:overflow-visible">
+          {walletAddress}
+        </p>
+      </div>
     </div>
   </div>
 );
