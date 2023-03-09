@@ -6,6 +6,7 @@ import "./roles.sol";
 contract UserData {
     UserRoles public roles;
     User[] public users;
+    Doctor[] public doctors;
 
     struct User {
         string nama;
@@ -17,12 +18,36 @@ contract UserData {
         bool status;
     }
 
+    struct Doctor {
+        string nama;
+        string email;
+        string telepon;
+        string hari;
+        string sesi;
+        string pendidikan;
+        string str;
+        address wallet;
+        bool status;
+    }
+
     event UserAdded(
         string nama,
         string email,
         string telepon,
         string gender,
         string tanggalLahir,
+        address wallet,
+        bool status
+    );
+
+    event DoctorAdded(
+        string nama,
+        string email,
+        string telepon,
+        string hari,
+        string sesi,
+        string pendidikan,
+        string str,
         address wallet,
         bool status
     );
@@ -110,7 +135,9 @@ contract UserData {
     }
 
     // get user
-    function getUser(address _wallet)
+    function getUser(
+        address _wallet
+    )
         public
         view
         onlyUser
@@ -169,6 +196,75 @@ contract UserData {
             _wallet,
             _status
         );
+    }
+
+    function addDoctor(
+        string memory _nama,
+        string memory _email,
+        string memory _telepon,
+        string memory _hari,
+        string memory _sesi,
+        string memory _pendidikan,
+        string memory _str,
+        address _wallet,
+        bool _status
+    ) public onlyAdmin {
+        Doctor memory newDoctor = Doctor(
+            _nama,
+            _email,
+            _telepon,
+            _hari,
+            _sesi,
+            _pendidikan,
+            _str,
+            _wallet,
+            _status
+        );
+        doctors.push(newDoctor);
+        emit DoctorAdded(
+            _nama,
+            _email,
+            _telepon,
+            _hari,
+            _sesi,
+            _pendidikan,
+            _str,
+            _wallet,
+            _status
+        );
+    }
+
+    function updateDoctor(
+        string memory _nama,
+        string memory _email,
+        string memory _telepon,
+        string memory _hari,
+        string memory _sesi,
+        string memory _pendidikan,
+        string memory _str,
+        address _wallet,
+        bool _status
+    ) public onlyAdmin {
+        bool doctorExists = false;
+        for (uint256 i = 0; i < doctors.length; i++) {
+            if (doctors[i].wallet == _wallet) {
+                doctorExists = true;
+                doctors[i].nama = _nama;
+                doctors[i].email = _email;
+                doctors[i].telepon = _telepon;
+                doctors[i].hari = _hari;
+                doctors[i].sesi = _sesi;
+                doctors[i].pendidikan = _pendidikan;
+                doctors[i].str = _str;
+                doctors[i].status = _status;
+                break;
+            }
+        }
+        require(doctorExists, "Dokter tidak ditemukan.");
+    }
+
+    function getDoctors() public view onlyUser returns (Doctor[] memory) {
+        return doctors;
     }
 
     // update user for admin

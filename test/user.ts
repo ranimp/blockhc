@@ -10,10 +10,11 @@ describe('UserData', () => {
   let admin: SignerWithAddress;
   let user1: SignerWithAddress;
   let user2: SignerWithAddress;
+  let user3: SignerWithAddress;
   let nonUser: SignerWithAddress;
 
   before(async () => {
-    [admin, user1, user2, nonUser] = await ethers.getSigners();
+    [admin, user1, user2, user3, nonUser] = await ethers.getSigners();
 
     const UserRolesFactory = await ethers.getContractFactory('UserRoles');
     userRoles = await UserRolesFactory.deploy();
@@ -144,6 +145,77 @@ describe('UserData', () => {
     });
   });
 
+  describe('add & get doctor from admin', () => {
+    const nama = 'Bob';
+    const email = 'bob@example.com';
+    const telepon = '1234567890';
+    const hari = 'senin - jumat';
+    const sesi = '09-00-10.00, 10-00-11.00';
+    const pendidikan = 'Universitas Indonesia (2012)';
+    const str = '33.1.1.401.4.22.086214';
+    const status = true;
+    it('should add a doctor from admin', async () => {
+      await userData.connect(admin).addDoctor(
+        nama,
+        email,
+        telepon,
+        hari,
+        sesi,
+        pendidikan,
+        str,
+        await user3.getAddress(),
+        status,
+      );
+    });
+    it('should get all doctors from admin', async () => {
+      const doctor = await userData.connect(admin).getDoctors();
+      expect(doctor.length).to.eql(1);
+    });
+  });
+
+  describe('update doctor from admin', () => {
+    const nama = 'Bob Updated';
+    const email = 'bob@example.com';
+    const telepon = '1234567890';
+    const hari = 'senin - jumat';
+    const sesi = '09-00-10.00, 10-00-11.00';
+    const pendidikan = 'Universitas Indonesia (2012)';
+    const str = '33.1.1.401.4.22.086214';
+    const status = true;
+    it('should update a user from admin', async () => {
+      await userData.connect(admin).updateDoctor(
+        nama,
+        email,
+        telepon,
+        hari,
+        sesi,
+        pendidikan,
+        str,
+        await user3.getAddress(),
+        status,
+      );
+    });
+    it('should get all doctors from admin', async () => {
+      const doctor = await userData.connect(admin).getDoctors();
+      expect(doctor.length).to.eql(1);
+    });
+    it('should only allow update for existing doctor from admin', async () => {
+      await expect(
+        userData.connect(admin).updateDoctor(
+          nama,
+          email,
+          telepon,
+          hari,
+          sesi,
+          pendidikan,
+          str,
+          await nonUser.getAddress(),
+          status,
+        ),
+      ).to.be.revertedWith('Dokter tidak ditemukan.');
+    });
+  });
+
   describe('get all user for admin', () => {
     it('should get all users for admin', async () => {
       const users = await userData.connect(admin).getUserAdmin();
@@ -185,6 +257,52 @@ describe('UserData', () => {
         telepon,
         gender,
         tanggalLahir,
+        status,
+      )).to.be.revertedWith(
+        'Hanya admin yang diizinkan untuk mengakses.',
+      );
+    });
+    it('should only allow admin to addDoctor()', async () => {
+      const nama = 'Bob';
+      const email = 'bob@example.com';
+      const telepon = '1234567890';
+      const hari = 'senin - jumat';
+      const sesi = '09-00-10.00, 10-00-11.00';
+      const pendidikan = 'Universitas Indonesia (2012)';
+      const str = '33.1.1.401.4.22.086214';
+      const status = true;
+      await expect(userData.connect(user1).addDoctor(
+        nama,
+        email,
+        telepon,
+        hari,
+        sesi,
+        pendidikan,
+        str,
+        await user1.getAddress(),
+        status,
+      )).to.be.revertedWith(
+        'Hanya admin yang diizinkan untuk mengakses.',
+      );
+    });
+    it('should only allow admin to updateDoctor()', async () => {
+      const nama = 'Bob Updated';
+      const email = 'bob@example.com';
+      const telepon = '1234567890';
+      const hari = 'senin - jumat';
+      const sesi = '09-00-10.00, 10-00-11.00';
+      const pendidikan = 'Universitas Indonesia (2012)';
+      const str = '33.1.1.401.4.22.086214';
+      const status = true;
+      await expect(userData.connect(user1).updateDoctor(
+        nama,
+        email,
+        telepon,
+        hari,
+        sesi,
+        pendidikan,
+        str,
+        await user3.getAddress(),
         status,
       )).to.be.revertedWith(
         'Hanya admin yang diizinkan untuk mengakses.',
