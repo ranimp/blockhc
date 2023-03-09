@@ -141,6 +141,80 @@ describe('ConsultationRegist', () => {
     });
   });
 
+  describe('get all session', () => {
+    it('should return all sessions for admin and doctor', async () => {
+      await userRoles.connect(admin).setRole(await pasien1.getAddress(), 'pasien');
+      // Register a session for a patient
+      const patientAddress = await pasien1.getAddress();
+      const nama = 'John Doe';
+      const telepon = '08012345678';
+      const namaDokter = 'Dr. Jane Smith';
+      const sesi = 'Sesi 1';
+      const sesi2 = 'Sesi 2';
+      const tanggal = '2022-02-17';
+      const keluhan = 'Flu';
+      const gender = 'Male';
+      await consultationRegist.connect(pasien1).addRegistration(
+        patientAddress,
+        nama,
+        telepon,
+        namaDokter,
+        sesi,
+        tanggal,
+        keluhan,
+        gender,
+      );
+
+      // Register another session for the same patient
+      await consultationRegist.connect(pasien1).addRegistration(
+        patientAddress,
+        nama,
+        telepon,
+        namaDokter,
+        sesi2,
+        tanggal,
+        keluhan,
+        gender,
+      );
+
+      // Call getAllSessions as an admin
+      const allSessions = await consultationRegist.connect(admin).getAllSesi();
+
+      // Assert that the result contains the registered sessions
+      expect(allSessions.length).to.equal(1);
+      expect(allSessions[0].length).to.equal(2);
+    });
+
+    it('should return all sessions for pasien', async () => {
+      await userRoles.connect(admin).setRole(await pasien1.getAddress(), 'pasien');
+      // Register a session for the patient
+      const patientAddress = await pasien1.getAddress();
+      const nama = 'John Doe';
+      const telepon = '08012345678';
+      const namaDokter = 'Dr. Jane Smith';
+      const sesi = 'Sesi 1';
+      const tanggal = '2022-02-17';
+      const keluhan = 'Flu';
+      const gender = 'Male';
+      await consultationRegist.connect(pasien1).addRegistration(
+        patientAddress,
+        nama,
+        telepon,
+        namaDokter,
+        sesi,
+        tanggal,
+        keluhan,
+        gender,
+      );
+
+      // Call getAllSessions as the patient
+      const allSessions = await consultationRegist.connect(pasien1).getAllSesi();
+
+      // Assert that the result contains the registered session
+      expect(allSessions.length).to.equal(1);
+    });
+  });
+
   describe('modifier', () => {
     it('should only existing user can add registration', async () => {
       const patientAddress = await pasien1.getAddress();

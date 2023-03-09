@@ -43,7 +43,7 @@ const NavbarLogin = ({
         >
           <ul className="flex flex-col items-center lg:hidden list-none">
             <li className=""><Link className={`rounded-t bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue${profil ? ' font-bold' : ' font-normal'}`} href="/profil">Profil</Link></li>
-            <li className=""><Link className={`bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue${dashboard ? ' font-bold' : ' font-normal'}`} href="/profil">Dashboard</Link></li>
+            <li className=""><Link className={`bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue${dashboard ? ' font-bold' : ' font-normal'}`} href="/dashboard">Dashboard</Link></li>
             <li className=""><button className="rounded-b bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue" onClick={handleLogout}>Keluar</button></li>
           </ul>
         </div>

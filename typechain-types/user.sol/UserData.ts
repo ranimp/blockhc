@@ -28,6 +28,40 @@ import type {
 } from "../common";
 
 export declare namespace UserData {
+  export type DoctorStruct = {
+    nama: PromiseOrValue<string>;
+    email: PromiseOrValue<string>;
+    telepon: PromiseOrValue<string>;
+    hari: PromiseOrValue<string>;
+    sesi: PromiseOrValue<string>;
+    pendidikan: PromiseOrValue<string>;
+    str: PromiseOrValue<string>;
+    wallet: PromiseOrValue<string>;
+    status: PromiseOrValue<boolean>;
+  };
+
+  export type DoctorStructOutput = [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    boolean
+  ] & {
+    nama: string;
+    email: string;
+    telepon: string;
+    hari: string;
+    sesi: string;
+    pendidikan: string;
+    str: string;
+    wallet: string;
+    status: boolean;
+  };
+
   export type UserStruct = {
     nama: PromiseOrValue<string>;
     email: PromiseOrValue<string>;
@@ -59,11 +93,15 @@ export declare namespace UserData {
 
 export interface UserDataInterface extends utils.Interface {
   functions: {
+    "addDoctor(string,string,string,string,string,string,string,address,bool)": FunctionFragment;
     "addUser(string,string,string,string,string,bool)": FunctionFragment;
     "addUserAdmin(address,string,string,string,string,string,bool)": FunctionFragment;
+    "doctors(uint256)": FunctionFragment;
+    "getDoctors()": FunctionFragment;
     "getUser(address)": FunctionFragment;
     "getUserAdmin()": FunctionFragment;
     "roles()": FunctionFragment;
+    "updateDoctor(string,string,string,string,string,string,string,address,bool)": FunctionFragment;
     "updateUser(string,string,string,string,string,bool)": FunctionFragment;
     "updateUserAdmin(address,string,string,string,string,string,bool)": FunctionFragment;
     "users(uint256)": FunctionFragment;
@@ -71,16 +109,34 @@ export interface UserDataInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "addDoctor"
       | "addUser"
       | "addUserAdmin"
+      | "doctors"
+      | "getDoctors"
       | "getUser"
       | "getUserAdmin"
       | "roles"
+      | "updateDoctor"
       | "updateUser"
       | "updateUserAdmin"
       | "users"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "addDoctor",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
+    ]
+  ): string;
   encodeFunctionData(
     functionFragment: "addUser",
     values: [
@@ -105,6 +161,14 @@ export interface UserDataInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "doctors",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getDoctors",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getUser",
     values: [PromiseOrValue<string>]
   ): string;
@@ -113,6 +177,20 @@ export interface UserDataInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "roles", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "updateDoctor",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
+    ]
+  ): string;
   encodeFunctionData(
     functionFragment: "updateUser",
     values: [
@@ -141,17 +219,24 @@ export interface UserDataInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
 
+  decodeFunctionResult(functionFragment: "addDoctor", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "addUser", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "addUserAdmin",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "doctors", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getDoctors", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getUser", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getUserAdmin",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "roles", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "updateDoctor",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "updateUser", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "updateUserAdmin",
@@ -160,11 +245,31 @@ export interface UserDataInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "users", data: BytesLike): Result;
 
   events: {
+    "DoctorAdded(string,string,string,string,string,string,string,address,bool)": EventFragment;
     "UserAdded(string,string,string,string,string,address,bool)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "DoctorAdded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UserAdded"): EventFragment;
 }
+
+export interface DoctorAddedEventObject {
+  nama: string;
+  email: string;
+  telepon: string;
+  hari: string;
+  sesi: string;
+  pendidikan: string;
+  str: string;
+  wallet: string;
+  status: boolean;
+}
+export type DoctorAddedEvent = TypedEvent<
+  [string, string, string, string, string, string, string, string, boolean],
+  DoctorAddedEventObject
+>;
+
+export type DoctorAddedEventFilter = TypedEventFilter<DoctorAddedEvent>;
 
 export interface UserAddedEventObject {
   nama: string;
@@ -209,6 +314,19 @@ export interface UserData extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    addDoctor(
+      _nama: PromiseOrValue<string>,
+      _email: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _hari: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _pendidikan: PromiseOrValue<string>,
+      _str: PromiseOrValue<string>,
+      _wallet: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     addUser(
       _nama: PromiseOrValue<string>,
       _email: PromiseOrValue<string>,
@@ -230,6 +348,37 @@ export interface UserData extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    doctors(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        boolean
+      ] & {
+        nama: string;
+        email: string;
+        telepon: string;
+        hari: string;
+        sesi: string;
+        pendidikan: string;
+        str: string;
+        wallet: string;
+        status: boolean;
+      }
+    >;
+
+    getDoctors(
+      overrides?: CallOverrides
+    ): Promise<[UserData.DoctorStructOutput[]]>;
+
     getUser(
       _wallet: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -240,6 +389,19 @@ export interface UserData extends BaseContract {
     ): Promise<[UserData.UserStructOutput[]]>;
 
     roles(overrides?: CallOverrides): Promise<[string]>;
+
+    updateDoctor(
+      _nama: PromiseOrValue<string>,
+      _email: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _hari: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _pendidikan: PromiseOrValue<string>,
+      _str: PromiseOrValue<string>,
+      _wallet: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     updateUser(
       _nama: PromiseOrValue<string>,
@@ -278,6 +440,19 @@ export interface UserData extends BaseContract {
     >;
   };
 
+  addDoctor(
+    _nama: PromiseOrValue<string>,
+    _email: PromiseOrValue<string>,
+    _telepon: PromiseOrValue<string>,
+    _hari: PromiseOrValue<string>,
+    _sesi: PromiseOrValue<string>,
+    _pendidikan: PromiseOrValue<string>,
+    _str: PromiseOrValue<string>,
+    _wallet: PromiseOrValue<string>,
+    _status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   addUser(
     _nama: PromiseOrValue<string>,
     _email: PromiseOrValue<string>,
@@ -299,6 +474,35 @@ export interface UserData extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  doctors(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<
+    [
+      string,
+      string,
+      string,
+      string,
+      string,
+      string,
+      string,
+      string,
+      boolean
+    ] & {
+      nama: string;
+      email: string;
+      telepon: string;
+      hari: string;
+      sesi: string;
+      pendidikan: string;
+      str: string;
+      wallet: string;
+      status: boolean;
+    }
+  >;
+
+  getDoctors(overrides?: CallOverrides): Promise<UserData.DoctorStructOutput[]>;
+
   getUser(
     _wallet: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -307,6 +511,19 @@ export interface UserData extends BaseContract {
   getUserAdmin(overrides?: CallOverrides): Promise<UserData.UserStructOutput[]>;
 
   roles(overrides?: CallOverrides): Promise<string>;
+
+  updateDoctor(
+    _nama: PromiseOrValue<string>,
+    _email: PromiseOrValue<string>,
+    _telepon: PromiseOrValue<string>,
+    _hari: PromiseOrValue<string>,
+    _sesi: PromiseOrValue<string>,
+    _pendidikan: PromiseOrValue<string>,
+    _str: PromiseOrValue<string>,
+    _wallet: PromiseOrValue<string>,
+    _status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   updateUser(
     _nama: PromiseOrValue<string>,
@@ -345,6 +562,19 @@ export interface UserData extends BaseContract {
   >;
 
   callStatic: {
+    addDoctor(
+      _nama: PromiseOrValue<string>,
+      _email: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _hari: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _pendidikan: PromiseOrValue<string>,
+      _str: PromiseOrValue<string>,
+      _wallet: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     addUser(
       _nama: PromiseOrValue<string>,
       _email: PromiseOrValue<string>,
@@ -366,6 +596,37 @@ export interface UserData extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    doctors(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        boolean
+      ] & {
+        nama: string;
+        email: string;
+        telepon: string;
+        hari: string;
+        sesi: string;
+        pendidikan: string;
+        str: string;
+        wallet: string;
+        status: boolean;
+      }
+    >;
+
+    getDoctors(
+      overrides?: CallOverrides
+    ): Promise<UserData.DoctorStructOutput[]>;
+
     getUser(
       _wallet: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -376,6 +637,19 @@ export interface UserData extends BaseContract {
     ): Promise<UserData.UserStructOutput[]>;
 
     roles(overrides?: CallOverrides): Promise<string>;
+
+    updateDoctor(
+      _nama: PromiseOrValue<string>,
+      _email: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _hari: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _pendidikan: PromiseOrValue<string>,
+      _str: PromiseOrValue<string>,
+      _wallet: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     updateUser(
       _nama: PromiseOrValue<string>,
@@ -415,6 +689,29 @@ export interface UserData extends BaseContract {
   };
 
   filters: {
+    "DoctorAdded(string,string,string,string,string,string,string,address,bool)"(
+      nama?: null,
+      email?: null,
+      telepon?: null,
+      hari?: null,
+      sesi?: null,
+      pendidikan?: null,
+      str?: null,
+      wallet?: null,
+      status?: null
+    ): DoctorAddedEventFilter;
+    DoctorAdded(
+      nama?: null,
+      email?: null,
+      telepon?: null,
+      hari?: null,
+      sesi?: null,
+      pendidikan?: null,
+      str?: null,
+      wallet?: null,
+      status?: null
+    ): DoctorAddedEventFilter;
+
     "UserAdded(string,string,string,string,string,address,bool)"(
       nama?: null,
       email?: null,
@@ -436,6 +733,19 @@ export interface UserData extends BaseContract {
   };
 
   estimateGas: {
+    addDoctor(
+      _nama: PromiseOrValue<string>,
+      _email: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _hari: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _pendidikan: PromiseOrValue<string>,
+      _str: PromiseOrValue<string>,
+      _wallet: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     addUser(
       _nama: PromiseOrValue<string>,
       _email: PromiseOrValue<string>,
@@ -457,6 +767,13 @@ export interface UserData extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    doctors(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getDoctors(overrides?: CallOverrides): Promise<BigNumber>;
+
     getUser(
       _wallet: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -465,6 +782,19 @@ export interface UserData extends BaseContract {
     getUserAdmin(overrides?: CallOverrides): Promise<BigNumber>;
 
     roles(overrides?: CallOverrides): Promise<BigNumber>;
+
+    updateDoctor(
+      _nama: PromiseOrValue<string>,
+      _email: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _hari: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _pendidikan: PromiseOrValue<string>,
+      _str: PromiseOrValue<string>,
+      _wallet: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     updateUser(
       _nama: PromiseOrValue<string>,
@@ -494,6 +824,19 @@ export interface UserData extends BaseContract {
   };
 
   populateTransaction: {
+    addDoctor(
+      _nama: PromiseOrValue<string>,
+      _email: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _hari: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _pendidikan: PromiseOrValue<string>,
+      _str: PromiseOrValue<string>,
+      _wallet: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     addUser(
       _nama: PromiseOrValue<string>,
       _email: PromiseOrValue<string>,
@@ -515,6 +858,13 @@ export interface UserData extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    doctors(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getDoctors(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getUser(
       _wallet: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -523,6 +873,19 @@ export interface UserData extends BaseContract {
     getUserAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     roles(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    updateDoctor(
+      _nama: PromiseOrValue<string>,
+      _email: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _hari: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _pendidikan: PromiseOrValue<string>,
+      _str: PromiseOrValue<string>,
+      _wallet: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     updateUser(
       _nama: PromiseOrValue<string>,

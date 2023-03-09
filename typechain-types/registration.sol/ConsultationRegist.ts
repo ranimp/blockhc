@@ -61,6 +61,7 @@ export interface ConsultationRegistInterface extends utils.Interface {
     "accountsWithRegistrations(uint256)": FunctionFragment;
     "addRegistration(address,string,string,string,string,string,string,string)": FunctionFragment;
     "getAllRegistrations()": FunctionFragment;
+    "getAllSesi()": FunctionFragment;
     "getRegistrationEvidence()": FunctionFragment;
     "registrationCount()": FunctionFragment;
     "registrations(address,uint256)": FunctionFragment;
@@ -72,6 +73,7 @@ export interface ConsultationRegistInterface extends utils.Interface {
       | "accountsWithRegistrations"
       | "addRegistration"
       | "getAllRegistrations"
+      | "getAllSesi"
       | "getRegistrationEvidence"
       | "registrationCount"
       | "registrations"
@@ -100,6 +102,10 @@ export interface ConsultationRegistInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "getAllSesi",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getRegistrationEvidence",
     values?: undefined
   ): string;
@@ -125,6 +131,7 @@ export interface ConsultationRegistInterface extends utils.Interface {
     functionFragment: "getAllRegistrations",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getAllSesi", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getRegistrationEvidence",
     data: BytesLike
@@ -190,6 +197,8 @@ export interface ConsultationRegist extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[ConsultationRegist.DataStructOutput[][]]>;
 
+    getAllSesi(overrides?: CallOverrides): Promise<[string[][][]]>;
+
     getRegistrationEvidence(
       overrides?: CallOverrides
     ): Promise<[ConsultationRegist.DataStructOutput[]]>;
@@ -237,6 +246,8 @@ export interface ConsultationRegist extends BaseContract {
     overrides?: CallOverrides
   ): Promise<ConsultationRegist.DataStructOutput[][]>;
 
+  getAllSesi(overrides?: CallOverrides): Promise<string[][][]>;
+
   getRegistrationEvidence(
     overrides?: CallOverrides
   ): Promise<ConsultationRegist.DataStructOutput[]>;
@@ -283,6 +294,8 @@ export interface ConsultationRegist extends BaseContract {
     getAllRegistrations(
       overrides?: CallOverrides
     ): Promise<ConsultationRegist.DataStructOutput[][]>;
+
+    getAllSesi(overrides?: CallOverrides): Promise<string[][][]>;
 
     getRegistrationEvidence(
       overrides?: CallOverrides
@@ -332,6 +345,8 @@ export interface ConsultationRegist extends BaseContract {
 
     getAllRegistrations(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getAllSesi(overrides?: CallOverrides): Promise<BigNumber>;
+
     getRegistrationEvidence(overrides?: CallOverrides): Promise<BigNumber>;
 
     registrationCount(overrides?: CallOverrides): Promise<BigNumber>;
@@ -366,6 +381,8 @@ export interface ConsultationRegist extends BaseContract {
     getAllRegistrations(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    getAllSesi(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getRegistrationEvidence(
       overrides?: CallOverrides

@@ -106,4 +106,26 @@ contract ConsultationRegist {
 
         return result;
     }
+
+    // get semua data sesi yang sudah tersimpan
+    function getAllSesi() public view onlyUser returns (string[][][] memory) {
+        uint256 length = accountsWithRegistrations.length;
+        string[][][] memory result = new string[][][](length);
+
+        for (uint256 i = 0; i < length; i++) {
+            uint256 sesiLength = registrations[accountsWithRegistrations[i]]
+                .length;
+            result[i] = new string[][](sesiLength);
+
+            for (uint256 j = 0; j < sesiLength; j++) {
+                result[i][j] = new string[](2);
+                result[i][j][0] = registrations[accountsWithRegistrations[i]][j]
+                    .tanggal;
+                result[i][j][1] = registrations[accountsWithRegistrations[i]][j]
+                    .sesi;
+            }
+        }
+
+        return result;
+    }
 }

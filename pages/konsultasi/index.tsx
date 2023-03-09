@@ -1,75 +1,97 @@
-import { useState } from 'react';
-import { ethers } from 'ethers';
+import { useContext, useState, useEffect } from 'react';
 import Head from 'next/head';
-import contractAbi from '../../artifacts/contracts/registration.sol/ConsultationRegist.json';
 import Footer from '../../components/footer/index';
 import Button from '../../components/button/index';
 import NavbarLogin from '../../components/navbar/login';
 import withAuth from '../../lib/withAuth';
-
-const contractAddress = '0x44798f719A26DA247c7097D954f7b32340dF0b7F';
+import { ContractContext } from '../../lib/contractProvider';
 
 function Konsultasi() {
-  const [walletAddress, setWalletAddress] = useState('');
-  const [nama, setNama] = useState('');
-  const [telepon, setTelepon] = useState('');
-  const [namaDokter, setNamaDokter] = useState('');
-  const [sesi, setSesi] = useState('');
-  const [tanggal, setTanggal] = useState('');
-  const [keluhan, setKeluhan] = useState('');
-  const [gender, setGender] = useState('');
+  const {
+    user,
+    setNama,
+    setTelepon,
+    setGender,
+    setNamaDokter,
+    setSesi,
+    tanggal, setTanggal,
+    keluhan, setKeluhan,
+    handleAddRegistration,
+    slot,
+  } = useContext(ContractContext);
+  const [tanggalSesiList, setTanggalSesiList] = useState([]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Buatlah sebuah provider yang terhubung ke Metamask
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send('eth_requestAccounts', []);
-    const signer = provider.getSigner();
-
-    // Buat instance kontrak yang terhubung ke provider
-    const contract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
-    const loggedInUser = localStorage.getItem('address');
-    const address = JSON.parse(loggedInUser);
-    // Panggil fungsi addRegistration pada kontrak
-    try {
-      const tx = await contract.addRegistration(
-        address,
-        nama,
-        telepon,
-        namaDokter,
-        sesi,
-        tanggal,
-        keluhan,
-        gender,
-      );
-      await tx.wait();
-    } catch (error) {
-      alert('Transaksi dibatalkan oleh pengguna');
+  useEffect(() => {
+    // buat daftar tanggal dari 1 April 2023 hingga 30 Mei 2023
+    const startDate = new Date('2023-04-01');
+    const endDate = new Date('2023-05-30');
+    const days = [];
+    for (let day = startDate; day <= endDate; day.setDate(day.getDate() + 1)) {
+      const formattedDay = day.toISOString().slice(0, 10);
+      days.push(formattedDay);
     }
+    // buat daftar tanggal dan sesi yang tersedia
+    const tanggalSesi = days.map((day) => ({
+      tanggal: day,
+      sesi: [
+        '09.00-10.00',
+        '10.00-11.00',
+        '11.00-12.00',
+        '13.00-14.00',
+        '14.00-15.00',
+      ],
+    }));
+    // ambil data sesi yang sudah terisi
+    const bookedSessions = slot;
+    // hapus sesi yang sudah terisi dari daftar sesi yang tersedia
+    if (bookedSessions) {
+      bookedSessions[0].forEach((bookedSession) => {
+        const tanggalIndex = tanggalSesi.findIndex((val) => val.tanggal === bookedSession[0]);
+        if (tanggalIndex !== -1) {
+          const sesiIndex = tanggalSesi[tanggalIndex].sesi
+            .findIndex((availableSesi) => availableSesi === bookedSession[1]);
+          if (sesiIndex !== -1) {
+            tanggalSesi[tanggalIndex].sesi.splice(sesiIndex, 1);
+          }
+        }
+      });
+    }
+    setTanggalSesiList(tanggalSesi);
+  }, []);
 
-    // Setelah transaksi berhasil, reset nilai-nilai pada form
-    setWalletAddress('');
-    setNama('');
-    setTelepon('');
-    setNamaDokter('');
-    setSesi('');
-    setTanggal('');
-    setKeluhan('');
-    setGender('');
+  const handleTanggalChange = (event) => {
+    setTanggal(event.target.value);
+
+    // Ambil daftar sesi yang tersedia pada tanggal yang dipilih
+    const tanggalSesi = tanggalSesiList.find((val) => val.tanggal === event.target.value);
+    const bookedSessions = slot;
+
+    // Hapus sesi yang sudah terisi dari daftar sesi yang tersedia
+    const availableSesi = tanggalSesi.sesi.filter((availableSession) => {
+      let isBooked = false;
+      bookedSessions[0].forEach((bookedSession) => {
+        if (bookedSession[0] === event.target.value && bookedSession[1] === availableSession) {
+          isBooked = true;
+        }
+      });
+      return !isBooked;
+    });
+
+    // Update daftar sesi yang tersedia pada tanggal yang dipilih
+    const updatedTanggalSesiList = tanggalSesiList.map((val) => {
+      if (val.tanggal === event.target.value) {
+        return { tanggal: val.tanggal, sesi: availableSesi };
+      }
+      return val;
+    });
+
+    // Simpan perubahan pada state
+    setSesi(updatedTanggalSesiList[0].sesi[0]);
+    setTanggalSesiList(updatedTanggalSesiList);
   };
 
-  const getData = async (e) => {
-    e.preventDefault();
-    // Buatlah sebuah provider yang terhubung ke Alchemy
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send('eth_requestAccounts', []);
-    const signer = provider.getSigner();
-
-    // Buat instance kontrak yang terhubung ke provider
-    const contract = new ethers.Contract(contractAddress, contractAbi.abi, signer);
-    // Mendapatkan data registrasi
-    const registrations = await contract.getAllRegistrations();
-    console.log(registrations);
+  const handleSesiChange = (event) => {
+    setSesi(event.target.value);
   };
 
   return (
@@ -81,158 +103,183 @@ function Konsultasi() {
         <nav>
           <NavbarLogin konsultasi />
         </nav>
-        <main className="px-4 lg:px-16 my-36 min-h-screen">
-          <div className="container mx-auto px-5">
-            <div className="grid grid-cols-1 lg:grid-cols-7">
-              <div className="lg:col-span-3">
-                <div className="mb-4">
-                  <h1 className="text-2xl lg:text-4xl font-bold">
-                    FORM PENDAFTARAN KONSULTASI
-                  </h1>
-                  <h3 className="text-base lg:text-lg font-bold mt-5 lg:mt-10">Silahkan isi form singkat di samping dan klik “Kirim”</h3>
-                  <p className="text-xs lg:text-sm mt-5">*Privasi dan kerahasiaanmu aman dalam lindungan Kode Etik Kedokteran.</p>
-                  <p>
-                    Tes tampilkan disini nanti :
-                    {' '}
-                  </p>
+        {!user
+          ? (
+            <main className="px-4 lg:px-16 my-64">
+              <div className="mt-4 flex flex-col items-center justify-center ">
+                <p className="text-xl lg:text-3xl text-center">Mohon isi data diri anda terlebih dahulu</p>
+                <div className="max-w-xs mt-4">
+                  <Button type="btn-normal" title="Tambah data" onClick={() => router.push('/profil/tambah')} />
                 </div>
               </div>
-              <div className="lg:col-span-1" />
-              <div className="col-span-1 lg:col-span-3 border-4 border-medium-blue rounded-lg">
-                <form className="w-full px-4 lg:px-12 py-8">
-                  {/* name */}
-                  <div>
-                    <p className="label text-sm font-bold text-black block">
-                      Nama Lengkap
-                    </p>
-                    <input
-                      type="text"
-                      name="nama"
-                      className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
-                      value={nama}
-                      onChange={(e) => setNama(e.target.value)}
-                      placeholder="Enter Your Name"
-                    />
+            </main>
+          )
+          : (
+            <main className="px-4 lg:px-16 my-36 min-h-screen">
+              <div className="container mx-auto px-5">
+                <div className="grid grid-cols-1 lg:grid-cols-7">
+                  <div className="lg:col-span-3">
+                    <div className="mb-4">
+                      <h1 className="text-2xl lg:text-4xl font-bold">
+                        FORM PENDAFTARAN KONSULTASI
+                      </h1>
+                      <h3 className="text-base lg:text-lg font-bold mt-5 lg:mt-10">Silahkan isi form singkat di samping dan klik “Kirim”</h3>
+                      <p className="text-xs lg:text-sm mt-5">*Privasi dan kerahasiaanmu aman dalam lindungan Kode Etik Kedokteran.</p>
+                      <p>
+                        Tes tampilkan disini nanti :
+                        {' '}
+                      </p>
+                    </div>
                   </div>
+                  <div className="lg:col-span-1" />
+                  <div className="col-span-1 lg:col-span-3 border-4 border-medium-blue rounded-lg">
+                    <form className="w-full px-4 lg:px-12 py-8">
+                      {/* name */}
+                      <div>
+                        <p className="label text-sm font-bold text-black block">
+                          Nama Lengkap
+                        </p>
+                        <input
+                          type="text"
+                          name="nama"
+                          className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
+                          onChange={(e) => setNama(e.target.value)}
+                          placeholder="Enter Your Name"
+                        />
+                      </div>
 
-                  {/* gender */}
-                  <div className="mt-4">
-                    <p className="label text-sm font-bold text-black block">
-                      Jenis Kelamin
-                    </p>
-                    <label className="inline-flex items-center label text-sm font-bold text-black" htmlFor="gender">
-                      <input
-                        type="radio"
-                        className="form-radio"
-                        name="gender"
-                        value="laki-laki"
-                        onChange={(e) => setGender(e.target.value)}
-                      />
-                      <p className="ml-2 text-xs">Laki-laki</p>
-                    </label>
-                    <label className="inline-flex items-center ml-4 label text-sm font-bold text-black" htmlFor="gender">
-                      <input
-                        type="radio"
-                        className="form-radio"
-                        name="gender"
-                        value="perempuan"
-                        onChange={(e) => setGender(e.target.value)}
-                      />
-                      <p className="ml-2 text-xs">Perempuan</p>
-                    </label>
-                  </div>
+                      {/* gender */}
+                      <div className="mt-4">
+                        <p className="label text-sm font-bold text-black block">
+                          Jenis Kelamin
+                        </p>
+                        <label className="inline-flex items-center label text-sm font-bold text-black" htmlFor="gender">
+                          <input
+                            type="radio"
+                            className="form-radio"
+                            name="gender"
+                            value="laki-laki"
+                            onChange={(e) => setGender(e.target.value)}
+                          />
+                          <p className="ml-2 text-xs">Laki-laki</p>
+                        </label>
+                        <label className="inline-flex items-center ml-4 label text-sm font-bold text-black" htmlFor="gender">
+                          <input
+                            type="radio"
+                            className="form-radio"
+                            name="gender"
+                            value="perempuan"
+                            onChange={(e) => setGender(e.target.value)}
+                          />
+                          <p className="ml-2 text-xs">Perempuan</p>
+                        </label>
+                      </div>
 
-                  {/* phone number */}
-                  <div className="mt-3">
-                    <p className="label text-sm font-bold text-black block">
-                      Nomor Telepon
-                    </p>
-                    <input
-                      type="tel"
-                      name="telepon"
-                      className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
-                      value={telepon}
-                      onChange={(e) => setTelepon(e.target.value)}
-                      placeholder="08xxxxxxxxxx"
-                    />
-                  </div>
+                      {/* phone number */}
+                      <div className="mt-3">
+                        <p className="label text-sm font-bold text-black block">
+                          Nomor Telepon
+                        </p>
+                        <input
+                          type="tel"
+                          name="telepon"
+                          className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
+                          onChange={(e) => setTelepon(e.target.value)}
+                          placeholder="08xxxxxxxxxx"
+                        />
+                      </div>
 
-                  {/* Dokter */}
-                  <div className="mt-4">
-                    <p className="label text-sm font-bold text-black block">
-                      Pilih Dokter
-                    </p>
-                    <select
-                      name="dokter"
-                      id="dokter"
-                      className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
-                      onChange={(e) => setNamaDokter(e.target.value)}
-                    >
-                      <option value="Drg. Rio Dewantara">Drg. Rio Dewantara</option>
-                      <option value="Dr. Andini Putri">Dr. Andini Putri</option>
-                    </select>
-                  </div>
+                      {/* Dokter */}
+                      <div className="mt-4">
+                        <p className="label text-sm font-bold text-black block">
+                          Pilih Dokter
+                        </p>
+                        <select
+                          name="dokter"
+                          id="dokter"
+                          className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
+                          onChange={(e) => setNamaDokter(e.target.value)}
+                        >
+                          <option value="Drg. Rio Dewantara">Drg. Rio Dewantara</option>
+                          <option value="Dr. Andini Putri">Dr. Andini Putri</option>
+                        </select>
+                      </div>
 
-                  {/* Antrian */}
-                  <div className="mt-4">
-                    <p className="label text-sm font-bold text-black block">
-                      Pilih Sesi
-                    </p>
-                    <select
-                      name="sesi"
-                      id="sesi"
-                      className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
-                      onChange={(e) => setSesi(e.target.value)}
-                    >
-                      <option value="09.00 - 10.00">09.00 - 10.00</option>
-                      <option value="10.00 - 11.00">10.00 - 11.00</option>
-                    </select>
-                  </div>
+                      {/* date */}
+                      <div className="mt-4">
+                        <p className="label text-sm font-bold text-black block">
+                          Pilih Tanggal Konsultasi
+                        </p>
+                        <select
+                          name="tanggal"
+                          id="tanggal"
+                          className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
+                          // value={tanggal}
+                          onChange={handleTanggalChange}
+                        >
+                          <option value="">Pilih tanggal</option>
+                          {tanggalSesiList.map((tanggalSesi) => (
+                            <option key={tanggalSesi.tanggal} value={tanggalSesi.tanggal}>
+                              {tanggalSesi.tanggal}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-                  {/* date */}
-                  <div className="mt-3">
-                    <p className="label text-sm font-bold text-black block">
-                      Pilih Tanggal Konsultasi
-                    </p>
-                    <input
-                      type="date"
-                      name="tanggal"
-                      className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
-                      value={tanggal}
-                      onChange={(e) => setTanggal(e.target.value)}
-                      placeholder="08xxxxxxxxxx"
-                    />
-                  </div>
+                      {/* Antrian */}
+                      <div className="mt-4">
+                        <p className="label text-sm font-bold text-black block">
+                          Pilih Sesi
+                        </p>
+                        <select
+                          name="sesi"
+                          id="sesi"
+                          className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
+                          // value={sesi}
+                          onChange={handleSesiChange}
+                        >
+                          <option>Pilih sesi</option>
+                          {tanggalSesiList.find((tanggalSesi) => tanggalSesi.tanggal
+                          === tanggal)?.sesi.map((availableSesi) => (
+                            <option key={availableSesi} value={availableSesi}>
+                              {availableSesi}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
-                  {/* keluhan */}
-                  <div className="mt-3">
-                    <p
-                      className="label text-sm lg:text-sm font-bold text-black block font-montserrat"
-                    >
-                      Keluhan
-                    </p>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={keluhan}
-                      onChange={(e) => setKeluhan(e.target.value)}
-                      placeholder="Write a message..."
-                      className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue h-56 text-sm outline-none text-gray-800 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                    />
-                  </div>
+                      {/* keluhan */}
+                      <div className="mt-3">
+                        <p
+                          className="label text-sm lg:text-sm font-bold text-black block  "
+                        >
+                          Keluhan
+                        </p>
+                        <textarea
+                          id="message"
+                          name="message"
+                          maxLength={100}
+                          onChange={(e) => setKeluhan(e.target.value)}
+                          placeholder="contoh: batuk, pilek, demam"
+                          className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue h-56 text-sm outline-none text-gray-800 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                        />
+                        <p className="text-sm text-gray-400 mb-4">
+                          {keluhan.length}
+                          {' '}
+                          / 100
+                        </p>
+                      </div>
 
-                  {/* submit */}
-                  <div className="w-full">
-                    <Button type="btn-normal" title="Kirim" onClick={handleSubmit} />
+                      {/* submit */}
+                      <div className="w-full">
+                        <Button type="btn-normal" title="Kirim" onClick={handleAddRegistration} />
+                      </div>
+                    </form>
                   </div>
-                  <div className="w-full mt-2">
-                    <Button type="btn-normal" title="Ambil" onClick={getData} />
-                  </div>
-                </form>
+                </div>
               </div>
-            </div>
-          </div>
-        </main>
+            </main>
+          )}
         <footer>
           <Footer />
         </footer>
