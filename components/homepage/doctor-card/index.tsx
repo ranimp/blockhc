@@ -4,10 +4,10 @@ import React from 'react';
 import { DoctorCardType } from '../../../types/user';
 
 const DoctorCard: React.FC<DoctorCardType> = ({
-  img, name, title, sch,
+  img, name, title, sch, detailUrl,
 }) => (
   <div className="flex lg:flex-none px-3">
-    <Link href="/">
+    <Link href={detailUrl}>
       <div className="flex flex-col justify-center my-2">
         <figure className="flex justify-center">
           <Image src={img || ''} alt="doctor" width={180} height={180} className="rounded-full" />

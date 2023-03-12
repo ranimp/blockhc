@@ -1,21 +1,39 @@
-import { Fragment, useState } from 'react';
+import {
+  Fragment, useState, useContext, useEffect,
+} from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import NavbarLogin from '../../../components/navbar/login';
-import Profil from '../../../components/dashboard/profil';
-import Sidebar from '../../../components/dashboard/sidebar';
-import Footer from '../../../components/footer/index';
-import DaftarPasienAdmin from '../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
-import HasilKonsultasiAdmin from '../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-hasil-konsultasi';
-import UpdateDokterAdmin from '../../../components/dashboard-admin/manajemen-dokter/update-dokter';
-import Button from '../../../components/button/index';
-import withAuth from '../../../lib/withAuth';
+import NavbarLogin from '../../../../components/navbar/login';
+import Profil from '../../../../components/dashboard/profil';
+import Sidebar from '../../../../components/dashboard/sidebar';
+import Footer from '../../../../components/footer/index';
+import DaftarPasienAdmin from '../../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
+import HasilKonsultasiAdmin from '../../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-hasil-konsultasi';
+import UpdateDokterAdmin from '../../../../components/dashboard-admin/manajemen-dokter/update-dokter';
+import Button from '../../../../components/button/index';
+import withAuth from '../../../../lib/withAuth';
+import { ContractContext } from '../../../../lib/contractProvider';
 
 function UpdateDokterAdminPage() {
-  const [active, setActive] = useState('manajemen-dokter');
+  const {
+    getAllDoctor,
+    allDoctor,
+  } = useContext(ContractContext);
+
   const router = useRouter();
+  const { walletAddress } = router.query;
+  const [doctorData, setDoctorData] = useState(
+    allDoctor?.filter((dokter) => dokter[7] === walletAddress),
+  );
+
+  useEffect(() => {
+    getAllDoctor();
+    setDoctorData(allDoctor?.filter((dokter) => dokter[7] === walletAddress));
+  }, []);
+
+  const [active, setActive] = useState('manajemen-dokter');
   return (
     <>
       <Head>
@@ -54,7 +72,16 @@ function UpdateDokterAdminPage() {
             <div>
               {active === 'manajemen-pasien' && <DaftarPasienAdmin />}
               {active === 'hasil-konsultasi' && <HasilKonsultasiAdmin />}
-              {active === 'manajemen-dokter' && <UpdateDokterAdmin />}
+              {active === 'manajemen-dokter' && (
+              <UpdateDokterAdmin
+                namaDokter={doctorData ? doctorData[0][0] : null}
+                telepon={doctorData ? doctorData[0][2] : null}
+                email={doctorData ? doctorData[0][1] : null}
+                walletAddress={doctorData ? doctorData[0][7] : null}
+                pendidikan={doctorData ? doctorData[0][5] : null}
+                strNumber={doctorData ? doctorData[0][6] : null}
+              />
+              )}
             </div>
           </div>
         </div>

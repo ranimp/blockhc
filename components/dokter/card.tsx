@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { DoctorCardType } from '../../types/user';
 
 const Card: React.FC<DoctorCardType> = ({
-  img, name, title, sch,
+  img, name, title, sch, detailUrl,
 }) => (
-  <Link className="shadow-md w-5/12 sm:w-1/4 lg:w-1/5" href="/dokter/detail">
+  <Link className="shadow-md w-5/12 sm:w-1/4 lg:w-1/5" href={detailUrl}>
     <figure className="h-32 lg:h-52 relative">
       <Image src={img} alt="doctor" fill className="object-contain" />
     </figure>

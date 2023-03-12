@@ -18,7 +18,13 @@ function Konsultasi() {
     keluhan, setKeluhan,
     handleAddRegistration,
     slot,
+    getAllDoctor,
+    allDoctor,
   } = useContext(ContractContext);
+
+  useEffect(() => {
+    getAllDoctor();
+  }, []);
   const [tanggalSesiList, setTanggalSesiList] = useState([]);
 
   useEffect(() => {
@@ -200,8 +206,10 @@ function Konsultasi() {
                           className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
                           onChange={(e) => setNamaDokter(e.target.value)}
                         >
-                          <option value="Drg. Rio Dewantara">Drg. Rio Dewantara</option>
-                          <option value="Dr. Andini Putri">Dr. Andini Putri</option>
+                          <option>Pilih Dokter</option>
+                          {allDoctor?.map((data, idx) => (
+                            <option key={idx} value={data[0]}>{data[0]}</option>
+                          ))}
                         </select>
                       </div>
 
