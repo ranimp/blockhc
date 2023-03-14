@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router';
+import React from 'react';
 import Button from '../../button/index';
+import { AdminDetailPasien } from '../../../types/index';
 
-const DetailPasienAdmin = ({
+const DetailPasienAdmin: React.FC<AdminDetailPasien> = ({
   name, gender, ttl, email, phone, address, linkRiwayat,
 }) => {
   const router = useRouter();

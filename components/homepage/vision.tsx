@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import React from 'react';
 
 const Vision = () => (
   <div className="bg-soft-blue mb-16 lg:mb-36 px-4">

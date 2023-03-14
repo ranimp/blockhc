@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import React from 'react';
 
 const Search = () => (
   <div className="flex justify-center items-center container mx-auto">

@@ -1,3 +1,4 @@
+import React from 'react';
 import TablePasienDashboardAdmin from './table-pasien';
 
 const DaftarPasienAdmin = () => (

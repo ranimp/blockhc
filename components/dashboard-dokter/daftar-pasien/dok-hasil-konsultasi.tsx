@@ -1,3 +1,4 @@
+import React from 'react';
 import TableDashboardDokter from '../table';
 
 const HasilKonsultasiDokter = () => (

@@ -1,4 +1,7 @@
-const EditData = ({
+import React from 'react';
+import { ProfilTambahEditProps } from '../../types/index';
+
+const EditData: React.FC<ProfilTambahEditProps> = ({
   name, ttl, email, phone, nameChange, ttlChange, emailChange, phoneChange,
   genderChange, nameName, ttlName, emailName, phoneName, genderName, maleValue, femaleValue,
 }) => (

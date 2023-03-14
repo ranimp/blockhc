@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Button from '../button/index';
+import { NavbarProps } from '../../types/index';
 
-const Navbar = ({
+const Navbar: React.FC<NavbarProps> = ({
   home, konsultasi, tentang, dokter,
 }) => {
   const [navbarOpen, setNavbarOpen] = useState(false);

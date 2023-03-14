@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import Button from '../../button/index';
 import { ContractContext } from '../../../lib/contractProvider';
 

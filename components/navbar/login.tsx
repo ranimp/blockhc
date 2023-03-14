@@ -1,9 +1,10 @@
-import { useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AuthContext } from '../../lib/auth';
+import { NavbarLoginProps } from '../../types/index';
 
-const NavbarLogin = ({
+const NavbarLogin: React.FC<NavbarLoginProps> = ({
   home, konsultasi, tentang, dokter, profil, dashboard,
 }) => {
   const [navbarOpen, setNavbarOpen] = useState(false);

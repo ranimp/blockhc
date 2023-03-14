@@ -1,4 +1,7 @@
-const BuktiPendaftaran = ({
+import { React } from 'react';
+import { PasienBuktiPendaftaran } from '../../types/index';
+
+const BuktiPendaftaran: React.FC<PasienBuktiPendaftaran> = ({
   name, doctor, keluhan, date, sesi,
 }) => (
   <div className="w-full">

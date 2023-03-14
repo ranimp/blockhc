@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import Navbar from '../navbar/index';

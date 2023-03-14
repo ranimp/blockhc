@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { DoctorCardType } from '../../../types/user';
+import { DoctorCardProps } from '../../../types/index';
 
-const DoctorCard: React.FC<DoctorCardType> = ({
+const DoctorCard: React.FC<DoctorCardProps> = ({
   img, name, title, sch, detailUrl,
 }) => (
   <div className="flex lg:flex-none px-3">

@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import React from 'react';
+import { AdminTableKonsultasi } from '../../../types/index';
 
-const TableKonsultasiDashboardAdmin = ({
+const TableKonsultasiDashboardAdmin: React.FC<AdminTableKonsultasi> = ({
   no, walletAddress, name, date,
 }) => (
   <tr className="text-center odd:bg-odd-blue even:bg-even-blue">

@@ -1,4 +1,7 @@
-const Data = ({
+import React from 'react';
+import { ProfilDataProps } from '../../types/index';
+
+const Data: React.FC<ProfilDataProps> = ({
   name, gender, ttl, email, phone,
 }) => (
   <div className="mt-2 lg:mt-4">

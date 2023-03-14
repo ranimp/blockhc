@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import React from 'react';
+import { AdminTablePasien } from '../../../types/index';
 
-const TablePasienDashboardAdmin = ({ no, walletAddress, name }) => (
+const TablePasienDashboardAdmin: React.FC<AdminTablePasien> = ({ no, walletAddress, name }) => (
   <tr className="text-center odd:bg-odd-blue even:bg-even-blue">
     <td className="text-xs sm:text-sm lg:text-base">{no}</td>
     <td className="text-xs sm:text-sm lg:text-base">

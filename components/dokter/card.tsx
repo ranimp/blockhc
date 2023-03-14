@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { DoctorCardType } from '../../types/user';
+import { DoctorCardProps } from '../../types/index';
 
-const Card: React.FC<DoctorCardType> = ({
+const Card: React.FC<DoctorCardProps> = ({
   img, name, title, sch, detailUrl,
 }) => (
   <Link className="shadow-md w-5/12 sm:w-1/4 lg:w-1/5" href={detailUrl}>

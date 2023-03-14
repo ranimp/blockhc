@@ -1,3 +1,4 @@
+import React from 'react';
 import TableKonsultasiDashboardAdmin from './table-konsultasi';
 
 const HasilKonsultasiAdmin = () => (

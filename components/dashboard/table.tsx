@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import React from 'react';
+import { DashboardTableProps } from '../../types/index';
 
-const Table = ({
+const Table: React.FC<DashboardTableProps> = ({
   no, date, doctor, link,
 }) => (
   <tr className="text-center odd:bg-odd-blue even:bg-even-blue">

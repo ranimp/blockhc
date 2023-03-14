@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import DoctorCard from './doctor-card/index';
 import { ContractContext } from '../../lib/contractProvider';
 

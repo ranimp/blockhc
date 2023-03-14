@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import React from 'react';
+import { DokterTable } from '../../types/index';
 
-const TableDashboardDokter = ({
+const TableDashboardDokter: React.FC<DokterTable> = ({
   no, walletAddress, name, date, hasil,
 }) => (
   <tr className="text-center odd:bg-odd-blue even:bg-even-blue">

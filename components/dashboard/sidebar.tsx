@@ -1,4 +1,7 @@
-const Sidebar = ({
+import React from 'react';
+import { DashboardSidebarProps } from '../../types/index';
+
+const Sidebar: React.FC<DashboardSidebarProps> = ({
   menu1, menu2, menu3, onClickMenu1, onClickMenu2, onClickMenu3, title1, title2, title3, menu3Show,
 }) => (
   <div className="flex flex-col gap-2 lg:gap-2 md:my-8">

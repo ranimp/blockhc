@@ -1,6 +1,8 @@
 import Image from 'next/image';
+import React from 'react';
+import { ProfilUserProps } from '../../types/index';
 
-const User = ({
+const User: React.FC<ProfilUserProps> = ({
   name, role, username, walletAddress,
 }) => (
   <div className="flex justify-center items-center gap-4 lg:gap-8">
