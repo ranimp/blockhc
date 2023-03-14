@@ -2,14 +2,17 @@ import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import Button from '../../button/index';
 import { ContractContext } from '../../../lib/contractProvider';
+import { AdminUpdateDokter } from '../../../types/index';
 
-const UpdateDokterAdmin = ({
+const UpdateDokterAdmin: React.FC<AdminUpdateDokter> = ({
   namaDokter,
   telepon,
   email,
   walletAddress,
   pendidikan,
   strNumber,
+  category,
+  img,
   status,
 }) => {
   const {
@@ -20,6 +23,8 @@ const UpdateDokterAdmin = ({
     setPendidikan,
     setStrNumber,
     setStatus,
+    setImg,
+    setCategory,
     handleUpdateDoctor,
   } = useContext(ContractContext);
   const router = useRouter();
@@ -69,6 +74,20 @@ const UpdateDokterAdmin = ({
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="text" name="strNumber" defaultValue={strNumber} onChange={(e) => setStrNumber(e.target.value)} placeholder="Nomor STR" className="focus:outline-none bg-transparent w-full" />
+            </td>
+          </tr>
+          <tr className="odd:bg-odd-blue even:bg-even-blue">
+            <td className="py-3 pl-3 text-xs lg:text-base">Kategori</td>
+            <td className="text-xs sm:text-sm lg:text-base">:</td>
+            <td className="text-xs sm:text-sm lg:text-base">
+              <input type="text" name="category" defaultValue={category} onChange={(e) => setCategory(e.target.value)} placeholder="Kategori" className="focus:outline-none bg-transparent w-full" />
+            </td>
+          </tr>
+          <tr className="odd:bg-odd-blue even:bg-even-blue">
+            <td className="py-3 pl-3 text-xs lg:text-base">Foto</td>
+            <td className="text-xs sm:text-sm lg:text-base">:</td>
+            <td className="text-xs sm:text-sm lg:text-base">
+              <input type="text" name="img" defaultValue={img} onChange={(e) => setImg(e.target.value)} placeholder="Masukkan url foto" className="focus:outline-none bg-transparent w-full" />
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">

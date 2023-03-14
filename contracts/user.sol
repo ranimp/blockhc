@@ -26,6 +26,8 @@ contract UserData {
         string sesi;
         string pendidikan;
         string str;
+        string cat;
+        string img;
         address wallet;
         bool status;
     }
@@ -48,6 +50,8 @@ contract UserData {
         string sesi,
         string pendidikan,
         string str,
+        string cat,
+        string img,
         address wallet,
         bool status
     );
@@ -206,6 +210,8 @@ contract UserData {
         string memory _sesi,
         string memory _pendidikan,
         string memory _str,
+        string memory _cat,
+        string memory _img,
         address _wallet,
         bool _status
     ) public onlyAdmin {
@@ -217,6 +223,8 @@ contract UserData {
             _sesi,
             _pendidikan,
             _str,
+            _cat,
+            _img,
             _wallet,
             _status
         );
@@ -229,6 +237,8 @@ contract UserData {
             _sesi,
             _pendidikan,
             _str,
+            _cat,
+            _img,
             _wallet,
             _status
         );
@@ -242,6 +252,8 @@ contract UserData {
         string memory _sesi,
         string memory _pendidikan,
         string memory _str,
+        string memory _cat,
+        string memory _img,
         address _wallet,
         bool _status
     ) public onlyAdmin {
@@ -256,6 +268,8 @@ contract UserData {
                 doctors[i].sesi = _sesi;
                 doctors[i].pendidikan = _pendidikan;
                 doctors[i].str = _str;
+                doctors[i].cat = _cat;
+                doctors[i].img = _img;
                 doctors[i].status = _status;
                 break;
             }

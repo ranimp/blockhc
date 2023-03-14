@@ -9,8 +9,8 @@ const DoctorCard: React.FC<DoctorCardProps> = ({
   <div className="flex lg:flex-none px-3">
     <Link href={detailUrl}>
       <div className="flex flex-col justify-center my-2">
-        <figure className="flex justify-center">
-          <Image src={img || ''} alt="doctor" width={180} height={180} className="rounded-full" />
+        <figure className="flex justify-center w-40 h-40">
+          <Image src={img || ''} alt="doctor" width={180} height={180} className="rounded-full object-cover" />
         </figure>
         <div className="flex flex-col justify-center mt-4">
           <h3 className="font-medium text-center md:text-lg">{name || ''}</h3>

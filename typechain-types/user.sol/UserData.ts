@@ -36,11 +36,15 @@ export declare namespace UserData {
     sesi: PromiseOrValue<string>;
     pendidikan: PromiseOrValue<string>;
     str: PromiseOrValue<string>;
+    cat: PromiseOrValue<string>;
+    img: PromiseOrValue<string>;
     wallet: PromiseOrValue<string>;
     status: PromiseOrValue<boolean>;
   };
 
   export type DoctorStructOutput = [
+    string,
+    string,
     string,
     string,
     string,
@@ -58,6 +62,8 @@ export declare namespace UserData {
     sesi: string;
     pendidikan: string;
     str: string;
+    cat: string;
+    img: string;
     wallet: string;
     status: boolean;
   };
@@ -93,7 +99,7 @@ export declare namespace UserData {
 
 export interface UserDataInterface extends utils.Interface {
   functions: {
-    "addDoctor(string,string,string,string,string,string,string,address,bool)": FunctionFragment;
+    "addDoctor(string,string,string,string,string,string,string,string,string,address,bool)": FunctionFragment;
     "addUser(string,string,string,string,string,bool)": FunctionFragment;
     "addUserAdmin(address,string,string,string,string,string,bool)": FunctionFragment;
     "doctors(uint256)": FunctionFragment;
@@ -101,7 +107,7 @@ export interface UserDataInterface extends utils.Interface {
     "getUser(address)": FunctionFragment;
     "getUserAdmin()": FunctionFragment;
     "roles()": FunctionFragment;
-    "updateDoctor(string,string,string,string,string,string,string,address,bool)": FunctionFragment;
+    "updateDoctor(string,string,string,string,string,string,string,string,string,address,bool)": FunctionFragment;
     "updateUser(string,string,string,string,string,bool)": FunctionFragment;
     "updateUserAdmin(address,string,string,string,string,string,bool)": FunctionFragment;
     "users(uint256)": FunctionFragment;
@@ -126,6 +132,8 @@ export interface UserDataInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "addDoctor",
     values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
@@ -180,6 +188,8 @@ export interface UserDataInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "updateDoctor",
     values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
@@ -245,7 +255,7 @@ export interface UserDataInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "users", data: BytesLike): Result;
 
   events: {
-    "DoctorAdded(string,string,string,string,string,string,string,address,bool)": EventFragment;
+    "DoctorAdded(string,string,string,string,string,string,string,string,string,address,bool)": EventFragment;
     "UserAdded(string,string,string,string,string,address,bool)": EventFragment;
   };
 
@@ -261,11 +271,25 @@ export interface DoctorAddedEventObject {
   sesi: string;
   pendidikan: string;
   str: string;
+  cat: string;
+  img: string;
   wallet: string;
   status: boolean;
 }
 export type DoctorAddedEvent = TypedEvent<
-  [string, string, string, string, string, string, string, string, boolean],
+  [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    boolean
+  ],
   DoctorAddedEventObject
 >;
 
@@ -322,6 +346,8 @@ export interface UserData extends BaseContract {
       _sesi: PromiseOrValue<string>,
       _pendidikan: PromiseOrValue<string>,
       _str: PromiseOrValue<string>,
+      _cat: PromiseOrValue<string>,
+      _img: PromiseOrValue<string>,
       _wallet: PromiseOrValue<string>,
       _status: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -361,6 +387,8 @@ export interface UserData extends BaseContract {
         string,
         string,
         string,
+        string,
+        string,
         boolean
       ] & {
         nama: string;
@@ -370,6 +398,8 @@ export interface UserData extends BaseContract {
         sesi: string;
         pendidikan: string;
         str: string;
+        cat: string;
+        img: string;
         wallet: string;
         status: boolean;
       }
@@ -398,6 +428,8 @@ export interface UserData extends BaseContract {
       _sesi: PromiseOrValue<string>,
       _pendidikan: PromiseOrValue<string>,
       _str: PromiseOrValue<string>,
+      _cat: PromiseOrValue<string>,
+      _img: PromiseOrValue<string>,
       _wallet: PromiseOrValue<string>,
       _status: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -448,6 +480,8 @@ export interface UserData extends BaseContract {
     _sesi: PromiseOrValue<string>,
     _pendidikan: PromiseOrValue<string>,
     _str: PromiseOrValue<string>,
+    _cat: PromiseOrValue<string>,
+    _img: PromiseOrValue<string>,
     _wallet: PromiseOrValue<string>,
     _status: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -487,6 +521,8 @@ export interface UserData extends BaseContract {
       string,
       string,
       string,
+      string,
+      string,
       boolean
     ] & {
       nama: string;
@@ -496,6 +532,8 @@ export interface UserData extends BaseContract {
       sesi: string;
       pendidikan: string;
       str: string;
+      cat: string;
+      img: string;
       wallet: string;
       status: boolean;
     }
@@ -520,6 +558,8 @@ export interface UserData extends BaseContract {
     _sesi: PromiseOrValue<string>,
     _pendidikan: PromiseOrValue<string>,
     _str: PromiseOrValue<string>,
+    _cat: PromiseOrValue<string>,
+    _img: PromiseOrValue<string>,
     _wallet: PromiseOrValue<string>,
     _status: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -570,6 +610,8 @@ export interface UserData extends BaseContract {
       _sesi: PromiseOrValue<string>,
       _pendidikan: PromiseOrValue<string>,
       _str: PromiseOrValue<string>,
+      _cat: PromiseOrValue<string>,
+      _img: PromiseOrValue<string>,
       _wallet: PromiseOrValue<string>,
       _status: PromiseOrValue<boolean>,
       overrides?: CallOverrides
@@ -609,6 +651,8 @@ export interface UserData extends BaseContract {
         string,
         string,
         string,
+        string,
+        string,
         boolean
       ] & {
         nama: string;
@@ -618,6 +662,8 @@ export interface UserData extends BaseContract {
         sesi: string;
         pendidikan: string;
         str: string;
+        cat: string;
+        img: string;
         wallet: string;
         status: boolean;
       }
@@ -646,6 +692,8 @@ export interface UserData extends BaseContract {
       _sesi: PromiseOrValue<string>,
       _pendidikan: PromiseOrValue<string>,
       _str: PromiseOrValue<string>,
+      _cat: PromiseOrValue<string>,
+      _img: PromiseOrValue<string>,
       _wallet: PromiseOrValue<string>,
       _status: PromiseOrValue<boolean>,
       overrides?: CallOverrides
@@ -689,7 +737,7 @@ export interface UserData extends BaseContract {
   };
 
   filters: {
-    "DoctorAdded(string,string,string,string,string,string,string,address,bool)"(
+    "DoctorAdded(string,string,string,string,string,string,string,string,string,address,bool)"(
       nama?: null,
       email?: null,
       telepon?: null,
@@ -697,6 +745,8 @@ export interface UserData extends BaseContract {
       sesi?: null,
       pendidikan?: null,
       str?: null,
+      cat?: null,
+      img?: null,
       wallet?: null,
       status?: null
     ): DoctorAddedEventFilter;
@@ -708,6 +758,8 @@ export interface UserData extends BaseContract {
       sesi?: null,
       pendidikan?: null,
       str?: null,
+      cat?: null,
+      img?: null,
       wallet?: null,
       status?: null
     ): DoctorAddedEventFilter;
@@ -741,6 +793,8 @@ export interface UserData extends BaseContract {
       _sesi: PromiseOrValue<string>,
       _pendidikan: PromiseOrValue<string>,
       _str: PromiseOrValue<string>,
+      _cat: PromiseOrValue<string>,
+      _img: PromiseOrValue<string>,
       _wallet: PromiseOrValue<string>,
       _status: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -791,6 +845,8 @@ export interface UserData extends BaseContract {
       _sesi: PromiseOrValue<string>,
       _pendidikan: PromiseOrValue<string>,
       _str: PromiseOrValue<string>,
+      _cat: PromiseOrValue<string>,
+      _img: PromiseOrValue<string>,
       _wallet: PromiseOrValue<string>,
       _status: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -832,6 +888,8 @@ export interface UserData extends BaseContract {
       _sesi: PromiseOrValue<string>,
       _pendidikan: PromiseOrValue<string>,
       _str: PromiseOrValue<string>,
+      _cat: PromiseOrValue<string>,
+      _img: PromiseOrValue<string>,
       _wallet: PromiseOrValue<string>,
       _status: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -882,6 +940,8 @@ export interface UserData extends BaseContract {
       _sesi: PromiseOrValue<string>,
       _pendidikan: PromiseOrValue<string>,
       _str: PromiseOrValue<string>,
+      _cat: PromiseOrValue<string>,
+      _img: PromiseOrValue<string>,
       _wallet: PromiseOrValue<string>,
       _status: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }

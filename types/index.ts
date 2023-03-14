@@ -106,6 +106,18 @@ export interface AdminTableDokter {
   updateUrl: string;
 }
 
+export interface AdminUpdateDokter {
+  namaDokter: string;
+  telepon: string;
+  email: string;
+  walletAddress: any;
+  pendidikan: string;
+  strNumber: string;
+  category: string;
+  img: string;
+  status: boolean;
+}
+
 export interface AdminTambahEditKonsultasi {
   name: string;
   doctor: string;
@@ -124,54 +136,54 @@ export interface AdminTableKonsultasi {
 }
 
 export interface AdminDetailPasien {
-  name: string,
-  gender: string,
+  name: string;
+  gender: string;
   ttl: string;
-  email: string,
-  phone: string,
-  address: string,
-  linkRiwayat: string,
+  email: string;
+  phone: string;
+  address: string;
+  linkRiwayat: string;
 }
 
 export interface AdminDetailRiwayatPasien {
-  date: string,
-  name: string,
-  doctor: string,
-  cat: string,
-  keluhan: string,
-  diagnosa: string,
-  tekanan: string,
-  gula: string,
+  date: string;
+  name: string;
+  doctor: string;
+  cat: string;
+  keluhan: string;
+  diagnosa: string;
+  tekanan: string;
+  gula: string;
 }
 
 export interface AdminTambahPasien {
-  name: string,
-  gender: string,
-  ttl: string,
-  email: string,
-  phone: string,
-  address: string,
-  linkRiwayat: string,
+  name: string;
+  gender: string;
+  ttl: string;
+  email: string;
+  phone: string;
+  address: string;
+  linkRiwayat: string;
 }
 
 export interface AdminTablePasien {
-  no: number,
-  walletAddress: any,
+  no: number;
+  walletAddress: any;
   name: string
 }
 
 export interface DokterTable {
-  no: number,
-  walletAddress: any,
-  name: string,
-  date: string,
-  hasil: string,
+  no: number;
+  walletAddress: any;
+  name: string;
+  date: string;
+  hasil: string;
 }
 
 export interface PasienBuktiPendaftaran {
-  name: string,
-  doctor: string,
-  keluhan: string,
-  date: string,
-  sesi: string,
+  name: string;
+  doctor: string;
+  keluhan: string;
+  date: string;
+  sesi: string;
 }

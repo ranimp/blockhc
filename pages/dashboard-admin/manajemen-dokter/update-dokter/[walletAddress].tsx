@@ -25,12 +25,12 @@ function UpdateDokterAdminPage() {
   const router = useRouter();
   const { walletAddress } = router.query;
   const [doctorData, setDoctorData] = useState(
-    allDoctor?.filter((dokter) => dokter[7] === walletAddress),
+    allDoctor?.filter((dokter) => dokter.wallet === walletAddress),
   );
 
   useEffect(() => {
     getAllDoctor();
-    setDoctorData(allDoctor?.filter((dokter) => dokter[7] === walletAddress));
+    setDoctorData(allDoctor?.filter((dokter) => dokter.wallet === walletAddress));
   }, []);
 
   const [active, setActive] = useState('manajemen-dokter');
@@ -74,12 +74,14 @@ function UpdateDokterAdminPage() {
               {active === 'hasil-konsultasi' && <HasilKonsultasiAdmin />}
               {active === 'manajemen-dokter' && (
               <UpdateDokterAdmin
-                namaDokter={doctorData ? doctorData[0][0] : null}
-                telepon={doctorData ? doctorData[0][2] : null}
-                email={doctorData ? doctorData[0][1] : null}
-                walletAddress={doctorData ? doctorData[0][7] : null}
-                pendidikan={doctorData ? doctorData[0][5] : null}
-                strNumber={doctorData ? doctorData[0][6] : null}
+                namaDokter={doctorData ? doctorData[0].nama : null}
+                telepon={doctorData ? doctorData[0].telepon : null}
+                email={doctorData ? doctorData[0].email : null}
+                walletAddress={doctorData ? doctorData[0].wallet : null}
+                pendidikan={doctorData ? doctorData[0].pendidikan : null}
+                strNumber={doctorData ? doctorData[0].str : null}
+                img={doctorData ? doctorData[0].img : null}
+                category={doctorData ? doctorData[0].cat : null}
               />
               )}
             </div>

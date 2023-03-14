@@ -153,6 +153,8 @@ describe('UserData', () => {
     const sesi = '09-00-10.00, 10-00-11.00';
     const pendidikan = 'Universitas Indonesia (2012)';
     const str = '33.1.1.401.4.22.086214';
+    const cat = 'Dokter Umum';
+    const img = 'image';
     const status = true;
     it('should add a doctor from admin', async () => {
       await userData.connect(admin).addDoctor(
@@ -163,6 +165,8 @@ describe('UserData', () => {
         sesi,
         pendidikan,
         str,
+        cat,
+        img,
         await user3.getAddress(),
         status,
       );
@@ -181,6 +185,8 @@ describe('UserData', () => {
     const sesi = '09-00-10.00, 10-00-11.00';
     const pendidikan = 'Universitas Indonesia (2012)';
     const str = '33.1.1.401.4.22.086214';
+    const cat = 'Dokter Umum';
+    const img = 'image';
     const status = true;
     it('should update a user from admin', async () => {
       await userData.connect(admin).updateDoctor(
@@ -191,6 +197,8 @@ describe('UserData', () => {
         sesi,
         pendidikan,
         str,
+        cat,
+        img,
         await user3.getAddress(),
         status,
       );
@@ -209,6 +217,8 @@ describe('UserData', () => {
           sesi,
           pendidikan,
           str,
+          cat,
+          img,
           await nonUser.getAddress(),
           status,
         ),
@@ -270,6 +280,8 @@ describe('UserData', () => {
       const sesi = '09-00-10.00, 10-00-11.00';
       const pendidikan = 'Universitas Indonesia (2012)';
       const str = '33.1.1.401.4.22.086214';
+      const cat = 'Dokter Umum';
+      const img = 'image';
       const status = true;
       await expect(userData.connect(user1).addDoctor(
         nama,
@@ -279,6 +291,8 @@ describe('UserData', () => {
         sesi,
         pendidikan,
         str,
+        cat,
+        img,
         await user1.getAddress(),
         status,
       )).to.be.revertedWith(
@@ -293,6 +307,8 @@ describe('UserData', () => {
       const sesi = '09-00-10.00, 10-00-11.00';
       const pendidikan = 'Universitas Indonesia (2012)';
       const str = '33.1.1.401.4.22.086214';
+      const cat = 'Dokter Umum';
+      const img = 'image';
       const status = true;
       await expect(userData.connect(user1).updateDoctor(
         nama,
@@ -302,6 +318,8 @@ describe('UserData', () => {
         sesi,
         pendidikan,
         str,
+        cat,
+        img,
         await user3.getAddress(),
         status,
       )).to.be.revertedWith(

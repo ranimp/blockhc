@@ -22,12 +22,12 @@ export default function DetailDokter() {
   const router = useRouter();
   const { walletAddress } = router.query;
   const [doctorData, setDoctorData] = useState(
-    allDoctor?.filter((dokter) => dokter[7] === walletAddress),
+    allDoctor?.filter((dokter) => dokter[9] === walletAddress),
   );
 
   useEffect(() => {
     getAllDoctor();
-    setDoctorData(allDoctor?.filter((dokter) => dokter[7] === walletAddress));
+    setDoctorData(allDoctor?.filter((dokter) => dokter[9] === walletAddress));
   }, []);
 
   useEffect(() => {
@@ -43,14 +43,14 @@ export default function DetailDokter() {
           ? <NavbarLogin dokter /> : <Navbar dokter />}
       </nav>
       <main className="px-4 lg:px-32 my-36 min-h-screen mx-auto">
-        <h2 className=" text-medium-blue text-2xl md:text-4xl font-medium mb-4 md:mb-8">{doctorData ? doctorData[0][0] : null}</h2>
+        <h2 className=" text-medium-blue text-2xl md:text-4xl font-medium mb-4 md:mb-8">{doctorData ? doctorData[0].nama : null}</h2>
         <div className="flex gap-8 flex-wrap md:flex-nowrap">
           <figure>
-            <Image src="/images/doctor.png" alt="founder" width={360} height={100} className="lg:hidden" />
-            <Image src="/images/doctor.png" alt="founder" width={480} height={100} className="hidden lg:block" />
+            <Image src={doctorData ? doctorData[0].img : '/images/doctor.png'} alt="founder" width={360} height={100} className="lg:hidden" />
+            <Image src={doctorData ? doctorData[0].img : '/images/doctor.png'} alt="founder" width={480} height={100} className="hidden lg:block" />
           </figure>
           <div className="flex flex-col gap-4 lg:gap-8">
-            <h4 className="font-medium text-lg lg:text-xl">Dokter Umum</h4>
+            <h4 className="font-medium text-lg lg:text-xl">{doctorData ? doctorData[0].cat : null}</h4>
             <div>
               <p className="flex mb-2 gap-2 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -60,7 +60,7 @@ export default function DetailDokter() {
               </p>
               <p>
                 {' '}
-                {doctorData ? doctorData[0][5] : null}
+                {doctorData ? doctorData[0].pendidikan : null}
                 {' '}
               </p>
             </div>
@@ -75,7 +75,7 @@ export default function DetailDokter() {
               </p>
               <p>
                 {' '}
-                {doctorData ? doctorData[0][6] : null}
+                {doctorData ? doctorData[0].str : null}
               </p>
             </div>
             <Link href="/konsultasi" className="flex justify-center lg:justify-start">

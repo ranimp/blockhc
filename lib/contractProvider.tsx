@@ -9,7 +9,8 @@ export const ContractContext = createContext();
 export const ContractProvider = ({ children }) => {
   // contract address
   // const userAddress = '0xE587868dB2eF7a6114029C703756894b00741b75';
-  const userAddress = '0xBd5AB6334C3be5aeD025341896d0CC15c14f04f1';
+  // const userAddress = '0xBd5AB6334C3be5aeD025341896d0CC15c14f04f1';
+  const userAddress = '0xC5445a305aeD121849D3c162cf04164F5fe930DE';
   const rolesAddress = '0x143Cab622c54a7537841779b79856DD58bE584A8';
   const registrationAddress = '0x514eA966faafF547B700487a7A2Fe47ACB6a92d4';
 
@@ -35,6 +36,8 @@ export const ContractProvider = ({ children }) => {
   const [pendidikan, setPendidikan] = useState('');
   const [strNumber, setStrNumber] = useState('');
   const [status, setStatus] = useState(false);
+  const [category, setCategory] = useState('');
+  const [img, setImg] = useState('');
 
   // data registrasi
   const [namaDokter, setNamaDokter] = useState('');
@@ -199,6 +202,8 @@ export const ContractProvider = ({ children }) => {
             '',
             pendidikan,
             strNumber,
+            category,
+            img,
             walletAddress,
             status,
           ),
@@ -237,6 +242,8 @@ export const ContractProvider = ({ children }) => {
             '',
             pendidikan,
             strNumber,
+            category,
+            img,
             walletAddress,
             status,
           ),
@@ -245,6 +252,7 @@ export const ContractProvider = ({ children }) => {
         alert('Gunakan akun yang digunakan saat login.');
       }
     } catch (error) {
+      console.log(error);
       alert('Transaksi dibatalkan oleh pengguna');
     }
   };
@@ -441,6 +449,10 @@ export const ContractProvider = ({ children }) => {
         setStatus,
         strNumber,
         setStrNumber,
+        category,
+        setCategory,
+        img,
+        setImg,
         checkRoles,
         handleAddUser,
         handleUpdateUser,

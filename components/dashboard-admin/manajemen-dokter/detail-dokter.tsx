@@ -4,7 +4,7 @@ import Button from '../../button/index';
 import { AdminDetailDokter } from '../../../types/index';
 
 const DetailDokterAdmin: React.FC<AdminDetailDokter> = ({
-  name, email, telepon, walletAddress, role, education, strnumber,
+  name, email, telepon, walletAddress, role, education, strnumber, category,
 }) => {
   const router = useRouter();
   return (
@@ -59,6 +59,13 @@ const DetailDokterAdmin: React.FC<AdminDetailDokter> = ({
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               {strnumber}
+            </td>
+          </tr>
+          <tr className="odd:bg-odd-blue even:bg-even-blue">
+            <td className="py-3 pl-3 text-xs lg:text-base">Kategori</td>
+            <td className="text-xs sm:text-sm lg:text-base">:</td>
+            <td className="text-xs sm:text-sm lg:text-base">
+              {category}
             </td>
           </tr>
         </tbody>

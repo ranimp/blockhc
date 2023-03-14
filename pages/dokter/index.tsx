@@ -38,7 +38,7 @@ export default function Dokter() {
         <Search />
         <div className="mt-10 lg:mt-16 flex flex-wrap justify-center gap-8">
           {allDoctor?.map((data, idx) => (
-            <Card img="/images/doctor.png" key={idx} name={data[0]} title="Dokter Umum" detailUrl={`/dokter/detail/${data[7]}`} />
+            <Card img={data.img} key={idx} name={data.nama} title={data.cat} detailUrl={`/dokter/detail/${data.wallet}`} />
           ))}
         </div>
       </main>

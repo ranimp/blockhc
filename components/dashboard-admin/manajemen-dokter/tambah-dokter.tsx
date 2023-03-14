@@ -12,6 +12,8 @@ const TambahDokterAdmin = () => {
     pendidikan, setPendidikan,
     strNumber, setStrNumber,
     status, setStatus,
+    img, setImg,
+    category, setCategory,
     handleAddDoctor,
   } = useContext(ContractContext);
 
@@ -61,6 +63,20 @@ const TambahDokterAdmin = () => {
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="text" name="strNumber" value={strNumber} onChange={(e) => setStrNumber(e.target.value)} placeholder="Nomor STR" className="focus:outline-none bg-transparent w-full" />
+            </td>
+          </tr>
+          <tr className="odd:bg-odd-blue even:bg-even-blue">
+            <td className="py-3 pl-3 text-xs lg:text-base">Kategori</td>
+            <td className="text-xs sm:text-sm lg:text-base">:</td>
+            <td className="text-xs sm:text-sm lg:text-base">
+              <input type="text" name="category" value={category} onChange={(e) => setCategory(e.target.value)} placeholder="Kategori" className="focus:outline-none bg-transparent w-full" />
+            </td>
+          </tr>
+          <tr className="odd:bg-odd-blue even:bg-even-blue">
+            <td className="py-3 pl-3 text-xs lg:text-base">Foto</td>
+            <td className="text-xs sm:text-sm lg:text-base">:</td>
+            <td className="text-xs sm:text-sm lg:text-base">
+              <input type="text" name="img" value={img} onChange={(e) => setImg(e.target.value)} placeholder="Masukkan url foto" className="focus:outline-none bg-transparent w-full" />
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">

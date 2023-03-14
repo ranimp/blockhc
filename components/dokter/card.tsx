@@ -7,8 +7,8 @@ const Card: React.FC<DoctorCardProps> = ({
   img, name, title, sch, detailUrl,
 }) => (
   <Link className="shadow-md w-5/12 sm:w-1/4 lg:w-1/5" href={detailUrl}>
-    <figure className="h-32 lg:h-52 relative">
-      <Image src={img} alt="doctor" fill className="object-contain" />
+    <figure className="flex justify-center h-32 lg:h-52">
+      <Image src={img || ''} alt="doctor" width={200} height={200} className="object-contain" />
     </figure>
     <div className="flex flex-col p-2 lg:p-4">
       <h3 className="font-medium text-medium-blue lg:text-xl">{name}</h3>
