@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 import { ethers } from 'ethers';
 import contractAbi from '../artifacts/contracts/user.sol/UserData.json';
 import rolesContractAbi from '../artifacts/contracts/roles.sol/UserRoles.json';
@@ -8,14 +8,14 @@ export const ContractContext = createContext();
 
 export const ContractProvider = ({ children }) => {
   // contract address
-  // const userAddress = '0xE587868dB2eF7a6114029C703756894b00741b75';
-  // const userAddress = '0xBd5AB6334C3be5aeD025341896d0CC15c14f04f1';
-  const userAddress = '0xC5445a305aeD121849D3c162cf04164F5fe930DE';
-  const rolesAddress = '0x143Cab622c54a7537841779b79856DD58bE584A8';
-  const registrationAddress = '0x514eA966faafF547B700487a7A2Fe47ACB6a92d4';
+  const rolesAddress = '0x2c161963073Ba0d9f3930563d4E7B8C081a09d37';
+  const userAddress = '0xCC3300A68739c6A9E6fD29ab0d32E86794eE47F9';
+  const registrationAddress = '0x6b6286E4bcf199b5814A84c189B5A04220BB67BD';
 
   // getAllData
   const [allDoctor, setAllDoctor] = useState();
+  const [allPasien, setAllPasien] = useState();
+  const [allUser, setAllUser] = useState();
 
   // condition
   const [user, setUser] = useState(true);
@@ -89,7 +89,7 @@ export const ContractProvider = ({ children }) => {
       if (signerAddress === address) {
         // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
         await Promise.all([
-          contract.addUser(nama, telepon, email, ttl, gender, true),
+          contract.addUser(nama, email, telepon, gender, ttl, true),
           contractRoles.setDefaultRole(),
         ]);
       } else {
@@ -114,9 +114,8 @@ export const ContractProvider = ({ children }) => {
 
     try {
       if (signerAddress === address) {
-        // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
         await Promise.all([
-          contract.updateUser(nama, telepon, email, ttl, gender, true),
+          contract.updateUser(nama, email, telepon, gender, ttl, true),
         ]);
       } else {
         alert('Gunakan akun yang digunakan saat login.');
@@ -137,17 +136,19 @@ export const ContractProvider = ({ children }) => {
     const contract = new ethers.Contract(userAddress, contractAbi.abi, signer);
     // Mendapatkan data registrasi
     try {
-      const data = await contract.getUser(address);
-      setWalletAddress(data[0]);
-      setNama(data[1]);
-      setTelepon(data[2]);
-      setEmail(data[3]);
-      setTtl(data[4]);
-      setGender(data[5]);
-      if (!data[1]) {
-        setUser(false);
-      } else {
-        setUser(true);
+      if (signerAddress === address) {
+        const data = await contract.getUser(address);
+        setWalletAddress(data[0]);
+        setNama(data[1]);
+        setTelepon(data[2]);
+        setEmail(data[3]);
+        setTtl(data[4]);
+        setGender(data[5]);
+        if (!data[1]) {
+          setUser(false);
+        } else {
+          setUser(true);
+        }
       }
     } catch (error) {
       setUser(false);
@@ -155,6 +156,79 @@ export const ContractProvider = ({ children }) => {
   };
 
   // user contract for admin
+  const handleAddUserAdmin = async (e) => {
+    e.preventDefault();
+    // Buatlah sebuah provider yang terhubung ke Metamask
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    const signer = provider.getSigner();
+
+    // Buat instance kontrak yang terhubung ke provider
+    const contract = new ethers.Contract(userAddress, contractAbi.abi, signer);
+    const contractRoles = new ethers.Contract(rolesAddress, rolesContractAbi.abi, signer);
+    const loggedInUser = localStorage.getItem('address');
+    const address = JSON.parse(loggedInUser);
+    const signerAddress = await signer.getAddress();
+
+    try {
+      checkRoles();
+      if ((signerAddress === address) && role === 'admin') {
+        // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
+        await Promise.all([
+          contract.addUserAdmin(
+            walletAddress,
+            nama,
+            email,
+            telepon,
+            gender,
+            ttl,
+            status,
+          ),
+          contractRoles.setRole(walletAddress, 'pasien'),
+        ]);
+      } else {
+        alert('Gunakan akun yang digunakan saat login.');
+      }
+    } catch (error) {
+      alert('Transaksi dibatalkan oleh pengguna');
+    }
+  };
+  const handleUpdateUserAdmin = async (e) => {
+    e.preventDefault();
+    // Buatlah sebuah provider yang terhubung ke Metamask
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    const signer = provider.getSigner();
+
+    // Buat instance kontrak yang terhubung ke provider
+    const contract = new ethers.Contract(userAddress, contractAbi.abi, signer);
+    const loggedInUser = localStorage.getItem('address');
+    const address = JSON.parse(loggedInUser);
+    const signerAddress = await signer.getAddress();
+
+    try {
+      checkRoles();
+      if ((signerAddress === address) && role === 'admin') {
+        // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
+        await Promise.all([
+          contract.updateUserAdmin(
+            walletAddress,
+            nama,
+            email,
+            telepon,
+            gender,
+            ttl,
+            status,
+          ),
+          contractRoles.setRole(walletAddress, 'pasien'),
+        ]);
+      } else {
+        alert('Gunakan akun yang digunakan saat login.');
+      }
+    } catch (error) {
+      alert('Transaksi dibatalkan oleh pengguna');
+    }
+  };
   const getAllDataUser = async () => {
     // Buatlah sebuah provider yang terhubung ke Metamask
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -165,14 +239,16 @@ export const ContractProvider = ({ children }) => {
     const signerAddress = await signer.getAddress();
     // Buat instance kontrak yang terhubung ke provider
     const contract = new ethers.Contract(userAddress, contractAbi.abi, signer);
+    // const contractRoles = new ethers.Contract(rolesAddress, rolesContractAbi.abi, signer);
     // Mendapatkan data registrasi
     try {
       checkRoles();
-      if (signerAddress === address && roles === 'admin') {
-        await contract.getUserAdmin();
+      if (signerAddress === address && role === 'admin') {
+        const data = await contract.getUserAdmin();
+        setAllUser(data);
       }
     } catch (error) {
-      setUser(false);
+      alert('terjadi kesalahan');
     }
   };
   const handleAddDoctor = async (e) => {
@@ -252,7 +328,6 @@ export const ContractProvider = ({ children }) => {
         alert('Gunakan akun yang digunakan saat login.');
       }
     } catch (error) {
-      console.log(error);
       alert('Transaksi dibatalkan oleh pengguna');
     }
   };
@@ -401,23 +476,12 @@ export const ContractProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      getDataUser();
-      getEvidanceRegistration();
-      checkRoles();
-      getAllSession();
-      getAllDoctor();
-    }, 1500);
-  }, []);
-
   return (
     <ContractContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         loading,
+        setLoading,
         user,
         role,
         setRole,
@@ -463,11 +527,17 @@ export const ContractProvider = ({ children }) => {
         getAllRegistration,
         getRegistrationDoctor,
         getAllSession,
+        handleAddUserAdmin,
+        handleUpdateUserAdmin,
         handleAddDoctor,
         handleUpdateDoctor,
         getAllDoctor,
         allDoctor,
         setAllDoctor,
+        allUser,
+        setAllUser,
+        allPasien,
+        setAllPasien,
       }}
     >
       {children}

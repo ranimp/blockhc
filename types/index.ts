@@ -141,7 +141,6 @@ export interface AdminDetailPasien {
   ttl: string;
   email: string;
   phone: string;
-  address: string;
   linkRiwayat: string;
 }
 
@@ -166,10 +165,22 @@ export interface AdminTambahPasien {
   linkRiwayat: string;
 }
 
+export interface AdminUpdatePasien {
+  nama: string;
+  telepon: string;
+  ttl: string;
+  email: string;
+  status?: boolean;
+  walletAddress: any;
+}
+
 export interface AdminTablePasien {
   no: number;
   walletAddress: any;
-  name: string
+  name: string;
+  status: boolean;
+  detailUrl: string;
+  updateUrl: string;
 }
 
 export interface DokterTable {

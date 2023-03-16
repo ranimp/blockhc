@@ -78,6 +78,19 @@ contract UserData {
         _;
     }
 
+    modifier onlyGetDoctors() {
+        require(
+            !roles.isPasien(msg.sender) ||
+                !roles.isAdmin(msg.sender) ||
+                !roles.isDokter(msg.sender) ||
+                roles.isPasien(msg.sender) ||
+                roles.isAdmin(msg.sender) ||
+                roles.isDokter(msg.sender),
+            "Hanya pengguna terdaftar yang diizinkan untuk mengakses."
+        );
+        _;
+    }
+
     modifier onlyPasien() {
         require(
             roles.isPasien(msg.sender),
@@ -277,7 +290,7 @@ contract UserData {
         require(doctorExists, "Dokter tidak ditemukan.");
     }
 
-    function getDoctors() public view onlyUser returns (Doctor[] memory) {
+    function getDoctors() public view onlyGetDoctors returns (Doctor[] memory) {
         return doctors;
     }
 

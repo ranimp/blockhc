@@ -4,7 +4,7 @@ import Button from '../../button/index';
 import { AdminDetailPasien } from '../../../types/index';
 
 const DetailPasienAdmin: React.FC<AdminDetailPasien> = ({
-  name, gender, ttl, email, phone, address, linkRiwayat,
+  name, gender, ttl, email, phone, linkRiwayat,
 }) => {
   const router = useRouter();
   return (
@@ -35,11 +35,6 @@ const DetailPasienAdmin: React.FC<AdminDetailPasien> = ({
             <td className="py-3 pl-3 text-xs lg:text-base">No. Telepon</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">{phone || ''}</td>
-          </tr>
-          <tr className="odd:bg-odd-blue even:bg-even-blue">
-            <td className="py-3 pl-3 text-xs lg:text-base">Alamat</td>
-            <td className="text-xs sm:text-sm lg:text-base">:</td>
-            <td className="text-xs sm:text-sm lg:text-base">{address || ''}</td>
           </tr>
         </tbody>
       </table>

@@ -1,8 +1,10 @@
-import React, { useState, useContext } from 'react';
+/* eslint-disable consistent-return */
+import React, { useState, useContext, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AuthContext } from '../../lib/auth';
 import { NavbarLoginProps } from '../../types/index';
+import { ContractContext } from '../../lib/contractProvider';
 
 const NavbarLogin: React.FC<NavbarLoginProps> = ({
   home, konsultasi, tentang, dokter, profil, dashboard,
@@ -10,6 +12,21 @@ const NavbarLogin: React.FC<NavbarLoginProps> = ({
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [profilOpen, setProfilOpen] = useState(false);
   const { handleLogout } = useContext(AuthContext);
+  const { role, checkRoles } = useContext(ContractContext);
+  useEffect(() => {
+    checkRoles();
+  }, []);
+
+  let dashboardPath = '/';
+  if (role === 'admin') {
+    dashboardPath = '/dashboard-admin';
+  } else if (role === 'dokter') {
+    dashboardPath = '/dashboard-dokter';
+  } else if (role === 'pasien') {
+    dashboardPath = '/dashboard';
+  }
+
+  const linkHref = dashboardPath !== '/' ? dashboardPath : '/dashboard'; // tambahkan path default
 
   return (
     <nav className="w-full fixed top-0 inset-x-0 z-50 py-3 lg:px-16 bg-white shadow-md">
@@ -43,8 +60,10 @@ const NavbarLogin: React.FC<NavbarLoginProps> = ({
           id="profile"
         >
           <ul className="flex flex-col items-center lg:hidden list-none">
-            <li className=""><Link className={`rounded-t bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue${profil ? ' font-bold' : ' font-normal'}`} href="/profil">Profil</Link></li>
-            <li className=""><Link className={`bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue${dashboard ? ' font-bold' : ' font-normal'}`} href="/dashboard">Dashboard</Link></li>
+            <li className=""><Link className={`rounded-t bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue ${role === 'admin' ? ' hidden' : 'block'} ${profil ? ' font-bold' : ' font-normal'}`} href="/profil">Profil</Link></li>
+            <li className="">
+              <Link className={`bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue ${dashboard ? ' font-bold' : ' font-normal'}`} href={linkHref}>Dashboard</Link>
+            </li>
             <li className=""><button className="rounded-b bg-white hover:opacity-75 py-2 px-4 block whitespace-no-wrap text-medium-blue" onClick={handleLogout}>Keluar</button></li>
           </ul>
         </div>
@@ -98,8 +117,10 @@ const NavbarLogin: React.FC<NavbarLoginProps> = ({
                   <Image src="/images/profile.png" width={32} height={32} alt="prof-pic" className="rounded-full" />
                 </button>
                 <ul className="dropdown-menu absolute hidden text-black pt-1">
-                  <li className=""><Link className={`rounded-t bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue ${profil ? ' font-bold' : ' font-normal'}`} href="/profil">Profil</Link></li>
-                  <li className=""><Link className={`bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue ${dashboard ? ' font-bold' : ' font-normal'}`} href="/dashboard">Dashboard</Link></li>
+                  <li className=""><Link className={`rounded-t bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue ${role === 'admin' ? ' hidden' : 'block'} ${profil ? ' font-bold' : ' font-normal'}`} href="/profil">Profil</Link></li>
+                  <li className="">
+                    <Link className={`bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue ${dashboard ? ' font-bold' : ' font-normal'}`} href={linkHref}>Dashboard</Link>
+                  </li>
                   <li className=""><button className="rounded-b bg-white hover:bg-soft-blue py-2 px-4 block whitespace-no-wrap text-medium-blue w-full text-left" onClick={handleLogout}>Keluar</button></li>
                 </ul>
               </div>

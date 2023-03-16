@@ -29,11 +29,11 @@ const DaftarDokterAdmin = () => {
             <TableDokterDashboardAdmin
               key={index}
               no={index + 1}
-              walletAddress={data[9]}
-              name={data[0]}
-              status={data[10]}
-              detailUrl={`/dashboard-admin/manajemen-dokter/detail-dokter/${data[9]}`}
-              updateUrl={`/dashboard-admin/manajemen-dokter/update-dokter/${data[9]}`}
+              walletAddress={data.wallet}
+              name={data.nama}
+              status={data.status}
+              detailUrl={`/dashboard-admin/manajemen-dokter/detail-dokter/${data.wallet}`}
+              updateUrl={`/dashboard-admin/manajemen-dokter/update-dokter/${data.wallet}`}
             />
           ))}
         </tbody>

@@ -208,7 +208,7 @@ function Konsultasi() {
                         >
                           <option>Pilih Dokter</option>
                           {allDoctor?.map((data, idx) => (
-                            <option key={idx} value={data[0]}>{data[0]}</option>
+                            <option key={idx} value={data.nama}>{data.nama}</option>
                           ))}
                         </select>
                       </div>

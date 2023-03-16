@@ -37,8 +37,8 @@
       ]
     },
     "D:\\TA\\project\\blockhc\\contracts\\user.sol": {
-      "lastModificationDate": 1678800460367,
-      "contentHash": "eb707b4126daf88ee9dd4b598e94e27e",
+      "lastModificationDate": 1678969636667,
+      "contentHash": "d2e14bda62c56f4a333521da54e19046",
       "sourceName": "contracts/user.sol",
       "solcConfig": {
         "version": "0.8.17",
