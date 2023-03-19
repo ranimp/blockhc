@@ -326,10 +326,10 @@ describe('UserData', () => {
         'Hanya admin yang diizinkan untuk mengakses.',
       );
     });
-    it('should only allow admin to use getAllUser()', async () => {
+    it('should only allow admin and doctor to use getAllUser()', async () => {
       await expect(
         userData.connect(user1).getUserAdmin(),
-      ).to.be.revertedWith('Hanya admin yang diizinkan untuk mengakses.');
+      ).to.be.revertedWith('Hanya admin atau dokter yang diizinkan untuk mengakses.');
     });
     it('should only allow pasien to use updateUser()', async () => {
       const nama = 'Alice Updated';

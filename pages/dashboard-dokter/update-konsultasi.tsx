@@ -1,4 +1,6 @@
-import { Fragment, useState } from 'react';
+import {
+  Fragment, useState, useContext, useEffect,
+} from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -9,10 +11,25 @@ import Sidebar from '../../components/dashboard/sidebar';
 import DaftarPasienDokter from '../../components/dashboard-dokter/daftar-pasien/dok-daftar-pasien';
 import UpdateKonsultasiDokter from '../../components/dashboard-dokter/manajemen-hasil-konsultasi/dok-update-konsultasi';
 import withAuth from '../../lib/withAuth';
+import { ContractContext } from '../../lib/contractProvider';
 
 function UpdateKonsultasi() {
   const router = useRouter();
   const [active, setActive] = useState('hasil-konsultasi');
+  const {
+    getAllDoctor,
+    allDoctor,
+  } = useContext(ContractContext);
+  const [address, setAddress] = useState('');
+
+  useEffect(() => {
+    getAllDoctor();
+    const loggedInUser = localStorage.getItem('address');
+    const addressStorage = JSON.parse(loggedInUser);
+    setAddress(addressStorage);
+  }, []);
+
+  const doctorData = allDoctor?.filter((dokter) => dokter.wallet === address);
   return (
     <>
       <Head>
@@ -25,7 +42,7 @@ function UpdateKonsultasi() {
         <div className="flex justify-start">
           <div className="w-1/9 md:w-1/3">
             <div className="hidden md:block">
-              <Profil name="Rani Meliyana Putri" role="dokter" />
+              <Profil name={doctorData ? doctorData[0]?.nama : null} role="dokter" />
             </div>
             <Sidebar menu2={active === 'hasil-konsultasi' && true} onClickMenu1={() => router.push('/dashboard-dokter')} onClickMenu2={() => setActive('hasil-konsultasi')} menu1={active === 'daftar-pasien' && true} title2="manajemen hasil konsultasi" title1="daftar pasien" />
           </div>

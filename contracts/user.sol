@@ -99,6 +99,14 @@ contract UserData {
         _;
     }
 
+    modifier onlyAdminOrDokter() {
+        require(
+            roles.isAdmin(msg.sender) || roles.isDokter(msg.sender),
+            "Hanya admin atau dokter yang diizinkan untuk mengakses."
+        );
+        _;
+    }
+
     // add user
     function addUser(
         string memory _nama,
@@ -321,7 +329,12 @@ contract UserData {
     }
 
     // get user for admin
-    function getUserAdmin() public view onlyAdmin returns (User[] memory) {
+    function getUserAdmin()
+        public
+        view
+        onlyAdminOrDokter
+        returns (User[] memory)
+    {
         return users;
     }
 }

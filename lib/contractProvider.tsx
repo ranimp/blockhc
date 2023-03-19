@@ -9,13 +9,14 @@ export const ContractContext = createContext();
 export const ContractProvider = ({ children }) => {
   // contract address
   const rolesAddress = '0x2c161963073Ba0d9f3930563d4E7B8C081a09d37';
-  const userAddress = '0xCC3300A68739c6A9E6fD29ab0d32E86794eE47F9';
+  // const userAddress = '0xCC3300A68739c6A9E6fD29ab0d32E86794eE47F9';
+  const userAddress = '0xf8Aa18d6620Cd256d4105862a7aBb73Ad843Afe1';
   const registrationAddress = '0x6b6286E4bcf199b5814A84c189B5A04220BB67BD';
 
   // getAllData
   const [allDoctor, setAllDoctor] = useState();
-  const [allPasien, setAllPasien] = useState();
   const [allUser, setAllUser] = useState();
+  const [allRegistration, setAllRegistration] = useState();
 
   // condition
   const [user, setUser] = useState(true);
@@ -243,7 +244,7 @@ export const ContractProvider = ({ children }) => {
     // Mendapatkan data registrasi
     try {
       checkRoles();
-      if (signerAddress === address && role === 'admin') {
+      if (signerAddress === address && (role === 'admin' || role === 'dokter')) {
         const data = await contract.getUserAdmin();
         setAllUser(data);
       }
@@ -446,13 +447,18 @@ export const ContractProvider = ({ children }) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send('eth_requestAccounts', []);
     const signer = provider.getSigner();
+    const loggedInUser = localStorage.getItem('address');
+    const address = JSON.parse(loggedInUser);
+    const signerAddress = await signer.getAddress();
 
     // Buat instance kontrak yang terhubung ke provider
-    const contract = new ethers.Contract(contractAddress, registContractAbi.abi, signer);
+    const contract = new ethers.Contract(registrationAddress, registContractAbi.abi, signer);
     // Mendapatkan data registrasi
     try {
-      if (address === signerAddress && (roles === 'admin' || roles === 'dokter')) {
-        await contract.getAllRegistrations();
+      checkRoles();
+      if (address === signerAddress && (role === 'admin')) {
+        const data = await contract.getAllRegistrations();
+        setAllRegistration(data);
       }
     } catch (error) {
       setUser(false);
@@ -463,13 +469,23 @@ export const ContractProvider = ({ children }) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send('eth_requestAccounts', []);
     const signer = provider.getSigner();
+    const loggedInUser = localStorage.getItem('address');
+    const address = JSON.parse(loggedInUser);
+    const signerAddress = await signer.getAddress();
 
     // Buat instance kontrak yang terhubung ke provider
-    const contract = new ethers.Contract(contractAddress, registContractAbi.abi, signer);
+    const contract = new ethers.Contract(registrationAddress, registContractAbi.abi, signer);
     // Mendapatkan data registrasi
     try {
-      if (address === signerAddress && (roles === 'admin' || roles === 'dokter')) {
-        await contract.getAllRegistrations();
+      checkRoles();
+      getAllDoctor();
+      if (address === signerAddress && (role === 'dokter')) {
+        const doctor = allDoctor?.filter((dokter) => dokter.wallet === address);
+        const filteredDoctor = doctor[0].nama;
+        const data = await contract.getAllRegistrations();
+        const filteredData = data.filter((pasien) => pasien
+          .some((item) => item.namaDokter === filteredDoctor));
+        setAllRegistration(filteredData);
       }
     } catch (error) {
       setUser(false);
@@ -536,8 +552,8 @@ export const ContractProvider = ({ children }) => {
         setAllDoctor,
         allUser,
         setAllUser,
-        allPasien,
-        setAllPasien,
+        allRegistration,
+        setAllRegistration,
       }}
     >
       {children}

@@ -51,7 +51,7 @@ function Konsultasi() {
     const bookedSessions = slot;
     // hapus sesi yang sudah terisi dari daftar sesi yang tersedia
     if (bookedSessions) {
-      bookedSessions[0].forEach((bookedSession) => {
+      bookedSessions[0]?.forEach((bookedSession) => {
         const tanggalIndex = tanggalSesi.findIndex((val) => val.tanggal === bookedSession[0]);
         if (tanggalIndex !== -1) {
           const sesiIndex = tanggalSesi[tanggalIndex].sesi
@@ -75,7 +75,7 @@ function Konsultasi() {
     // Hapus sesi yang sudah terisi dari daftar sesi yang tersedia
     const availableSesi = tanggalSesi.sesi.filter((availableSession) => {
       let isBooked = false;
-      bookedSessions[0].forEach((bookedSession) => {
+      bookedSessions[0]?.forEach((bookedSession) => {
         if (bookedSession[0] === event.target.value && bookedSession[1] === availableSession) {
           isBooked = true;
         }
