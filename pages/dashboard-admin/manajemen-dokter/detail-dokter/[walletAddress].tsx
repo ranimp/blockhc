@@ -47,7 +47,7 @@ function DetailDokterAdminPage() {
         <div className="flex justify-start">
           <div className="w-1/9 md:w-1/3">
             <div className="hidden md:block">
-              <Profil name="Rani Meliyana Putri" role="admin" />
+              <Profil name="Admin" role="admin" />
             </div>
             <Sidebar menu3Show onClickMenu1={() => setActive('manajemen-pasien')} menu1={active === 'manajemen-pasien' && true} title1="manajemen pasien" onClickMenu2={() => setActive('hasil-konsultasi')} menu2={active === 'hasil-konsultasi' && true} title2="manajemen hasil konsultasi" onClickMenu3={() => router.push('/dashboard-admin')} menu3={active === 'manajemen-dokter' && true} title3="manajemen dokter" />
           </div>

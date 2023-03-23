@@ -1,25 +1,37 @@
-import { Fragment, useState } from 'react';
+import {
+  Fragment, useState, useContext, useEffect,
+} from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import NavbarLogin from '../../components/navbar/login';
-import Footer from '../../components/footer/index';
-import Profil from '../../components/dashboard/profil';
-import Sidebar from '../../components/dashboard/sidebar';
-import DetailRiwayat from '../../components/dashboard-pasien/detail-riwayat';
-import BuktiPendaftaran from '../../components/dashboard-pasien/bukti-pendaftaran';
-import withAuth from '../../lib/withAuth';
-import Loading from '../../components/loading/index';
+import { useRouter } from 'next/router';
+import NavbarLogin from '../../../components/navbar/login';
+import Footer from '../../../components/footer/index';
+import Profil from '../../../components/dashboard/profil';
+import Sidebar from '../../../components/dashboard/sidebar';
+import DetailRiwayat from '../../../components/dashboard-pasien/detail-riwayat';
+import BuktiPendaftaran from '../../../components/dashboard-pasien/bukti-pendaftaran';
+import withAuth from '../../../lib/withAuth';
+import Loading from '../../../components/loading/index';
+import { ContractContext } from '../../../lib/contractProvider';
 
 function DetailKonsultasi() {
   const [active, setActive] = useState('riwayat');
+  const router = useRouter();
   const {
     user, loading, role, nama, namaDokter, keluhan, tanggal,
-    sesi, getEvidanceRegistration,
+    sesi, getEvidanceRegistration, getConsultationPasien,
+    allConsultation,
   } = useContext(ContractContext);
+  const { index } = router.query;
+
+  useEffect(() => {
+    getConsultationPasien();
+  });
 
   useEffect(() => {
     getEvidanceRegistration();
   }, []);
+
   return (
     <>
       <Head>
@@ -55,7 +67,17 @@ function DetailKonsultasi() {
                       <input type="text" placeholder="Pencarian" className="w-full focus:outline-none" />
                     </div>
                     <div>
-                      {active === 'riwayat' && <DetailRiwayat name="Rani Meliyana Putri" doctor="dr. rani" cat="Umum" keluhan="Batuk, pilek, demam" diagnosa="Pasien terindikasi covid-19. Pasien dirujuk ke rumah sakit x untuk penanganan lebih lanjut." date="12/12/2022" />}
+                      {active === 'riwayat' && (
+                      <DetailRiwayat
+                        name={allConsultation ? allConsultation[index]?.nama : null}
+                        doctor={allConsultation ? allConsultation[index]?.namaDokter : null}
+                        keluhan={allConsultation ? allConsultation[index]?.keluhan : null}
+                        diagnosa={allConsultation ? allConsultation[index]?.diagnosa : null}
+                        date={allConsultation ? allConsultation[index]?.tanggal : null}
+                        tekanan={allConsultation ? allConsultation[index]?.tensi : null}
+                        gula={allConsultation ? allConsultation[index]?.gula : null}
+                      />
+                      )}
                       {active === 'bukti' && <BuktiPendaftaran name={nama} doctor={namaDokter} keluhan={keluhan} date={tanggal} sesi={sesi} />}
                     </div>
                   </div>

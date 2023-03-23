@@ -4,13 +4,14 @@ import Button from '../../button/index';
 import { AdminDetailRiwayatPasien } from '../../../types/index';
 
 const DetailRiwayatAdmin: React.FC<AdminDetailRiwayatPasien> = ({
-  date, name, doctor, cat, keluhan, diagnosa, tekanan, gula,
+  date, name, doctor, keluhan, diagnosa, tekanan, gula,
 }) => {
   const router = useRouter();
   return (
     <div className="w-full">
       <h3 className="font-bold text-sm md:text-xl my-2 md:my-4">
-        Hasil Konsultasi -
+        Hasil Konsultasi
+        {' '}
         {date}
       </h3>
       <table className="w-full text-black border-separate border-spacing-y-2">
@@ -24,11 +25,6 @@ const DetailRiwayatAdmin: React.FC<AdminDetailRiwayatPasien> = ({
             <td className="py-3 pl-3 text-xs lg:text-base">Nama Dokter</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base capitalize">{doctor || ''}</td>
-          </tr>
-          <tr className="odd:bg-odd-blue even:bg-even-blue">
-            <td className="py-3 pl-3 text-xs lg:text-base">Kategori</td>
-            <td className="text-xs sm:text-sm lg:text-base">:</td>
-            <td className="text-xs sm:text-sm lg:text-base">{cat || ''}</td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
             <td className="py-3 pl-3 text-xs lg:text-base">Keluhan</td>

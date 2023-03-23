@@ -3,17 +3,17 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import NavbarLogin from '../../../components/navbar/login';
-import Profil from '../../../components/dashboard/profil';
-import Sidebar from '../../../components/dashboard/sidebar';
-import DaftarDokterAdmin from '../../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
-import Footer from '../../../components/footer/index';
-import DaftarPasienAdmin from '../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
-import UpdateKonsultasiAdmin from '../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-update-konsultasi';
-import Button from '../../../components/button/index';
-import withAuth from '../../../lib/withAuth';
+import NavbarLogin from '../../../../components/navbar/login';
+import Profil from '../../../../components/dashboard/profil';
+import Sidebar from '../../../../components/dashboard/sidebar';
+import DaftarDokterAdmin from '../../../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
+import Footer from '../../../../components/footer/index';
+import DetailRiwayatAdmin from '../../../../components/dashboard-admin/manajemen-pasien/adm-detail-riwayat-pasien';
+import Button from '../../../../components/button/index';
+import DaftarPasienAdmin from '../../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
+import withAuth from '../../../../lib/withAuth';
 
-function RiwayatKonsultasiAdminPage() {
+function DetailKonsultasiAdminPage() {
   const [active, setActive] = useState('hasil-konsultasi');
   const router = useRouter();
   return (
@@ -28,7 +28,7 @@ function RiwayatKonsultasiAdminPage() {
         <div className="flex justify-start">
           <div className="w-1/9 md:w-1/3">
             <div className="hidden md:block">
-              <Profil name="Rani Meliyana Putri" role="admin" />
+              <Profil name="Admin" role="admin" />
             </div>
             <Sidebar menu3Show onClickMenu1={() => setActive('manajemen-pasien')} menu1={active === 'manajemen-pasien' && true} title1="manajemen pasien" onClickMenu2={() => router.push('/dashboard-admin')} menu2={active === 'hasil-konsultasi' && true} title2="manajemen hasil konsultasi" onClickMenu3={() => setActive('manajemen-dokter')} menu3={active === 'manajemen-dokter' && true} title3="manajemen dokter" />
           </div>
@@ -53,7 +53,7 @@ function RiwayatKonsultasiAdminPage() {
             </div>
             <div>
               {active === 'manajemen-pasien' && <DaftarPasienAdmin />}
-              {active === 'hasil-konsultasi' && <UpdateKonsultasiAdmin />}
+              {active === 'hasil-konsultasi' && <DetailRiwayatAdmin name="Rani Meliyana Putri" doctor="dr. rani" cat="Umum" keluhan="Batuk, pilek, demam" diagnosa="Pasien terindikasi covid-19. Pasien dirujuk ke rumah sakit x untuk penanganan lebih lanjut." date="12/12/2022" tekanan="156/80" gula="200" />}
               {active === 'manajemen-dokter' && <DaftarDokterAdmin />}
             </div>
           </div>
@@ -66,4 +66,4 @@ function RiwayatKonsultasiAdminPage() {
   );
 }
 
-export default withAuth(RiwayatKonsultasiAdminPage);
+export default withAuth(DetailKonsultasiAdminPage);

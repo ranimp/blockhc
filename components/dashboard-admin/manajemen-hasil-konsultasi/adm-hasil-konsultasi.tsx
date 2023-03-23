@@ -33,6 +33,8 @@ const HasilKonsultasiAdmin = () => {
                 walletAddress={data2?.wallet}
                 date={data2?.tanggal}
                 name={data2?.nama}
+                detailUrl={`/dashboard-admin/manajemen-konsultasi/detail-registrasi/${data2?.wallet}/${idx}`}
+                tambahUrl={`/dashboard-admin/manajemen-konsultasi/tambah-konsultasi/${data2?.wallet}`}
               />
             ))
           ))}

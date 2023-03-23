@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import Button from '../../button/index';
-// import { AdminTambahPasien } from '../../../types/index';
 import { ContractContext } from '../../../lib/contractProvider';
 
 const TambahPasienAdmin = () => {

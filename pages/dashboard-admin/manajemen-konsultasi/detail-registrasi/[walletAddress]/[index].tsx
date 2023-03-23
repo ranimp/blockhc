@@ -1,21 +1,48 @@
-import { Fragment, useState } from 'react';
+import {
+  Fragment, useState, useContext, useEffect,
+} from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import NavbarLogin from '../../../components/navbar/login';
-import Profil from '../../../components/dashboard/profil';
-import Sidebar from '../../../components/dashboard/sidebar';
-import DaftarDokterAdmin from '../../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
-import Footer from '../../../components/footer/index';
-import DetailRiwayatAdmin from '../../../components/dashboard-admin/manajemen-pasien/adm-detail-riwayat-pasien';
-import Button from '../../../components/button/index';
-import DaftarPasienAdmin from '../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
-import withAuth from '../../../lib/withAuth';
+import DetailRegistrasiAdmin from '../../../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-detail-registrasi';
+import NavbarLogin from '../../../../../components/navbar/login';
+import Profil from '../../../../../components/dashboard/profil';
+import Sidebar from '../../../../../components/dashboard/sidebar';
+import DaftarDokterAdmin from '../../../../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
+import Footer from '../../../../../components/footer/index';
+import Button from '../../../../../components/button/index';
+import DaftarPasienAdmin from '../../../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
+import withAuth from '../../../../../lib/withAuth';
+import { ContractContext } from '../../../../../lib/contractProvider';
 
 function DetailKonsultasiAdminPage() {
   const [active, setActive] = useState('hasil-konsultasi');
   const router = useRouter();
+  const { walletAddress, index } = router.query;
+
+  const {
+    getAllRegistration,
+    allRegistration,
+  } = useContext(ContractContext);
+
+  const [registrasi, setRegistrasi] = useState([]);
+  const [detailRegistrasi, setDetailRegistrasi] = useState([]);
+
+  useEffect(() => {
+    getAllRegistration();
+  }, []);
+
+  useEffect(() => {
+    setRegistrasi(allRegistration?.filter((item) => item.some((data) => data
+      .wallet === walletAddress)));
+  }, [allRegistration, walletAddress]);
+
+  useEffect(() => {
+    const dataIndex = registrasi?.find((item) => item[0]);
+    setDetailRegistrasi(dataIndex);
+  }, [index, registrasi]);
+
   return (
     <>
       <Head>
@@ -28,7 +55,7 @@ function DetailKonsultasiAdminPage() {
         <div className="flex justify-start">
           <div className="w-1/9 md:w-1/3">
             <div className="hidden md:block">
-              <Profil name="Rani Meliyana Putri" role="admin" />
+              <Profil name="Admin" role="admin" />
             </div>
             <Sidebar menu3Show onClickMenu1={() => setActive('manajemen-pasien')} menu1={active === 'manajemen-pasien' && true} title1="manajemen pasien" onClickMenu2={() => router.push('/dashboard-admin')} menu2={active === 'hasil-konsultasi' && true} title2="manajemen hasil konsultasi" onClickMenu3={() => setActive('manajemen-dokter')} menu3={active === 'manajemen-dokter' && true} title3="manajemen dokter" />
           </div>
@@ -53,7 +80,19 @@ function DetailKonsultasiAdminPage() {
             </div>
             <div>
               {active === 'manajemen-pasien' && <DaftarPasienAdmin />}
-              {active === 'hasil-konsultasi' && <DetailRiwayatAdmin name="Rani Meliyana Putri" doctor="dr. rani" cat="Umum" keluhan="Batuk, pilek, demam" diagnosa="Pasien terindikasi covid-19. Pasien dirujuk ke rumah sakit x untuk penanganan lebih lanjut." date="12/12/2022" tekanan="156/80" gula="200" />}
+              {active === 'hasil-konsultasi' && (
+              <DetailRegistrasiAdmin
+                nama={detailRegistrasi ? detailRegistrasi[index]?.nama : null}
+                gender={detailRegistrasi ? detailRegistrasi[index]?.gender : null}
+                dokter={detailRegistrasi ? detailRegistrasi[index]?.namaDokter : null}
+                telepon={detailRegistrasi ? detailRegistrasi[index]?.telepon : null}
+                sesi={detailRegistrasi ? detailRegistrasi[index]?.sesi : null}
+                tanggal={detailRegistrasi ? detailRegistrasi[index]?.tanggal : null}
+                keluhan={detailRegistrasi ? detailRegistrasi[index]?.keluhan : null}
+                wallet={detailRegistrasi ? detailRegistrasi[index]?.wallet : null}
+                status=""
+              />
+              )}
               {active === 'manajemen-dokter' && <DaftarDokterAdmin />}
             </div>
           </div>

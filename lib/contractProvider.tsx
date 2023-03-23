@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import contractAbi from '../artifacts/contracts/user.sol/UserData.json';
 import rolesContractAbi from '../artifacts/contracts/roles.sol/UserRoles.json';
 import registContractAbi from '../artifacts/contracts/registration.sol/ConsultationRegist.json';
+import consultContractAbi from '../artifacts/contracts/consultation.sol/ConsultationResult.json';
 
 export const ContractContext = createContext();
 
@@ -12,11 +13,13 @@ export const ContractProvider = ({ children }) => {
   // const userAddress = '0xCC3300A68739c6A9E6fD29ab0d32E86794eE47F9';
   const userAddress = '0xf8Aa18d6620Cd256d4105862a7aBb73Ad843Afe1';
   const registrationAddress = '0x6b6286E4bcf199b5814A84c189B5A04220BB67BD';
+  const consultationAddress = '0xecDbb16A89F61dFddc54a3bd0623D8458FcE91D4';
 
   // getAllData
   const [allDoctor, setAllDoctor] = useState();
   const [allUser, setAllUser] = useState();
   const [allRegistration, setAllRegistration] = useState();
+  const [allConsultation, setAllConsultation] = useState();
 
   // condition
   const [user, setUser] = useState(true);
@@ -45,6 +48,11 @@ export const ContractProvider = ({ children }) => {
   const [sesi, setSesi] = useState('');
   const [tanggal, setTanggal] = useState('');
   const [keluhan, setKeluhan] = useState('');
+
+  // data konsultasi
+  const [diagnosa, setDiagnosa] = useState('');
+  const [tensi, setTensi] = useState('');
+  const [gula, setGula] = useState('');
 
   // roles contract
   const checkRoles = async () => {
@@ -461,7 +469,7 @@ export const ContractProvider = ({ children }) => {
         setAllRegistration(data);
       }
     } catch (error) {
-      setUser(false);
+      alert('terjadi kesalahan');
     }
   };
   const getRegistrationDoctor = async () => {
@@ -488,7 +496,118 @@ export const ContractProvider = ({ children }) => {
         setAllRegistration(filteredData);
       }
     } catch (error) {
-      setUser(false);
+      alert('terjadi kesalahan');
+    }
+  };
+
+  // consultation contract
+  const handleAddConsultation = async (e) => {
+    e.preventDefault();
+    // Buatlah sebuah provider yang terhubung ke Metamask
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    const signer = provider.getSigner();
+
+    // Buat instance kontrak yang terhubung ke provider
+    const contract = new ethers.Contract(consultationAddress, consultContractAbi.abi, signer);
+    const loggedInUser = localStorage.getItem('address');
+    const address = JSON.parse(loggedInUser);
+    const signerAddress = await signer.getAddress();
+    // Panggil fungsi addRegistration pada kontrak
+    try {
+      checkRoles();
+      if (address === signerAddress && (role === 'admin' || role === 'dokter')) {
+        const tx = await contract.addConsultation(
+          walletAddress,
+          nama,
+          namaDokter,
+          tanggal,
+          keluhan,
+          diagnosa,
+          tensi,
+          gula,
+        );
+        await tx.wait();
+      }
+    } catch (error) {
+      alert('Transaksi dibatalkan oleh pengguna');
+    }
+  };
+  const handleUpdateConsultation = async (e) => {
+    e.preventDefault();
+    // Buatlah sebuah provider yang terhubung ke Metamask
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    const signer = provider.getSigner();
+
+    // Buat instance kontrak yang terhubung ke provider
+    const contract = new ethers.Contract(consultationAddress, consultContractAbi.abi, signer);
+    const loggedInUser = localStorage.getItem('address');
+    const address = JSON.parse(loggedInUser);
+    const signerAddress = await signer.getAddress();
+    // Panggil fungsi addRegistration pada kontrak
+    try {
+      checkRoles();
+      if (address === signerAddress && (role === 'admin' || role === 'dokter')) {
+        const tx = await contract.updateConsultation(
+          walletAddress,
+          index,
+          nama,
+          namaDokter,
+          tanggal,
+          keluhan,
+          diagnosa,
+          tensi,
+          gula,
+        );
+        await tx.wait();
+      }
+    } catch (error) {
+      alert('Transaksi dibatalkan oleh pengguna');
+    }
+  };
+  const getConsultationPasien = async () => {
+    // Buatlah sebuah provider yang terhubung ke Metamask
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    const signer = provider.getSigner();
+    const loggedInUser = localStorage.getItem('address');
+    const address = JSON.parse(loggedInUser);
+    const signerAddress = await signer.getAddress();
+
+    // Buat instance kontrak yang terhubung ke provider
+    const contract = new ethers.Contract(consultationAddress, consultContractAbi.abi, signer);
+    // Mendapatkan data registrasi
+    try {
+      checkRoles();
+      if (address === signerAddress) {
+        const data = await contract.getConsultationsPasien();
+        setAllConsultation(data);
+      }
+    } catch (error) {
+      alert('terjadi kesalahan');
+    }
+  };
+  const getAllConsultation = async () => {
+    // Buatlah sebuah provider yang terhubung ke Metamask
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    const signer = provider.getSigner();
+    const loggedInUser = localStorage.getItem('address');
+    const address = JSON.parse(loggedInUser);
+    const signerAddress = await signer.getAddress();
+
+    // Buat instance kontrak yang terhubung ke provider
+    const contract = new ethers.Contract(consultationAddress, consultContractAbi.abi, signer);
+    // Mendapatkan data registrasi
+    try {
+      checkRoles();
+      if (address === signerAddress && (role === 'admin' || role === 'dokter')) {
+        const data = await contract.getAllConsultations();
+        setAllConsultation(data);
+      }
+    } catch (error) {
+      alert('terjadi kesalahan');
     }
   };
 
@@ -533,6 +652,12 @@ export const ContractProvider = ({ children }) => {
         setCategory,
         img,
         setImg,
+        diagnosa,
+        setDiagnosa,
+        tensi,
+        setTensi,
+        gula,
+        setGula,
         checkRoles,
         handleAddUser,
         handleUpdateUser,
@@ -548,12 +673,18 @@ export const ContractProvider = ({ children }) => {
         handleAddDoctor,
         handleUpdateDoctor,
         getAllDoctor,
+        handleAddConsultation,
+        handleUpdateConsultation,
+        getConsultationPasien,
+        getAllConsultation,
         allDoctor,
         setAllDoctor,
         allUser,
         setAllUser,
         allRegistration,
         setAllRegistration,
+        allConsultation,
+        setAllConsultation,
       }}
     >
       {children}

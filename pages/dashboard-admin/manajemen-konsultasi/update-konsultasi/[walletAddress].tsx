@@ -1,21 +1,41 @@
-import { Fragment, useState } from 'react';
+import {
+  Fragment, useState, useContext, useEffect,
+} from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import NavbarLogin from '../../../components/navbar/login';
-import Profil from '../../../components/dashboard/profil';
-import Sidebar from '../../../components/dashboard/sidebar';
-import DaftarDokterAdmin from '../../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
-import Footer from '../../../components/footer/index';
-import DaftarPasienAdmin from '../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
-import TambahKonsultasiAdmin from '../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-tambah-konsultasi';
-import Button from '../../../components/button/index';
-import withAuth from '../../../lib/withAuth';
+import NavbarLogin from '../../../../components/navbar/login';
+import Profil from '../../../../components/dashboard/profil';
+import Sidebar from '../../../../components/dashboard/sidebar';
+import DaftarDokterAdmin from '../../../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
+import Footer from '../../../../components/footer/index';
+import DaftarPasienAdmin from '../../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
+import UpdateKonsultasiAdmin from '../../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-update-konsultasi';
+import Button from '../../../../components/button/index';
+import withAuth from '../../../../lib/withAuth';
+import { ContractContext } from '../../../../lib/contractProvider';
 
 function RiwayatKonsultasiAdminPage() {
   const [active, setActive] = useState('hasil-konsultasi');
   const router = useRouter();
+  const { walletAddress } = router.query;
+  const {
+    setWalletAddress,
+    nama, setNama,
+    namaDokter, setNamaDokter,
+    tanggal, setTanggal,
+    keluhan, setKeluhan,
+    diagnosa, setDiagnosa,
+    tensi, setTensi,
+    gula, setGula,
+    handleAddConsultation,
+    getAllConsultation,
+  } = useContext(ContractContext);
+
+  useEffect(() => {
+    getAllConsultation();
+  }, []);
   return (
     <>
       <Head>
@@ -28,7 +48,7 @@ function RiwayatKonsultasiAdminPage() {
         <div className="flex justify-start">
           <div className="w-1/9 md:w-1/3">
             <div className="hidden md:block">
-              <Profil name="Rani Meliyana Putri" role="admin" />
+              <Profil name="Admin" role="admin" />
             </div>
             <Sidebar menu3Show onClickMenu1={() => setActive('manajemen-pasien')} menu1={active === 'manajemen-pasien' && true} title1="manajemen pasien" onClickMenu2={() => router.push('/dashboard-admin')} menu2={active === 'hasil-konsultasi' && true} title2="manajemen hasil konsultasi" onClickMenu3={() => setActive('manajemen-dokter')} menu3={active === 'manajemen-dokter' && true} title3="manajemen dokter" />
           </div>
@@ -53,7 +73,34 @@ function RiwayatKonsultasiAdminPage() {
             </div>
             <div>
               {active === 'manajemen-pasien' && <DaftarPasienAdmin />}
-              {active === 'hasil-konsultasi' && <TambahKonsultasiAdmin />}
+              {active === 'hasil-konsultasi' && (
+              <UpdateKonsultasiAdmin
+                wallet={setWalletAddress(walletAddress)}
+                walletName="walletAddress"
+                name={nama}
+                nameName="nama"
+                nameChange={(e) => setNama(e.target.value)}
+                doctor={namaDokter}
+                doctorName="namaDokter"
+                doctorChange={(e) => setNamaDokter(e.target.value)}
+                date={tanggal}
+                dateName="tanggal"
+                dateChange={(e) => setTanggal(e.target.value)}
+                keluhan={keluhan}
+                keluhanName="keluhan"
+                keluhanChange={(e) => setKeluhan(e.target.value)}
+                diagnosa={diagnosa}
+                diagnosaName="diagnosa"
+                diagnosaChange={(e) => setDiagnosa(e.target.value)}
+                tekanan={tensi}
+                tekananName="tensi"
+                tekananChange={(e) => setTensi(e.target.value)}
+                gula={gula}
+                gulaName="gula"
+                gulaChange={(e) => setGula(e.target.value)}
+                onClick={handleAddConsultation}
+              />
+              )}
               {active === 'manajemen-dokter' && <DaftarDokterAdmin />}
             </div>
           </div>
