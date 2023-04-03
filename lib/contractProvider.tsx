@@ -1,5 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { ethers } from 'ethers';
+import { useRouter } from 'next/router';
 import contractAbi from '../artifacts/contracts/user.sol/UserData.json';
 import rolesContractAbi from '../artifacts/contracts/roles.sol/UserRoles.json';
 import registContractAbi from '../artifacts/contracts/registration.sol/ConsultationRegist.json';
@@ -8,9 +9,9 @@ import consultContractAbi from '../artifacts/contracts/consultation.sol/Consulta
 export const ContractContext = createContext();
 
 export const ContractProvider = ({ children }) => {
+  const router = useRouter();
   // contract address
   const rolesAddress = '0x2c161963073Ba0d9f3930563d4E7B8C081a09d37';
-  // const userAddress = '0xCC3300A68739c6A9E6fD29ab0d32E86794eE47F9';
   const userAddress = '0xf8Aa18d6620Cd256d4105862a7aBb73Ad843Afe1';
   const registrationAddress = '0x6b6286E4bcf199b5814A84c189B5A04220BB67BD';
   const consultationAddress = '0xecDbb16A89F61dFddc54a3bd0623D8458FcE91D4';
@@ -27,6 +28,7 @@ export const ContractProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [isRegist, setIsRegist] = useState(false);
   const [slot, setSlot] = useState('');
+  const [index, setIndex] = useState('');
 
   // data user
   const [walletAddress, setWalletAddress] = useState('');
@@ -101,6 +103,10 @@ export const ContractProvider = ({ children }) => {
           contract.addUser(nama, email, telepon, gender, ttl, true),
           contractRoles.setDefaultRole(),
         ]);
+        alert('transaksi anda sedang diproses');
+        await tx.wait();
+        alert('transaksi anda berhasil');
+        router.back();
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
@@ -126,6 +132,10 @@ export const ContractProvider = ({ children }) => {
         await Promise.all([
           contract.updateUser(nama, email, telepon, gender, ttl, true),
         ]);
+        alert('transaksi anda sedang diproses');
+        await tx.wait();
+        alert('transaksi anda berhasil');
+        router.back();
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
@@ -195,6 +205,10 @@ export const ContractProvider = ({ children }) => {
           ),
           contractRoles.setRole(walletAddress, 'pasien'),
         ]);
+        alert('transaksi anda sedang diproses');
+        await tx.wait();
+        alert('transaksi anda berhasil');
+        router.back();
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
@@ -231,6 +245,10 @@ export const ContractProvider = ({ children }) => {
           ),
           contractRoles.setRole(walletAddress, 'pasien'),
         ]);
+        alert('transaksi anda sedang diproses');
+        await tx.wait();
+        alert('transaksi anda berhasil');
+        router.back();
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
@@ -294,6 +312,10 @@ export const ContractProvider = ({ children }) => {
           ),
           contractRoles.setRole(walletAddress, 'dokter'),
         ]);
+        alert('transaksi anda sedang diproses');
+        await tx.wait();
+        alert('transaksi anda berhasil');
+        router.back();
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
@@ -333,6 +355,10 @@ export const ContractProvider = ({ children }) => {
             status,
           ),
         ]);
+        alert('transaksi anda sedang diproses');
+        await tx.wait();
+        alert('transaksi anda berhasil');
+        router.back();
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
@@ -383,7 +409,10 @@ export const ContractProvider = ({ children }) => {
           keluhan,
           gender,
         );
+        alert('transaksi anda sedang diproses');
         await tx.wait();
+        alert('transaksi anda berhasil');
+        router.back();
       }
     } catch (error) {
       alert('Transaksi dibatalkan oleh pengguna');
@@ -527,7 +556,10 @@ export const ContractProvider = ({ children }) => {
           tensi,
           gula,
         );
+        alert('transaksi anda sedang diproses');
         await tx.wait();
+        alert('transaksi anda berhasil');
+        router.back();
       }
     } catch (error) {
       alert('Transaksi dibatalkan oleh pengguna');
@@ -560,7 +592,10 @@ export const ContractProvider = ({ children }) => {
           tensi,
           gula,
         );
+        alert('transaksi anda sedang diproses');
         await tx.wait();
+        alert('transaksi anda berhasil');
+        router.back();
       }
     } catch (error) {
       alert('Transaksi dibatalkan oleh pengguna');
@@ -658,6 +693,8 @@ export const ContractProvider = ({ children }) => {
         setTensi,
         gula,
         setGula,
+        index,
+        setIndex,
         checkRoles,
         handleAddUser,
         handleUpdateUser,

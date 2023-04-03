@@ -4,13 +4,14 @@ import Button from '../../button/index';
 import { AdminDetailRiwayatPasien } from '../../../types/index';
 
 const DetailRiwayatDokter: React.FC<AdminDetailRiwayatPasien> = ({
-  date, name, doctor, cat, keluhan, diagnosa, tekanan, gula,
+  date, name, doctor, keluhan, diagnosa, tekanan, gula,
 }) => {
   const router = useRouter();
   return (
     <div className="w-full">
       <h3 className="font-bold text-sm md:text-xl my-2 md:my-4">
-        Hasil Konsultasi -
+        Hasil Konsultasi
+        {' '}
         {date}
       </h3>
       <table className="w-full text-black border-separate border-spacing-y-2">
@@ -24,11 +25,6 @@ const DetailRiwayatDokter: React.FC<AdminDetailRiwayatPasien> = ({
             <td className="py-3 pl-3 text-xs lg:text-base">Nama Dokter</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base capitalize">{doctor || ''}</td>
-          </tr>
-          <tr className="odd:bg-odd-blue even:bg-even-blue">
-            <td className="py-3 pl-3 text-xs lg:text-base">Kategori</td>
-            <td className="text-xs sm:text-sm lg:text-base">:</td>
-            <td className="text-xs sm:text-sm lg:text-base">{cat || ''}</td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
             <td className="py-3 pl-3 text-xs lg:text-base">Keluhan</td>
@@ -52,14 +48,14 @@ const DetailRiwayatDokter: React.FC<AdminDetailRiwayatPasien> = ({
               <p>:</p>
             </td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <p />
+              <p className="invisible">empty</p>
               <p>{tekanan || '' }</p>
               <p>{gula || '' }</p>
             </td>
           </tr>
         </tbody>
       </table>
-      <div className="flex justify-end mt-2">
+      <div className="flex justify-end mt-2 gap-2">
         <div className="w-32 lg:w-60">
           <Button type="btn-outline" title="kembali" onClick={() => router.back()} />
         </div>

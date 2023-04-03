@@ -1,18 +1,30 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from '../../button/index';
 import { AdminTambahEditKonsultasi } from '../../../types/index';
+import { ContractContext } from '../../../lib/contractProvider';
 
 const UpdateKonsultasiAdmin: React.FC<AdminTambahEditKonsultasi> = ({
-  name, nameName, nameChange,
-  doctor, doctorName, doctorChange,
-  date, dateName, dateChange,
-  keluhan, keluhanName, keluhanChange,
-  diagnosa, diagnosaName, diagnosaChange,
-  tekanan, tekananName, tekananChange,
-  gula, gulaName, gulaChange,
-  onClick, wallet, walletName, walletChange,
+  name,
+  doctor,
+  date,
+  keluhan,
+  diagnosa,
+  tekanan,
+  gula,
+  wallet,
 }) => {
+  const {
+    setWalletAddress,
+    setNama,
+    setNamaDokter,
+    setTanggal,
+    setKeluhan,
+    setDiagnosa,
+    setTensi,
+    setGula,
+    handleUpdateConsultation,
+  } = useContext(ContractContext);
   const router = useRouter();
   return (
     <div className="w-full">
@@ -23,42 +35,42 @@ const UpdateKonsultasiAdmin: React.FC<AdminTambahEditKonsultasi> = ({
             <td className="py-3 pl-3 text-xs lg:text-base">Wallet Address</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <input type="text" name={walletName} defaultValue={wallet} onChange={walletChange} placeholder="Nama Pasien" className="focus:outline-none bg-transparent w-full" />
+              <input type="text" name="walletAddress" defaultValue={wallet} onChange={setWalletAddress(wallet)} placeholder="Nama Pasien" className="focus:outline-none bg-transparent w-full" />
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
             <td className="py-3 pl-3 text-xs lg:text-base">Nama Pasien</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <input type="text" defaultValue={name} name={nameName} onChange={nameChange} placeholder="Nama Pasien" className="focus:outline-none bg-transparent w-full" />
+              <input type="text" defaultValue={name} name="nama" onChange={(e) => setNama(e.target.value)} placeholder="Nama Pasien" className="focus:outline-none bg-transparent w-full" />
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
             <td className="py-3 pl-3 text-xs lg:text-base">Nama Dokter</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base capitalize">
-              <input type="text" defaultValue={doctor} name={doctorName} onChange={doctorChange} placeholder="Nama Dokter" className="focus:outline-none bg-transparent w-full" />
+              <input type="text" defaultValue={doctor} name="namaDokter" onChange={(e) => setNamaDokter(e.target.value)} placeholder="Nama Dokter" className="focus:outline-none bg-transparent w-full" />
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
             <td className="py-3 pl-3 text-xs lg:text-base">Tanggal</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <input type="text" value={`${date} (updated)`} name={dateName} placeholder="01/01/2022" className="focus:outline-none bg-transparent w-full" />
+              <input type="text" defaultValue={`${date}(u)`} name="tanggal" placeholder="01/01/2022" className="focus:outline-none bg-transparent w-full" onChange={(e) => setTanggal(e.target.value)} />
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
             <td className="py-3 pl-3 text-xs lg:text-base">Keluhan</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <input type="text" defaultValue={keluhan} name={keluhanName} onChange={keluhanChange} placeholder="Keluhan" className="focus:outline-none bg-transparent w-full" />
+              <input type="text" defaultValue={keluhan} name="keluhan" onChange={(e) => setKeluhan(e.target.value)} placeholder="Keluhan" className="focus:outline-none bg-transparent w-full" />
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
             <td className="py-3 pl-3 text-xs lg:text-base">Hasil Diagnosa</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <input type="text" defaultValue={diagnosa} name={diagnosaName} onChange={diagnosaChange} placeholder="Diagnosa" className="focus:outline-none bg-transparent w-full" />
+              <input type="text" defaultValue={diagnosa} name="diagnosa" onChange={(e) => setDiagnosa(e.target.value)} placeholder="Diagnosa" className="focus:outline-none bg-transparent w-full" />
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -74,8 +86,8 @@ const UpdateKonsultasiAdmin: React.FC<AdminTambahEditKonsultasi> = ({
             </td>
             <td className="text-xs sm:text-sm lg:text-base">
               <p className="invisible">nothing</p>
-              <p><input type="text" defaultValue={tekanan} name={tekananName} onChange={tekananChange} placeholder="Tekanan darah" className="focus:outline-none bg-transparent w-full" /></p>
-              <p><input type="text" defaultValue={gula} name={gulaName} onChange={gulaChange} placeholder="Gula darah" className="focus:outline-none bg-transparent w-full" /></p>
+              <p><input type="text" defaultValue={tekanan} name="tensi" onChange={(e) => setTensi(e.target.value)} placeholder="Tekanan darah" className="focus:outline-none bg-transparent w-full" /></p>
+              <p><input type="text" defaultValue={gula} name="gula" onChange={(e) => setGula(e.target.value)} placeholder="Gula darah" className="focus:outline-none bg-transparent w-full" /></p>
             </td>
           </tr>
         </tbody>
@@ -85,7 +97,7 @@ const UpdateKonsultasiAdmin: React.FC<AdminTambahEditKonsultasi> = ({
           <Button type="btn-outline" title="kembali" onClick={() => router.back()} />
         </div>
         <div className="w-24 lg:w-48">
-          <Button type="btn-normal" title="simpan" onClick={onClick} />
+          <Button type="btn-normal" title="simpan" onClick={handleUpdateConsultation} />
         </div>
       </div>
     </div>

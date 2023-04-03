@@ -18,7 +18,7 @@ const RiwayatKonsultasiAdmin = ({ datas }) => {
         </thead>
         <tbody>
           {datas?.map((data, idx) => (
-            <Table key={idx} no={idx + 1} date={data?.tanggal} doctor={data?.namaDokter} link={`/dashboard-admin/manajemen-pasien/detail-riwayat-konsultasi/${data?.wallet}/${idx}`} updateUrl={`/dashboard-admin/manajemen-pasien/detail-riwayat-konsultasi/${data?.wallet}/${idx}`} />
+            <Table key={idx} no={idx + 1} date={data?.tanggal} doctor={data?.namaDokter} link={`/dashboard-admin/manajemen-pasien/detail-riwayat-konsultasi/${data?.wallet}/${idx}`} updateUrl={`/dashboard-admin/manajemen-pasien/update-riwayat-konsultasi/${data?.wallet}/${idx}`} />
           ))}
         </tbody>
       </table>

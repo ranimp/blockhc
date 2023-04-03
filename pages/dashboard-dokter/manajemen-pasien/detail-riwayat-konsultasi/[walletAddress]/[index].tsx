@@ -1,26 +1,47 @@
 import {
   Fragment, useState, useContext, useEffect,
 } from 'react';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
-import NavbarLogin from '../../components/navbar/login';
-import Profil from '../../components/dashboard/profil';
-import Footer from '../../components/footer/index';
-import Sidebar from '../../components/dashboard/sidebar';
-import HasilKonsultasiDokter from '../../components/dashboard-dokter/daftar-pasien/dok-hasil-konsultasi';
-import DetailRiwayatDokter from '../../components/dashboard-dokter/daftar-pasien/dok-detail-riwayat';
-import withAuth from '../../lib/withAuth';
-import { ContractContext } from '../../lib/contractProvider';
+import { useRouter } from 'next/router';
+import NavbarLogin from '../../../../../components/navbar/login';
+import Profil from '../../../../../components/dashboard/profil';
+import Sidebar from '../../../../../components/dashboard/sidebar';
+import Footer from '../../../../../components/footer/index';
+import withAuth from '../../../../../lib/withAuth';
+import { ContractContext } from '../../../../../lib/contractProvider';
+import HasilKonsultasiDokter from '../../../../../components/dashboard-dokter/daftar-pasien/dok-hasil-konsultasi';
+import DetailRiwayatDokter from '../../../../../components/dashboard-dokter/daftar-pasien/dok-detail-riwayat';
 
-function DetailRiwayatKonsultasi() {
-  const router = useRouter();
+function RiwayatKonsultasiDoctorPage() {
   const [active, setActive] = useState('daftar-pasien');
+  const router = useRouter();
+  const { walletAddress, index } = router.query;
+
   const {
+    getAllConsultation,
+    allConsultation,
     getAllDoctor,
     allDoctor,
   } = useContext(ContractContext);
+
+  const [riwayat, setRiwayat] = useState([]);
+  const [detailRiwayat, setDetailRiwayat] = useState([]);
   const [address, setAddress] = useState('');
+
+  useEffect(() => {
+    getAllConsultation();
+  }, [getAllConsultation]);
+
+  useEffect(() => {
+    setRiwayat(allConsultation?.filter((item) => item.some((data) => data
+      .wallet === walletAddress)));
+  }, [allConsultation, walletAddress]);
+
+  useEffect(() => {
+    const dataIndex = riwayat?.find((item) => item[0]);
+    setDetailRiwayat(dataIndex);
+  }, [index, riwayat]);
 
   useEffect(() => {
     getAllDoctor();
@@ -30,6 +51,7 @@ function DetailRiwayatKonsultasi() {
   }, []);
 
   const doctorData = allDoctor?.filter((dokter) => dokter.wallet === address);
+
   return (
     <>
       <Head>
@@ -54,7 +76,17 @@ function DetailRiwayatKonsultasi() {
               <input type="text" placeholder="Pencarian" className="w-full focus:outline-none" />
             </div>
             <div>
-              {active === 'daftar-pasien' && <DetailRiwayatDokter name="Rani Meliyana Putri" doctor="dr. rani" cat="Umum" keluhan="Batuk, pilek, demam" diagnosa="Pasien terindikasi covid-19. Pasien dirujuk ke rumah sakit x untuk penanganan lebih lanjut." date="12/12/2022" />}
+              {active === 'daftar-pasien' && (
+              <DetailRiwayatDokter
+                name={detailRiwayat ? detailRiwayat[index]?.nama : null}
+                doctor={detailRiwayat ? detailRiwayat[index]?.namaDokter : null}
+                keluhan={detailRiwayat ? detailRiwayat[index]?.keluhan : null}
+                diagnosa={detailRiwayat ? detailRiwayat[index]?.diagnosa : null}
+                date={detailRiwayat ? detailRiwayat[index]?.tanggal : null}
+                tekanan={detailRiwayat ? detailRiwayat[index]?.tensi : null}
+                gula={detailRiwayat ? detailRiwayat[index]?.gula : null}
+              />
+              )}
               {active === 'hasil-konsultasi' && <HasilKonsultasiDokter />}
             </div>
           </div>
@@ -67,4 +99,4 @@ function DetailRiwayatKonsultasi() {
   );
 }
 
-export default withAuth(DetailRiwayatKonsultasi);
+export default withAuth(RiwayatKonsultasiDoctorPage);

@@ -5,27 +5,30 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import NavbarLogin from '../../../../components/navbar/login';
-import Profil from '../../../../components/dashboard/profil';
-import Sidebar from '../../../../components/dashboard/sidebar';
-import HasilKonsultasiAdmin from '../../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-hasil-konsultasi';
-import DaftarDokterAdmin from '../../../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
-import Footer from '../../../../components/footer/index';
-import RiwayatKonsultasiAdmin from '../../../../components/dashboard-admin/manajemen-pasien/adm-riwayat-pasien';
-import Button from '../../../../components/button/index';
-import withAuth from '../../../../lib/withAuth';
-import { ContractContext } from '../../../../lib/contractProvider';
+import NavbarLogin from '../../../../../components/navbar/login';
+import Profil from '../../../../../components/dashboard/profil';
+import Sidebar from '../../../../../components/dashboard/sidebar';
+import HasilKonsultasiAdmin from '../../../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-hasil-konsultasi';
+import DaftarDokterAdmin from '../../../../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
+import Footer from '../../../../../components/footer/index';
+import Button from '../../../../../components/button/index';
+import withAuth from '../../../../../lib/withAuth';
+import { ContractContext } from '../../../../../lib/contractProvider';
+import UpdateKonsultasiAdmin from '../../../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-update-konsultasi';
 
-function RiwayatKonsultasiAdminPage() {
+function UpdateRiwayatKonsultasiAdminPage() {
   const [active, setActive] = useState('manajemen-pasien');
   const router = useRouter();
-  const { walletAddress } = router.query;
+  const { walletAddress, index } = router.query;
+
   const {
+    setIndex,
     getAllConsultation,
     allConsultation,
   } = useContext(ContractContext);
 
   const [riwayat, setRiwayat] = useState([]);
+  const [detailRiwayat, setDetailRiwayat] = useState([]);
 
   useEffect(() => {
     getAllConsultation();
@@ -35,6 +38,12 @@ function RiwayatKonsultasiAdminPage() {
     setRiwayat(allConsultation?.filter((item) => item.some((data) => data
       .wallet === walletAddress)));
   }, [allConsultation, walletAddress]);
+
+  useEffect(() => {
+    const dataIndex = riwayat?.find((item) => item[0]);
+    setDetailRiwayat(dataIndex);
+    setIndex(index);
+  }, [index, riwayat]);
 
   return (
     <>
@@ -72,7 +81,18 @@ function RiwayatKonsultasiAdminPage() {
               )}
             </div>
             <div>
-              {active === 'manajemen-pasien' && <RiwayatKonsultasiAdmin datas={riwayat ? riwayat[0] : null} />}
+              {active === 'manajemen-pasien' && (
+              <UpdateKonsultasiAdmin
+                wallet={walletAddress}
+                name={detailRiwayat ? detailRiwayat[index]?.nama : null}
+                doctor={detailRiwayat ? detailRiwayat[index]?.namaDokter : null}
+                date={detailRiwayat ? detailRiwayat[index]?.tanggal : null}
+                keluhan={detailRiwayat ? detailRiwayat[index]?.keluhan : null}
+                diagnosa={detailRiwayat ? detailRiwayat[index]?.diagnosa : null}
+                tekanan={detailRiwayat ? detailRiwayat[index]?.tensi : null}
+                gula={detailRiwayat ? detailRiwayat[index]?.gula : null}
+              />
+              )}
               {active === 'hasil-konsultasi' && <HasilKonsultasiAdmin />}
               {active === 'manajemen-dokter' && <DaftarDokterAdmin />}
             </div>
@@ -86,4 +106,4 @@ function RiwayatKonsultasiAdminPage() {
   );
 }
 
-export default withAuth(RiwayatKonsultasiAdminPage);
+export default withAuth(UpdateRiwayatKonsultasiAdminPage);

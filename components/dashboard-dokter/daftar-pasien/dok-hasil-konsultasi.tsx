@@ -32,6 +32,8 @@ const HasilKonsultasiDokter = () => {
                 walletAddress={data2?.wallet}
                 date={data2?.tanggal}
                 name={data2?.nama}
+                detailUrl={`/dashboard-dokter/manajemen-konsultasi/detail-registrasi/${data2?.wallet}/${idx}`}
+                tambahUrl={`/dashboard-dokter/manajemen-konsultasi/tambah-konsultasi/${data2?.wallet}`}
                 hasil
               />
             ))

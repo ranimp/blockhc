@@ -1,26 +1,40 @@
 import {
   Fragment, useState, useContext, useEffect,
 } from 'react';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
-import NavbarLogin from '../../components/navbar/login';
-import Profil from '../../components/dashboard/profil';
-import Footer from '../../components/footer/index';
-import Sidebar from '../../components/dashboard/sidebar';
-import DaftarPasienDokter from '../../components/dashboard-dokter/daftar-pasien/dok-daftar-pasien';
-import UpdateKonsultasiDokter from '../../components/dashboard-dokter/manajemen-hasil-konsultasi/dok-update-konsultasi';
-import withAuth from '../../lib/withAuth';
-import { ContractContext } from '../../lib/contractProvider';
+import { useRouter } from 'next/router';
+import NavbarLogin from '../../../../components/navbar/login';
+import Profil from '../../../../components/dashboard/profil';
+import Sidebar from '../../../../components/dashboard/sidebar';
+import Footer from '../../../../components/footer/index';
+import withAuth from '../../../../lib/withAuth';
+import { ContractContext } from '../../../../lib/contractProvider';
+import HasilKonsultasiDokter from '../../../../components/dashboard-dokter/daftar-pasien/dok-hasil-konsultasi';
+import RiwayatKonsultasiDokter from '../../../../components/dashboard-dokter/daftar-pasien/dok-riwayat-konsultasi';
 
-function UpdateKonsultasi() {
-  const router = useRouter();
-  const [active, setActive] = useState('hasil-konsultasi');
+function RiwayatKonsultasiDoctorPage() {
   const {
     getAllDoctor,
     allDoctor,
+    getAllConsultation,
+    allConsultation,
   } = useContext(ContractContext);
+
+  const router = useRouter();
+  const { walletAddress } = router.query;
+  const [active, setActive] = useState('daftar-pasien');
   const [address, setAddress] = useState('');
+  const [riwayat, setRiwayat] = useState([]);
+
+  useEffect(() => {
+    getAllConsultation();
+  }, [getAllConsultation]);
+
+  useEffect(() => {
+    setRiwayat(allConsultation?.filter((item) => item.some((data) => data
+      .wallet === walletAddress)));
+  }, [allConsultation, walletAddress]);
 
   useEffect(() => {
     getAllDoctor();
@@ -30,6 +44,7 @@ function UpdateKonsultasi() {
   }, []);
 
   const doctorData = allDoctor?.filter((dokter) => dokter.wallet === address);
+
   return (
     <>
       <Head>
@@ -54,8 +69,8 @@ function UpdateKonsultasi() {
               <input type="text" placeholder="Pencarian" className="w-full focus:outline-none" />
             </div>
             <div>
-              {active === 'daftar-pasien' && <DaftarPasienDokter />}
-              {active === 'hasil-konsultasi' && <UpdateKonsultasiDokter /> }
+              {active === 'daftar-pasien' && <RiwayatKonsultasiDokter datas={riwayat ? riwayat[0] : null} />}
+              {active === 'hasil-konsultasi' && <HasilKonsultasiDokter />}
             </div>
           </div>
         </div>
@@ -67,4 +82,4 @@ function UpdateKonsultasi() {
   );
 }
 
-export default withAuth(UpdateKonsultasi);
+export default withAuth(RiwayatKonsultasiDoctorPage);

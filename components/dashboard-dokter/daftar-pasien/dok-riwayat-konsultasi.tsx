@@ -3,7 +3,7 @@ import React from 'react';
 import Table from '../../dashboard/table';
 import Button from '../../button/index';
 
-const RiwayatKonsultasiDokter = () => {
+const RiwayatKonsultasiDokter = ({ datas }) => {
   const router = useRouter();
   return (
     <div className="overflow-x-auto">
@@ -17,9 +17,9 @@ const RiwayatKonsultasiDokter = () => {
           </tr>
         </thead>
         <tbody>
-          <Table no="1" date="29/10/2022" doctor="dr.rani" link="/dashboard-dokter/detail-riwayat-konsultasi" />
-          <Table no="1" date="29/10/2022" doctor="dr.rani" link="/dashboard-dokter/detail-riwayat-konsultasi" />
-          <Table no="1" date="29/10/2022" doctor="dr.rani" link="/dashboard-dokter/detail-riwayat-konsultasi" />
+          {datas?.map((data, idx) => (
+            <Table key={idx} no={idx + 1} date={data?.tanggal} doctor={data?.namaDokter} link={`/dashboard-dokter/manajemen-pasien/detail-riwayat-konsultasi/${data?.wallet}/${idx}`} updateUrl={`/dashboard-dokter/manajemen-pasien/update-riwayat-konsultasi/${data?.wallet}/${idx}`} />
+          ))}
         </tbody>
       </table>
       <div className="flex justify-end mt-2">

@@ -31,7 +31,7 @@ function DetailDokterAdminPage() {
   useEffect(() => {
     getAllDoctor();
     setDoctorData(allDoctor?.filter((dokter) => dokter.wallet === walletAddress));
-  }, []);
+  }, [getAllDoctor]);
 
   const [active, setActive] = useState('manajemen-dokter');
 

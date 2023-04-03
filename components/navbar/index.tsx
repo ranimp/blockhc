@@ -73,11 +73,6 @@ const Navbar: React.FC<NavbarProps> = ({
                 <Button type="btn-outline" title="masuk" />
               </Link>
             </li>
-            <li className="nav-item">
-              <Link href="/" className="lg:px-3 py-2 flex items-center">
-                <Button type="btn-normal" title="daftar" />
-              </Link>
-            </li>
           </ul>
         </div>
       </div>

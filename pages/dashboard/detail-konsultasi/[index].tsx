@@ -26,11 +26,11 @@ function DetailKonsultasi() {
 
   useEffect(() => {
     getConsultationPasien();
-  });
+  }, [getConsultationPasien]);
 
   useEffect(() => {
     getEvidanceRegistration();
-  }, []);
+  }, [getEvidanceRegistration]);
 
   return (
     <>

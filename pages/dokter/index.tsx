@@ -22,7 +22,7 @@ export default function Dokter() {
 
   useEffect(() => {
     getAllDoctor();
-  }, []);
+  }, [getAllDoctor]);
 
   return (
     <>

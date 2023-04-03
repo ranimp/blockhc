@@ -35,7 +35,7 @@ function RiwayatKonsultasiAdminPage() {
 
   useEffect(() => {
     getAllConsultation();
-  }, []);
+  }, [getAllConsultation]);
 
   return (
     <>

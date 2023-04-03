@@ -31,7 +31,7 @@ function DetailPasienAdminPage() {
   useEffect(() => {
     getAllDataUser();
     setPasienData(allUser?.filter((pasien) => pasien.wallet === walletAddress));
-  }, []);
+  }, [getAllDataUser]);
 
   const [active, setActive] = useState('manajemen-pasien');
   return (

@@ -22,7 +22,7 @@ function DashboardUser() {
 
   useEffect(() => {
     getEvidanceRegistration();
-  }, []);
+  }, [getEvidanceRegistration]);
 
   return (
     <>

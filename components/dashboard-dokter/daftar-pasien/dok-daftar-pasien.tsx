@@ -31,6 +31,8 @@ const DaftarPasienDokter = () => {
               walletAddress={data[0]?.wallet}
               date={data[0]?.tanggal}
               name={data[0]?.nama}
+              detailUrl={`/dashboard-dokter/manajemen-pasien/detail-pasien/${data[0]?.wallet}`}
+              tambahUrl={`/dashboard-dokter/manajemen-konsultasi/tambah-konsultasi/${data[0]?.wallet}`}
             />
           ))}
         </tbody>

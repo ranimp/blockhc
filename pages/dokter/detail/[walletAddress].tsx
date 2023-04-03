@@ -28,7 +28,7 @@ export default function DetailDokter() {
   useEffect(() => {
     getAllDoctor();
     setDoctorData(allDoctor?.filter((dokter) => dokter[9] === walletAddress));
-  }, []);
+  }, [getAllDoctor]);
 
   useEffect(() => {
     loginStatus();
