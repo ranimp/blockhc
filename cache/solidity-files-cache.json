@@ -74,8 +74,8 @@
       ]
     },
     "D:\\TA\\project\\blockhc\\contracts\\registration.sol": {
-      "lastModificationDate": 1678349667421,
-      "contentHash": "9397027f8de7ee54ccf43ce6c95f5195",
+      "lastModificationDate": 1680357125246,
+      "contentHash": "aa8d72031e9bca839024620ebd546f9b",
       "sourceName": "contracts/registration.sol",
       "solcConfig": {
         "version": "0.8.17",

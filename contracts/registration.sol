@@ -15,6 +15,7 @@ contract ConsultationRegist {
         string keluhan;
         string gender;
         address wallet;
+        bool status;
     }
 
     mapping(address => Data[]) public registrations;
@@ -60,7 +61,8 @@ contract ConsultationRegist {
         string memory _sesi,
         string memory _tanggal,
         string memory _keluhan,
-        string memory _gender
+        string memory _gender,
+        bool _status
     ) public onlyUser {
         registrations[_wallet].push(
             Data(
@@ -71,13 +73,41 @@ contract ConsultationRegist {
                 _tanggal,
                 _keluhan,
                 _gender,
-                _wallet
+                _wallet,
+                _status
             )
         );
         if (registrations[_wallet].length == 1) {
             accountsWithRegistrations.push(_wallet);
         }
         registrationCount++;
+    }
+
+    // update pendaftaran untuk pasien
+    function updateRegistration(
+        address _wallet,
+        uint256 _index,
+        string memory _nama,
+        string memory _telepon,
+        string memory _namaDokter,
+        string memory _sesi,
+        string memory _tanggal,
+        string memory _keluhan,
+        string memory _gender,
+        bool _status
+    ) public onlyAdminOrDokter {
+        require(_index < registrationCount, "Registration data not found");
+        registrations[_wallet][_index] = Data(
+            _nama,
+            _telepon,
+            _namaDokter,
+            _sesi,
+            _tanggal,
+            _keluhan,
+            _gender,
+            _wallet,
+            _status
+        );
     }
 
     // get bukti pendaftaran pasien

@@ -5,7 +5,7 @@ import { ContractContext } from '../../../lib/contractProvider';
 const DaftarPasienDokter = () => {
   const {
     getRegistrationDoctor,
-    allRegistration,
+    allPasien,
   } = useContext(ContractContext);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const DaftarPasienDokter = () => {
           </tr>
         </thead>
         <tbody>
-          {allRegistration?.map((data, idx) => (
+          {allPasien?.map((data, idx) => (
             <TableDashboardDokter
               key={idx}
               no={idx + 1}

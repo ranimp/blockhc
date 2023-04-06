@@ -25,18 +25,16 @@ const HasilKonsultasiAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {allRegistration?.map((data) => (
-            data.map((data2, idx) => (
-              <TableKonsultasiDashboardAdmin
-                key={idx}
-                no={idx + 1}
-                walletAddress={data2?.wallet}
-                date={data2?.tanggal}
-                name={data2?.nama}
-                detailUrl={`/dashboard-admin/manajemen-konsultasi/detail-registrasi/${data2?.wallet}/${idx}`}
-                tambahUrl={`/dashboard-admin/manajemen-konsultasi/tambah-konsultasi/${data2?.wallet}`}
-              />
-            ))
+          {allRegistration?.map((data2, idx) => (
+            <TableKonsultasiDashboardAdmin
+              key={idx}
+              no={idx + 1}
+              walletAddress={data2?.wallet}
+              date={data2?.tanggal}
+              name={data2?.nama}
+              detailUrl={`/dashboard-admin/manajemen-konsultasi/detail-registrasi/${data2?.wallet}/${idx}`}
+              tambahUrl={`/dashboard-admin/manajemen-konsultasi/tambah-konsultasi/${data2?.wallet}/${idx}`}
+            />
           ))}
         </tbody>
       </table>

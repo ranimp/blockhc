@@ -10,7 +10,7 @@ const Doctor = () => {
 
   useEffect(() => {
     getAllDoctor();
-  }, [getAllDoctor]);
+  }, []);
 
   return (
     <div className="mb-16 lg:mb-36 px-6 lg:px-16">

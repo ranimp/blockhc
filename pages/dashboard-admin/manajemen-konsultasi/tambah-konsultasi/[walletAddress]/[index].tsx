@@ -1,40 +1,43 @@
 import {
-  Fragment, useState, useContext, useEffect,
+  Fragment, useState, useEffect, useContext,
 } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import DetailRegistrasiAdmin from '../../../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-detail-registrasi';
 import NavbarLogin from '../../../../../components/navbar/login';
 import Profil from '../../../../../components/dashboard/profil';
 import Sidebar from '../../../../../components/dashboard/sidebar';
 import DaftarDokterAdmin from '../../../../../components/dashboard-admin/manajemen-dokter/adm-daftar-dokter';
 import Footer from '../../../../../components/footer/index';
-import Button from '../../../../../components/button/index';
 import DaftarPasienAdmin from '../../../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
+import TambahKonsultasiAdmin from '../../../../../components/dashboard-admin/manajemen-hasil-konsultasi/adm-tambah-konsultasi';
+import Button from '../../../../../components/button/index';
 import withAuth from '../../../../../lib/withAuth';
 import { ContractContext } from '../../../../../lib/contractProvider';
 
-function DetailKonsultasiAdminPage() {
+function RiwayatKonsultasiAdminPage() {
   const [active, setActive] = useState('hasil-konsultasi');
   const router = useRouter();
   const { walletAddress, index } = router.query;
-
   const {
-    getAllRegistration,
-    allRegistration,
+    setWalletAddress,
+    nama, setNama,
+    namaDokter, setNamaDokter,
+    tanggal, setTanggal,
+    keluhan, setKeluhan,
+    diagnosa, setDiagnosa,
+    tensi, setTensi,
+    gula, setGula,
+    setIndex,
+    handleAddConsultation,
+    getAllConsultation,
   } = useContext(ContractContext);
 
-  const [detailRegistrasi, setDetailRegistrasi] = useState([]);
-
   useEffect(() => {
-    getAllRegistration();
-  }, [getAllRegistration]);
-
-  useEffect(() => {
-    setDetailRegistrasi(allRegistration);
-  }, [allRegistration, walletAddress, index]);
+    getAllConsultation();
+    setIndex(index);
+  }, [getAllConsultation]);
 
   return (
     <>
@@ -74,16 +77,31 @@ function DetailKonsultasiAdminPage() {
             <div>
               {active === 'manajemen-pasien' && <DaftarPasienAdmin />}
               {active === 'hasil-konsultasi' && (
-              <DetailRegistrasiAdmin
-                nama={detailRegistrasi ? detailRegistrasi[index]?.nama : null}
-                gender={detailRegistrasi ? detailRegistrasi[index]?.gender : null}
-                dokter={detailRegistrasi ? detailRegistrasi[index]?.namaDokter : null}
-                telepon={detailRegistrasi ? detailRegistrasi[index]?.telepon : null}
-                sesi={detailRegistrasi ? detailRegistrasi[index]?.sesi : null}
-                tanggal={detailRegistrasi ? detailRegistrasi[index]?.tanggal : null}
-                keluhan={detailRegistrasi ? detailRegistrasi[index]?.keluhan : null}
-                wallet={detailRegistrasi ? detailRegistrasi[index]?.wallet : null}
-                status=""
+              <TambahKonsultasiAdmin
+                wallet={setWalletAddress(walletAddress)}
+                walletName="walletAddress"
+                name={nama}
+                nameName="nama"
+                nameChange={(e) => setNama(e.target.value)}
+                doctor={namaDokter}
+                doctorName="namaDokter"
+                doctorChange={(e) => setNamaDokter(e.target.value)}
+                date={tanggal}
+                dateName="tanggal"
+                dateChange={(e) => setTanggal(e.target.value)}
+                keluhan={keluhan}
+                keluhanName="keluhan"
+                keluhanChange={(e) => setKeluhan(e.target.value)}
+                diagnosa={diagnosa}
+                diagnosaName="diagnosa"
+                diagnosaChange={(e) => setDiagnosa(e.target.value)}
+                tekanan={tensi}
+                tekananName="tensi"
+                tekananChange={(e) => setTensi(e.target.value)}
+                gula={gula}
+                gulaName="gula"
+                gulaChange={(e) => setGula(e.target.value)}
+                onClick={handleAddConsultation}
               />
               )}
               {active === 'manajemen-dokter' && <DaftarDokterAdmin />}
@@ -98,4 +116,4 @@ function DetailKonsultasiAdminPage() {
   );
 }
 
-export default withAuth(DetailKonsultasiAdminPage);
+export default withAuth(RiwayatKonsultasiAdminPage);

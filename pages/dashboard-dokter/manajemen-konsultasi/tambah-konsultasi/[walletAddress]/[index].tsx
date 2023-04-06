@@ -4,20 +4,20 @@ import {
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import NavbarLogin from '../../../../components/navbar/login';
-import Profil from '../../../../components/dashboard/profil';
-import Sidebar from '../../../../components/dashboard/sidebar';
-import Footer from '../../../../components/footer/index';
-import DaftarPasienAdmin from '../../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
-import withAuth from '../../../../lib/withAuth';
-import { ContractContext } from '../../../../lib/contractProvider';
-import TambahKonsultasiDokter from '../../../../components/dashboard-dokter/manajemen-hasil-konsultasi/dok-tambah-konsultasi';
+import NavbarLogin from '../../../../../components/navbar/login';
+import Profil from '../../../../../components/dashboard/profil';
+import Sidebar from '../../../../../components/dashboard/sidebar';
+import Footer from '../../../../../components/footer/index';
+import DaftarPasienAdmin from '../../../../../components/dashboard-admin/manajemen-pasien/adm-daftar-pasien';
+import withAuth from '../../../../../lib/withAuth';
+import { ContractContext } from '../../../../../lib/contractProvider';
+import TambahKonsultasiDokter from '../../../../../components/dashboard-dokter/manajemen-hasil-konsultasi/dok-tambah-konsultasi';
 
 function RiwayatKonsultasiDokterPage() {
   const [active, setActive] = useState('hasil-konsultasi');
   const [address, setAddress] = useState('');
   const router = useRouter();
-  const { walletAddress } = router.query;
+  const { walletAddress, index } = router.query;
   const {
     setWalletAddress,
     nama, setNama,
@@ -27,6 +27,7 @@ function RiwayatKonsultasiDokterPage() {
     diagnosa, setDiagnosa,
     tensi, setTensi,
     gula, setGula,
+    setIndex,
     handleAddConsultation,
     getAllConsultation,
     getAllDoctor,
@@ -35,6 +36,7 @@ function RiwayatKonsultasiDokterPage() {
 
   useEffect(() => {
     getAllConsultation();
+    setIndex(index);
   }, [getAllConsultation]);
 
   useEffect(() => {

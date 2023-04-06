@@ -24,19 +24,17 @@ const HasilKonsultasiDokter = () => {
           </tr>
         </thead>
         <tbody>
-          {allRegistration?.map((data) => (
-            data.map((data2, idx) => (
-              <TableDashboardDokter
-                key={idx}
-                no={idx + 1}
-                walletAddress={data2?.wallet}
-                date={data2?.tanggal}
-                name={data2?.nama}
-                detailUrl={`/dashboard-dokter/manajemen-konsultasi/detail-registrasi/${data2?.wallet}/${idx}`}
-                tambahUrl={`/dashboard-dokter/manajemen-konsultasi/tambah-konsultasi/${data2?.wallet}`}
-                hasil
-              />
-            ))
+          {allRegistration?.map((data2, idx) => (
+            <TableDashboardDokter
+              key={idx}
+              no={idx + 1}
+              walletAddress={data2?.wallet}
+              date={data2?.tanggal}
+              name={data2?.nama}
+              detailUrl={`/dashboard-dokter/manajemen-konsultasi/detail-registrasi/${data2?.wallet}/${idx}`}
+              tambahUrl={`/dashboard-dokter/manajemen-konsultasi/tambah-konsultasi/${data2?.wallet}/${idx}`}
+              hasil
+            />
           ))}
         </tbody>
       </table>

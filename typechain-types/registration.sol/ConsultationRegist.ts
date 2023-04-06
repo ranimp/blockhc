@@ -33,6 +33,7 @@ export declare namespace ConsultationRegist {
     keluhan: PromiseOrValue<string>;
     gender: PromiseOrValue<string>;
     wallet: PromiseOrValue<string>;
+    status: PromiseOrValue<boolean>;
   };
 
   export type DataStructOutput = [
@@ -43,7 +44,8 @@ export declare namespace ConsultationRegist {
     string,
     string,
     string,
-    string
+    string,
+    boolean
   ] & {
     nama: string;
     telepon: string;
@@ -53,19 +55,21 @@ export declare namespace ConsultationRegist {
     keluhan: string;
     gender: string;
     wallet: string;
+    status: boolean;
   };
 }
 
 export interface ConsultationRegistInterface extends utils.Interface {
   functions: {
     "accountsWithRegistrations(uint256)": FunctionFragment;
-    "addRegistration(address,string,string,string,string,string,string,string)": FunctionFragment;
+    "addRegistration(address,string,string,string,string,string,string,string,bool)": FunctionFragment;
     "getAllRegistrations()": FunctionFragment;
     "getAllSesi()": FunctionFragment;
     "getRegistrationEvidence()": FunctionFragment;
     "registrationCount()": FunctionFragment;
     "registrations(address,uint256)": FunctionFragment;
     "roles()": FunctionFragment;
+    "updateRegistration(address,uint256,string,string,string,string,string,string,string,bool)": FunctionFragment;
   };
 
   getFunction(
@@ -78,6 +82,7 @@ export interface ConsultationRegistInterface extends utils.Interface {
       | "registrationCount"
       | "registrations"
       | "roles"
+      | "updateRegistration"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -94,7 +99,8 @@ export interface ConsultationRegistInterface extends utils.Interface {
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
-      PromiseOrValue<string>
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
     ]
   ): string;
   encodeFunctionData(
@@ -118,6 +124,21 @@ export interface ConsultationRegistInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "roles", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "updateRegistration",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>
+    ]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "accountsWithRegistrations",
@@ -145,6 +166,10 @@ export interface ConsultationRegistInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "roles", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "updateRegistration",
+    data: BytesLike
+  ): Result;
 
   events: {};
 }
@@ -190,6 +215,7 @@ export interface ConsultationRegist extends BaseContract {
       _tanggal: PromiseOrValue<string>,
       _keluhan: PromiseOrValue<string>,
       _gender: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -210,7 +236,17 @@ export interface ConsultationRegist extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, string, string, string, string, string, string] & {
+      [
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        boolean
+      ] & {
         nama: string;
         telepon: string;
         namaDokter: string;
@@ -219,10 +255,25 @@ export interface ConsultationRegist extends BaseContract {
         keluhan: string;
         gender: string;
         wallet: string;
+        status: boolean;
       }
     >;
 
     roles(overrides?: CallOverrides): Promise<[string]>;
+
+    updateRegistration(
+      _wallet: PromiseOrValue<string>,
+      _index: PromiseOrValue<BigNumberish>,
+      _nama: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _namaDokter: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _tanggal: PromiseOrValue<string>,
+      _keluhan: PromiseOrValue<string>,
+      _gender: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   accountsWithRegistrations(
@@ -239,6 +290,7 @@ export interface ConsultationRegist extends BaseContract {
     _tanggal: PromiseOrValue<string>,
     _keluhan: PromiseOrValue<string>,
     _gender: PromiseOrValue<string>,
+    _status: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -259,7 +311,17 @@ export interface ConsultationRegist extends BaseContract {
     arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [string, string, string, string, string, string, string, string] & {
+    [
+      string,
+      string,
+      string,
+      string,
+      string,
+      string,
+      string,
+      string,
+      boolean
+    ] & {
       nama: string;
       telepon: string;
       namaDokter: string;
@@ -268,10 +330,25 @@ export interface ConsultationRegist extends BaseContract {
       keluhan: string;
       gender: string;
       wallet: string;
+      status: boolean;
     }
   >;
 
   roles(overrides?: CallOverrides): Promise<string>;
+
+  updateRegistration(
+    _wallet: PromiseOrValue<string>,
+    _index: PromiseOrValue<BigNumberish>,
+    _nama: PromiseOrValue<string>,
+    _telepon: PromiseOrValue<string>,
+    _namaDokter: PromiseOrValue<string>,
+    _sesi: PromiseOrValue<string>,
+    _tanggal: PromiseOrValue<string>,
+    _keluhan: PromiseOrValue<string>,
+    _gender: PromiseOrValue<string>,
+    _status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   callStatic: {
     accountsWithRegistrations(
@@ -288,6 +365,7 @@ export interface ConsultationRegist extends BaseContract {
       _tanggal: PromiseOrValue<string>,
       _keluhan: PromiseOrValue<string>,
       _gender: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -308,7 +386,17 @@ export interface ConsultationRegist extends BaseContract {
       arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [string, string, string, string, string, string, string, string] & {
+      [
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        string,
+        boolean
+      ] & {
         nama: string;
         telepon: string;
         namaDokter: string;
@@ -317,10 +405,25 @@ export interface ConsultationRegist extends BaseContract {
         keluhan: string;
         gender: string;
         wallet: string;
+        status: boolean;
       }
     >;
 
     roles(overrides?: CallOverrides): Promise<string>;
+
+    updateRegistration(
+      _wallet: PromiseOrValue<string>,
+      _index: PromiseOrValue<BigNumberish>,
+      _nama: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _namaDokter: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _tanggal: PromiseOrValue<string>,
+      _keluhan: PromiseOrValue<string>,
+      _gender: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {};
@@ -340,6 +443,7 @@ export interface ConsultationRegist extends BaseContract {
       _tanggal: PromiseOrValue<string>,
       _keluhan: PromiseOrValue<string>,
       _gender: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -358,6 +462,20 @@ export interface ConsultationRegist extends BaseContract {
     ): Promise<BigNumber>;
 
     roles(overrides?: CallOverrides): Promise<BigNumber>;
+
+    updateRegistration(
+      _wallet: PromiseOrValue<string>,
+      _index: PromiseOrValue<BigNumberish>,
+      _nama: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _namaDokter: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _tanggal: PromiseOrValue<string>,
+      _keluhan: PromiseOrValue<string>,
+      _gender: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -375,6 +493,7 @@ export interface ConsultationRegist extends BaseContract {
       _tanggal: PromiseOrValue<string>,
       _keluhan: PromiseOrValue<string>,
       _gender: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -397,5 +516,19 @@ export interface ConsultationRegist extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     roles(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    updateRegistration(
+      _wallet: PromiseOrValue<string>,
+      _index: PromiseOrValue<BigNumberish>,
+      _nama: PromiseOrValue<string>,
+      _telepon: PromiseOrValue<string>,
+      _namaDokter: PromiseOrValue<string>,
+      _sesi: PromiseOrValue<string>,
+      _tanggal: PromiseOrValue<string>,
+      _keluhan: PromiseOrValue<string>,
+      _gender: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
   };
 }

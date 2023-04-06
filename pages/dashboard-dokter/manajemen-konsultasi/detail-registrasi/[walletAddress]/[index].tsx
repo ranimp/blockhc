@@ -25,7 +25,6 @@ function DetailKonsultasiDokterPage() {
     allDoctor,
   } = useContext(ContractContext);
 
-  const [registrasi, setRegistrasi] = useState([]);
   const [detailRegistrasi, setDetailRegistrasi] = useState([]);
   const [address, setAddress] = useState('');
 
@@ -34,14 +33,8 @@ function DetailKonsultasiDokterPage() {
   }, [getAllRegistration]);
 
   useEffect(() => {
-    setRegistrasi(allRegistration?.filter((item) => item.some((data) => data
-      .wallet === walletAddress)));
-  }, [allRegistration, walletAddress]);
-
-  useEffect(() => {
-    const dataIndex = registrasi?.find((item) => item[0]);
-    setDetailRegistrasi(dataIndex);
-  }, [index, registrasi]);
+    setDetailRegistrasi(allRegistration);
+  }, [allRegistration, walletAddress, index]);
 
   useEffect(() => {
     getAllDoctor();

@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import React, { createContext, useState } from 'react';
 import { ethers } from 'ethers';
 import { useRouter } from 'next/router';
@@ -13,7 +14,8 @@ export const ContractProvider = ({ children }) => {
   // contract address
   const rolesAddress = '0x2c161963073Ba0d9f3930563d4E7B8C081a09d37';
   const userAddress = '0xf8Aa18d6620Cd256d4105862a7aBb73Ad843Afe1';
-  const registrationAddress = '0x6b6286E4bcf199b5814A84c189B5A04220BB67BD';
+  // const registrationAddress = '0x6b6286E4bcf199b5814A84c189B5A04220BB67BD';
+  const registrationAddress = '0xcb13ecEc525796f8736446Ffc9206ddf9c083a58';
   const consultationAddress = '0xecDbb16A89F61dFddc54a3bd0623D8458FcE91D4';
 
   // getAllData
@@ -21,6 +23,7 @@ export const ContractProvider = ({ children }) => {
   const [allUser, setAllUser] = useState();
   const [allRegistration, setAllRegistration] = useState();
   const [allConsultation, setAllConsultation] = useState();
+  const [allPasien, setAllPasien] = useState();
 
   // condition
   const [user, setUser] = useState(true);
@@ -99,7 +102,7 @@ export const ContractProvider = ({ children }) => {
     try {
       if (signerAddress === address) {
         // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
-        await Promise.all([
+        const tx = await Promise.all([
           contract.addUser(nama, email, telepon, gender, ttl, true),
           contractRoles.setDefaultRole(),
         ]);
@@ -129,7 +132,7 @@ export const ContractProvider = ({ children }) => {
 
     try {
       if (signerAddress === address) {
-        await Promise.all([
+        const tx = await Promise.all([
           contract.updateUser(nama, email, telepon, gender, ttl, true),
         ]);
         alert('transaksi anda sedang diproses');
@@ -193,7 +196,7 @@ export const ContractProvider = ({ children }) => {
       checkRoles();
       if ((signerAddress === address) && role === 'admin') {
         // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
-        await Promise.all([
+        const tx = await Promise.all([
           contract.addUserAdmin(
             walletAddress,
             nama,
@@ -233,7 +236,7 @@ export const ContractProvider = ({ children }) => {
       checkRoles();
       if ((signerAddress === address) && role === 'admin') {
         // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
-        await Promise.all([
+        const tx = await Promise.all([
           contract.updateUserAdmin(
             walletAddress,
             nama,
@@ -275,6 +278,7 @@ export const ContractProvider = ({ children }) => {
         setAllUser(data);
       }
     } catch (error) {
+      console.log('getAllDataUser', error);
       alert('terjadi kesalahan');
     }
   };
@@ -296,7 +300,7 @@ export const ContractProvider = ({ children }) => {
       checkRoles();
       if ((signerAddress === address) && role === 'admin') {
         // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
-        await Promise.all([
+        const tx = await Promise.all([
           contract.addDoctor(
             namaDokter,
             email,
@@ -340,7 +344,7 @@ export const ContractProvider = ({ children }) => {
       checkRoles();
       if ((signerAddress === address) && role === 'admin') {
         // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
-        await Promise.all([
+        const tx = await Promise.all([
           contract.updateDoctor(
             namaDokter,
             email,
@@ -378,6 +382,7 @@ export const ContractProvider = ({ children }) => {
       const data = await contract.getDoctors();
       setAllDoctor(data);
     } catch (error) {
+      console.log('getAllDoctor', error);
       alert('ada kesalahan');
     }
   };
@@ -408,6 +413,7 @@ export const ContractProvider = ({ children }) => {
           tanggal,
           keluhan,
           gender,
+          true,
         );
         alert('transaksi anda sedang diproses');
         await tx.wait();
@@ -415,6 +421,7 @@ export const ContractProvider = ({ children }) => {
         router.back();
       }
     } catch (error) {
+      console.log(error);
       alert('Transaksi dibatalkan oleh pengguna');
     }
     // Setelah transaksi berhasil, reset nilai-nilai pada form
@@ -443,16 +450,18 @@ export const ContractProvider = ({ children }) => {
       if (address === signerAddress) {
         const data = await contract.getRegistrationEvidence();
         const latestData = data[data.length - 1];
-        setNama(latestData[0]);
-        setTelepon(latestData[1]);
-        setNamaDokter(latestData[2]);
-        setSesi(latestData[3]);
-        setTanggal(latestData[4]);
-        setKeluhan(latestData[5]);
-        setGender(latestData[6]);
-        setWalletAddress(latestData[7]);
-        if (latestData[5].length > 0) {
-          setIsRegist(true);
+        if (latestData[8] === true) {
+          setNama(latestData[0]);
+          setTelepon(latestData[1]);
+          setNamaDokter(latestData[2]);
+          setSesi(latestData[3]);
+          setTanggal(latestData[4]);
+          setKeluhan(latestData[5]);
+          setGender(latestData[6]);
+          setWalletAddress(latestData[7]);
+          if (latestData[5].length > 0) {
+            setIsRegist(true);
+          }
         }
       }
     } catch (error) {
@@ -476,6 +485,7 @@ export const ContractProvider = ({ children }) => {
         setSlot(slotBooked);
       }
     } catch (error) {
+      console.log('getAllSession', error);
       alert('terjadi kesalahan');
     }
   };
@@ -495,9 +505,12 @@ export const ContractProvider = ({ children }) => {
       checkRoles();
       if (address === signerAddress && (role === 'admin')) {
         const data = await contract.getAllRegistrations();
-        setAllRegistration(data);
+        const filteredData = data.flat().filter((item) => item.status === true);
+        setAllRegistration(filteredData);
+        setAllPasien(data);
       }
     } catch (error) {
+      console.log('getAllRegistration', error);
       alert('terjadi kesalahan');
     }
   };
@@ -522,9 +535,12 @@ export const ContractProvider = ({ children }) => {
         const data = await contract.getAllRegistrations();
         const filteredData = data.filter((pasien) => pasien
           .some((item) => item.namaDokter === filteredDoctor));
-        setAllRegistration(filteredData);
+        const displayedData = filteredData.flat().filter((item) => item.status === true);
+        setAllRegistration(displayedData);
+        setAllPasien(filteredData);
       }
     } catch (error) {
+      console.log('getRegistrationDoctor', error);
       alert('terjadi kesalahan');
     }
   };
@@ -539,6 +555,7 @@ export const ContractProvider = ({ children }) => {
 
     // Buat instance kontrak yang terhubung ke provider
     const contract = new ethers.Contract(consultationAddress, consultContractAbi.abi, signer);
+    const contractRegist = new ethers.Contract(registrationAddress, registContractAbi.abi, signer);
     const loggedInUser = localStorage.getItem('address');
     const address = JSON.parse(loggedInUser);
     const signerAddress = await signer.getAddress();
@@ -546,22 +563,37 @@ export const ContractProvider = ({ children }) => {
     try {
       checkRoles();
       if (address === signerAddress && (role === 'admin' || role === 'dokter')) {
-        const tx = await contract.addConsultation(
-          walletAddress,
-          nama,
-          namaDokter,
-          tanggal,
-          keluhan,
-          diagnosa,
-          tensi,
-          gula,
-        );
+        const [addConsultationTx, updateRegistrationTx] = await Promise.all([
+          contract.addConsultation(
+            walletAddress,
+            nama,
+            namaDokter,
+            tanggal,
+            keluhan,
+            diagnosa,
+            tensi,
+            gula,
+          ),
+          contractRegist.updateRegistration(
+            walletAddress,
+            index,
+            nama,
+            '',
+            namaDokter,
+            '',
+            tanggal,
+            keluhan,
+            gender,
+            false,
+          ),
+        ]);
         alert('transaksi anda sedang diproses');
-        await tx.wait();
+        await Promise.all([addConsultationTx.wait(), updateRegistrationTx.wait()]);
         alert('transaksi anda berhasil');
         router.back();
       }
     } catch (error) {
+      console.log(error);
       alert('Transaksi dibatalkan oleh pengguna');
     }
   };
@@ -620,6 +652,7 @@ export const ContractProvider = ({ children }) => {
         setAllConsultation(data);
       }
     } catch (error) {
+      console.log('getConsultationPasien', error);
       alert('terjadi kesalahan');
     }
   };
@@ -642,6 +675,7 @@ export const ContractProvider = ({ children }) => {
         setAllConsultation(data);
       }
     } catch (error) {
+      console.log('getAllConsultation', error);
       alert('terjadi kesalahan');
     }
   };
@@ -722,6 +756,8 @@ export const ContractProvider = ({ children }) => {
         setAllRegistration,
         allConsultation,
         setAllConsultation,
+        allPasien,
+        setAllPasien,
       }}
     >
       {children}
