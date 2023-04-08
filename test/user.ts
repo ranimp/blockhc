@@ -347,5 +347,9 @@ describe('UserData', () => {
         userData.connect(nonUser).getUser(await user1.getAddress()),
       ).to.be.revertedWith('Hanya pengguna terdaftar yang diizinkan untuk mengakses.');
     });
+    it('should allow user or non user to get all doctor', async () => {
+      const doctor = await userData.connect(nonUser).getDoctors();
+      expect(doctor.length).to.eql(1);
+    });
   });
 });

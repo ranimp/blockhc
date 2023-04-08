@@ -46,6 +46,7 @@ describe('ConsultationRegist', () => {
         tanggal,
         keluhan,
         gender,
+        true,
       );
       const registrations = await consultationRegist.connect(pasien1)
         .getRegistrationEvidence(pasien1.getAddress());
@@ -60,6 +61,60 @@ describe('ConsultationRegist', () => {
       expect(registration.keluhan).to.equal(keluhan);
       expect(registration.gender).to.equal(gender);
       expect(registration.wallet).to.equal(patientAddress);
+      expect(registration.status).to.equal(true);
+    });
+  });
+
+  describe('update registration', () => {
+    it('should update registration', async () => {
+      const patientAddress = await pasien1.getAddress();
+      const nama = 'John Doe';
+      const telepon = '08012345678';
+      const namaDokter = 'Dr. Jane Smith';
+      const sesi = 'Sesi 1';
+      const tanggal = '2022-02-17';
+      const keluhan = 'Flu';
+      const gender = 'Male';
+
+      await userRoles.connect(admin).setRole(await pasien1.getAddress(), 'pasien');
+      await userRoles.connect(admin).setRole(await dokter.getAddress(), 'dokter');
+      await consultationRegist.connect(pasien1).addRegistration(
+        patientAddress,
+        nama,
+        telepon,
+        namaDokter,
+        sesi,
+        tanggal,
+        keluhan,
+        gender,
+        true,
+      );
+      await consultationRegist.connect(dokter).updateRegistration(
+        patientAddress,
+        0,
+        nama,
+        telepon,
+        namaDokter,
+        sesi,
+        tanggal,
+        keluhan,
+        gender,
+        false,
+      );
+      const registrations = await consultationRegist.connect(pasien1)
+        .getRegistrationEvidence(pasien1.getAddress());
+      expect(registrations).to.have.lengthOf(1);
+
+      const registration = registrations[0];
+      expect(registration.nama).to.equal(nama);
+      expect(registration.telepon).to.equal(telepon);
+      expect(registration.namaDokter).to.equal(namaDokter);
+      expect(registration.sesi).to.equal(sesi);
+      expect(registration.tanggal).to.equal(tanggal);
+      expect(registration.keluhan).to.equal(keluhan);
+      expect(registration.gender).to.equal(gender);
+      expect(registration.wallet).to.equal(patientAddress);
+      expect(registration.status).to.equal(false);
     });
   });
 
@@ -93,6 +148,7 @@ describe('ConsultationRegist', () => {
         tanggal,
         keluhan,
         gender,
+        true,
       );
 
       await consultationRegist.connect(dokter).addRegistration(
@@ -104,6 +160,7 @@ describe('ConsultationRegist', () => {
         tanggal2,
         keluhan2,
         gender2,
+        true,
       );
 
       const allRegistrations = await consultationRegist.connect(admin).getAllRegistrations();
@@ -117,6 +174,7 @@ describe('ConsultationRegist', () => {
       expect(allRegistrations[0][0].keluhan).to.equal(keluhan);
       expect(allRegistrations[0][0].gender).to.equal(gender);
       expect(allRegistrations[0][0].wallet).to.equal(patient1Address);
+      expect(allRegistrations[0][0].status).to.equal(true);
 
       expect(allRegistrations[1][0].nama).to.equal(nama2);
       expect(allRegistrations[1][0].telepon).to.equal(telepon2);
@@ -126,6 +184,7 @@ describe('ConsultationRegist', () => {
       expect(allRegistrations[1][0].keluhan).to.equal(keluhan2);
       expect(allRegistrations[1][0].gender).to.equal(gender2);
       expect(allRegistrations[1][0].wallet).to.equal(patient2Address);
+      expect(allRegistrations[1][0].status).to.equal(true);
 
       const doctorRegistrations = await consultationRegist.connect(dokter).getAllRegistrations();
       expect(doctorRegistrations).to.have.lengthOf(2);
@@ -138,6 +197,7 @@ describe('ConsultationRegist', () => {
       expect(doctorRegistrations[1][0].keluhan).to.equal(keluhan2);
       expect(doctorRegistrations[1][0].gender).to.equal(gender2);
       expect(doctorRegistrations[1][0].wallet).to.equal(patient2Address);
+      expect(doctorRegistrations[1][0].status).to.equal(true);
     });
   });
 
@@ -163,6 +223,7 @@ describe('ConsultationRegist', () => {
         tanggal,
         keluhan,
         gender,
+        true,
       );
 
       // Register another session for the same patient
@@ -175,6 +236,7 @@ describe('ConsultationRegist', () => {
         tanggal,
         keluhan,
         gender,
+        true,
       );
 
       // Call getAllSessions as an admin
@@ -184,7 +246,6 @@ describe('ConsultationRegist', () => {
       expect(allSessions.length).to.equal(1);
       expect(allSessions[0].length).to.equal(2);
     });
-
     it('should return all sessions for pasien', async () => {
       await userRoles.connect(admin).setRole(await pasien1.getAddress(), 'pasien');
       // Register a session for the patient
@@ -205,6 +266,7 @@ describe('ConsultationRegist', () => {
         tanggal,
         keluhan,
         gender,
+        true,
       );
 
       // Call getAllSessions as the patient
@@ -235,7 +297,43 @@ describe('ConsultationRegist', () => {
         tanggal,
         keluhan,
         gender,
+        true,
       )).to.be.revertedWith('Hanya pengguna terdaftar yang diizinkan untuk mengakses.');
+    });
+    it('should only admin or doctor user can update registration', async () => {
+      const patientAddress = await pasien1.getAddress();
+      const nama = 'John Doe';
+      const telepon = '08012345678';
+      const namaDokter = 'Dr. Jane Smith';
+      const sesi = 'Sesi 1';
+      const tanggal = '2022-02-17';
+      const keluhan = 'Flu';
+      const gender = 'Male';
+
+      await userRoles.connect(admin).setRole(await pasien1.getAddress(), 'pasien');
+      await consultationRegist.connect(pasien1).addRegistration(
+        patientAddress,
+        nama,
+        telepon,
+        namaDokter,
+        sesi,
+        tanggal,
+        keluhan,
+        gender,
+        true,
+      );
+      await expect(consultationRegist.connect(dokter).updateRegistration(
+        patientAddress,
+        0,
+        nama,
+        telepon,
+        namaDokter,
+        sesi,
+        tanggal,
+        keluhan,
+        gender,
+        false,
+      )).to.be.revertedWith('Hanya admin atau dokter yang diizinkan untuk mengakses.');
     });
     it('should only pasien can get evidence', async () => {
       const patientAddress = await pasien1.getAddress();
@@ -258,6 +356,7 @@ describe('ConsultationRegist', () => {
         tanggal,
         keluhan,
         gender,
+        true,
       );
 
       await expect(consultationRegist.connect(admin)
@@ -282,6 +381,7 @@ describe('ConsultationRegist', () => {
         tanggal,
         keluhan,
         gender,
+        true,
       );
 
       await expect(consultationRegist.connect(pasien1).getAllRegistrations()).to.be.revertedWith('Hanya admin atau dokter yang diizinkan untuk mengakses.');
