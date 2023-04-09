@@ -10,6 +10,7 @@ export interface DoctorCardProps {
   img: string;
   title: string;
   sch: string;
+  detailUrl?: string;
 }
 
 export interface DashboardProfilProps {
@@ -21,9 +22,9 @@ export interface DashboardSidebarProps {
   menu1: string;
   menu2: string;
   menu3: string;
-  onClickMenu1: Function;
-  onClickMenu2: Function;
-  onClickMenu3: Function;
+  onClickMenu1: () => void;
+  onClickMenu2: () => void;
+  onClickMenu3: () => void;
   title1: string;
   title2: string;
   title3: string;
@@ -34,7 +35,9 @@ export interface DashboardTableProps {
   no: number;
   date: string;
   doctor: string;
-  link: string;
+  link?: string;
+  updateUrl?: string;
+  pasien?: boolean;
 }
 
 export interface NavbarProps {
@@ -95,6 +98,7 @@ export interface AdminDetailDokter {
   role: string;
   education: string;
   strnumber: string;
+  category: string;
 }
 
 export interface AdminTableDokter {
@@ -102,8 +106,8 @@ export interface AdminTableDokter {
   walletAddress: any;
   name: string;
   status: boolean;
-  detailUrl: string;
-  updateUrl: string;
+  detailUrl?: string;
+  updateUrl?: string;
 }
 
 export interface AdminUpdateDokter {
@@ -119,13 +123,31 @@ export interface AdminUpdateDokter {
 }
 
 export interface AdminTambahEditKonsultasi {
-  name: string;
-  doctor: string;
-  date: string;
-  keluhan: string;
-  diagnosa: string;
-  tekanan: string;
-  gula: string;
+  name?: string;
+  nameName?: string;
+  nameChange?: React.ChangeEventHandler<HTMLInputElement>;
+  doctor?: string;
+  doctorName?: string;
+  doctorChange?: React.ChangeEventHandler<HTMLInputElement>;
+  date?: string;
+  dateName?: string;
+  dateChange?: React.ChangeEventHandler<HTMLInputElement>;
+  keluhan?: string;
+  keluhanName?: string;
+  keluhanChange?: React.ChangeEventHandler<HTMLInputElement>;
+  diagnosa?: string;
+  diagnosaName?: string;
+  diagnosaChange?: React.ChangeEventHandler<HTMLInputElement>;
+  tekanan?: string;
+  tekananName?: string;
+  tekananChange?: React.ChangeEventHandler<HTMLInputElement>;
+  gula?: string;
+  gulaName?: string;
+  gulaChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onClick?: () => void;
+  wallet?: any;
+  walletName?: string;
+  walletChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 export interface AdminTableKonsultasi {
@@ -133,6 +155,8 @@ export interface AdminTableKonsultasi {
   walletAddress: any;
   name: string;
   date: string;
+  tambahUrl?: string;
+  detailUrl?: string;
 }
 
 export interface AdminDetailPasien {
@@ -145,14 +169,20 @@ export interface AdminDetailPasien {
 }
 
 export interface AdminDetailRiwayatPasien {
-  date: string;
-  name: string;
-  doctor: string;
-  cat: string;
-  keluhan: string;
-  diagnosa: string;
-  tekanan: string;
-  gula: string;
+  name?: string;
+  gender?: string;
+  dokter?: string;
+  doctor?: string;
+  telepon?: string;
+  sesi?: string;
+  tanggal?: string;
+  date?: string;
+  keluhan?: string;
+  diagnosa?: string;
+  tekanan?: string;
+  gula?: string;
+  wallet?: any;
+  status?: boolean;
 }
 
 export interface AdminTambahPasien {
@@ -179,8 +209,8 @@ export interface AdminTablePasien {
   walletAddress: any;
   name: string;
   status: boolean;
-  detailUrl: string;
-  updateUrl: string;
+  detailUrl?: string;
+  updateUrl?: string;
 }
 
 export interface DokterTable {
@@ -188,7 +218,9 @@ export interface DokterTable {
   walletAddress: any;
   name: string;
   date: string;
-  hasil: string;
+  tambahUrl?: string;
+  detailUrl?: string;
+  hasil?: boolean;
 }
 
 export interface PasienBuktiPendaftaran {

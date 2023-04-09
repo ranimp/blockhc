@@ -1,12 +1,23 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, {
+  createContext, useState, useEffect, useMemo,
+} from 'react';
 import { ethers } from 'ethers';
 
-export const AuthContext = createContext();
+type AuthContextType = {
+  isLogged: boolean;
+  redirect: { isRedirect: boolean; path: string };
+  address: string | null;
+  handleLogin: () => Promise<void>;
+  handleLogout: () => Promise<void>;
+  loginStatus: () => void;
+};
 
-export const AuthProvider = ({ children }) => {
+export const AuthContext = createContext<AuthContextType | null>(null);
+
+export const AuthProvider: React.FC = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
-  const [address, setAddress] = useState(null);
-  const [redirect, setRedirect] = useState({
+  const [address, setAddress] = useState<string | null>(null);
+  const [redirect, setRedirect] = useState<{ isRedirect: boolean; path: string }>({
     isRedirect: true,
     path: '/login',
   });
@@ -47,19 +58,14 @@ export const AuthProvider = ({ children }) => {
     window.location.href = '/';
   };
 
-  return (
-    <AuthContext.Provider
-      // eslint-disable-next-line react/jsx-no-constructed-context-values
-      value={{
-        isLogged,
-        redirect,
-        address,
-        handleLogin,
-        handleLogout,
-        loginStatus,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  const authContextValues = useMemo(() => ({
+    isLogged,
+    redirect,
+    address,
+    handleLogin,
+    handleLogout,
+    loginStatus,
+  }), [address, handleLogin, handleLogout, isLogged, loginStatus, redirect]);
+
+  return <AuthContext.Provider value={authContextValues}>{children}</AuthContext.Provider>;
 };

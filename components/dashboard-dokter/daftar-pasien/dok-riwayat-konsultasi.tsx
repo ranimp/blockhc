@@ -3,7 +3,11 @@ import React from 'react';
 import Table from '../../dashboard/table';
 import Button from '../../button/index';
 
-const RiwayatKonsultasiDokter = ({ datas }) => {
+interface Props {
+  datas: any[];
+}
+
+const RiwayatKonsultasiDokter = ({ datas }: Props) => {
   const router = useRouter();
   return (
     <div className="overflow-x-auto">
