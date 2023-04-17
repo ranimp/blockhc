@@ -16,6 +16,17 @@ import DaftarPasienAdmin from '../../../../../components/dashboard-admin/manajem
 import withAuth from '../../../../../lib/withAuth';
 import { ContractContext } from '../../../../../lib/contractProvider';
 
+interface DetailRegistrasi {
+  nama: string;
+  gender: string;
+  namaDokter: string;
+  telepon: string;
+  sesi: string;
+  tanggal: string;
+  keluhan: string;
+  wallet: string;
+}
+
 function DetailKonsultasiAdminPage() {
   const [active, setActive] = useState('hasil-konsultasi');
   const router = useRouter();
@@ -26,7 +37,7 @@ function DetailKonsultasiAdminPage() {
     allRegistration,
   } = useContext(ContractContext);
 
-  const [detailRegistrasi, setDetailRegistrasi] = useState([]);
+  const [detailRegistrasi, setDetailRegistrasi] = useState<DetailRegistrasi[]>();
 
   useEffect(() => {
     getAllRegistration();
@@ -35,6 +46,8 @@ function DetailKonsultasiAdminPage() {
   useEffect(() => {
     setDetailRegistrasi(allRegistration);
   }, [allRegistration, walletAddress, index]);
+
+  const numberIndex = Number(index);
 
   return (
     <>
@@ -75,15 +88,15 @@ function DetailKonsultasiAdminPage() {
               {active === 'manajemen-pasien' && <DaftarPasienAdmin />}
               {active === 'hasil-konsultasi' && (
               <DetailRegistrasiAdmin
-                nama={detailRegistrasi ? detailRegistrasi[index]?.nama : null}
-                gender={detailRegistrasi ? detailRegistrasi[index]?.gender : null}
-                dokter={detailRegistrasi ? detailRegistrasi[index]?.namaDokter : null}
-                telepon={detailRegistrasi ? detailRegistrasi[index]?.telepon : null}
-                sesi={detailRegistrasi ? detailRegistrasi[index]?.sesi : null}
-                tanggal={detailRegistrasi ? detailRegistrasi[index]?.tanggal : null}
-                keluhan={detailRegistrasi ? detailRegistrasi[index]?.keluhan : null}
-                wallet={detailRegistrasi ? detailRegistrasi[index]?.wallet : null}
-                status=""
+                nama={detailRegistrasi ? detailRegistrasi[numberIndex]?.nama : undefined}
+                gender={detailRegistrasi ? detailRegistrasi[numberIndex]?.gender : undefined}
+                dokter={detailRegistrasi ? detailRegistrasi[numberIndex]?.namaDokter : undefined}
+                telepon={detailRegistrasi ? detailRegistrasi[numberIndex]?.telepon : undefined}
+                sesi={detailRegistrasi ? detailRegistrasi[numberIndex]?.sesi : undefined}
+                tanggal={detailRegistrasi ? detailRegistrasi[numberIndex]?.tanggal : undefined}
+                keluhan={detailRegistrasi ? detailRegistrasi[numberIndex]?.keluhan : undefined}
+                wallet={detailRegistrasi ? detailRegistrasi[numberIndex]?.wallet : undefined}
+                // status=""
               />
               )}
               {active === 'manajemen-dokter' && <DaftarDokterAdmin />}

@@ -4,6 +4,7 @@ import { ProfilTambahEditProps } from '../../types/index';
 const EditData: React.FC<ProfilTambahEditProps> = ({
   name, ttl, email, phone, nameChange, ttlChange, emailChange, phoneChange,
   genderChange, nameName, ttlName, emailName, phoneName, genderName, maleValue, femaleValue,
+  error,
 }) => (
   <div className="mt-2 lg:mt-4">
     <table className="w-full text-black border-separate border-spacing-y-2">
@@ -13,6 +14,7 @@ const EditData: React.FC<ProfilTambahEditProps> = ({
           <td className="text-xs sm:text-sm lg:text-base">:</td>
           <td className="text-xs sm:text-sm lg:text-base">
             <input type="text" defaultValue={name} name={nameName} onChange={nameChange} placeholder="Tulis Nama" className="focus:outline-none bg-transparent w-full" />
+            {error.nama && <p className="text-red-500 text-xs italic">{error.nama}</p>}
           </td>
         </tr>
         <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -39,6 +41,7 @@ const EditData: React.FC<ProfilTambahEditProps> = ({
               />
               <p className="ml-2">Perempuan</p>
             </label>
+            {error.gender && <p className="text-red-500 text-xs italic">{error.gender}</p>}
           </td>
         </tr>
         <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -46,6 +49,7 @@ const EditData: React.FC<ProfilTambahEditProps> = ({
           <td className="text-xs sm:text-sm lg:text-base">:</td>
           <td className="text-xs sm:text-sm lg:text-base">
             <input type="date" defaultValue={ttl} name={ttlName} onChange={ttlChange} className="focus:outline-none bg-transparent w-fit" />
+            {error.ttl && <p className="text-red-500 text-xs italic">{error.ttl}</p>}
           </td>
         </tr>
         <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -53,6 +57,7 @@ const EditData: React.FC<ProfilTambahEditProps> = ({
           <td className="text-xs sm:text-sm lg:text-base">:</td>
           <td className="text-xs sm:text-sm lg:text-base">
             <input type="text" defaultValue={email} name={emailName} onChange={emailChange} placeholder="email@email.com" className="focus:outline-none bg-transparent w-full" />
+            {error.email && <p className="text-red-500 text-xs italic">{error.email}</p>}
           </td>
         </tr>
         <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -60,6 +65,7 @@ const EditData: React.FC<ProfilTambahEditProps> = ({
           <td className="text-xs sm:text-sm lg:text-base">:</td>
           <td className="text-xs sm:text-sm lg:text-base">
             <input type="text" defaultValue={phone} name={phoneName} onChange={phoneChange} placeholder="628987654xxx" className="focus:outline-none bg-transparent w-full" />
+            {error.telepon && <p className="text-red-500 text-xs italic">{error.telepon}</p>}
           </td>
         </tr>
       </tbody>

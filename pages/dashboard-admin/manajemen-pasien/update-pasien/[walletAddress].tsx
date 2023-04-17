@@ -25,12 +25,12 @@ function DetailPasienAdminPage() {
   const router = useRouter();
   const { walletAddress } = router.query;
   const [pasienData, setPasienData] = useState(
-    allUser?.filter((pasien) => pasien.wallet === walletAddress),
+    allUser?.filter((pasien: any) => pasien.wallet === walletAddress),
   );
 
   useEffect(() => {
     getAllDataUser();
-    setPasienData(allUser?.filter((pasien) => pasien.wallet === walletAddress));
+    setPasienData(allUser?.filter((pasien: any) => pasien.wallet === walletAddress));
   }, [getAllDataUser]);
 
   const [active, setActive] = useState('manajemen-pasien');
@@ -76,7 +76,7 @@ function DetailPasienAdminPage() {
                 telepon={pasienData ? pasienData[0].telepon : null}
                 ttl={pasienData ? pasienData[0].tanggalLahir : null}
                 email={pasienData ? pasienData[0].email : null}
-                status={pasienData ? pasienData[0].status : null}
+                // status={pasienData ? pasienData[0].status : null}
                 walletAddress={pasienData ? pasienData[0].wallet : null}
               />
               )}

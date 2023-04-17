@@ -24,7 +24,7 @@ const HasilKonsultasiDokter = () => {
           </tr>
         </thead>
         <tbody>
-          {allRegistration?.map((data2, idx) => (
+          {allRegistration?.map((data2: any, idx: number) => (
             <TableDashboardDokter
               key={idx}
               no={idx + 1}

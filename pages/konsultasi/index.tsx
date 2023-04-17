@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import Footer from '../../components/footer/index';
 import Button from '../../components/button/index';
 import NavbarLogin from '../../components/navbar/login';
@@ -7,6 +8,7 @@ import withAuth from '../../lib/withAuth';
 import { ContractContext } from '../../lib/contractProvider';
 
 function Konsultasi() {
+  const router = useRouter();
   const {
     user,
     setNama,
@@ -20,12 +22,14 @@ function Konsultasi() {
     slot,
     getAllDoctor,
     allDoctor,
+    errors,
   } = useContext(ContractContext);
 
   useEffect(() => {
     getAllDoctor();
   }, []);
-  const [tanggalSesiList, setTanggalSesiList] = useState([]);
+  const [tanggalSesiList, setTanggalSesiList] = useState<{ tanggal: string;
+    sesi: string[]; }[]>([]);
 
   useEffect(() => {
     // buat daftar tanggal dari 1 April 2023 hingga 30 Mei 2023
@@ -51,11 +55,11 @@ function Konsultasi() {
     const bookedSessions = slot;
     // hapus sesi yang sudah terisi dari daftar sesi yang tersedia
     if (bookedSessions) {
-      bookedSessions[0]?.forEach((bookedSession) => {
-        const tanggalIndex = tanggalSesi.findIndex((val) => val.tanggal === bookedSession[0]);
+      bookedSessions[0]?.forEach((bookedSession: any) => {
+        const tanggalIndex = tanggalSesi.findIndex((val: any) => val.tanggal === bookedSession[0]);
         if (tanggalIndex !== -1) {
           const sesiIndex = tanggalSesi[tanggalIndex].sesi
-            .findIndex((availableSesi) => availableSesi === bookedSession[1]);
+            .findIndex((availableSesi: any) => availableSesi === bookedSession[1]);
           if (sesiIndex !== -1) {
             tanggalSesi[tanggalIndex].sesi.splice(sesiIndex, 1);
           }
@@ -65,17 +69,17 @@ function Konsultasi() {
     setTanggalSesiList(tanggalSesi);
   }, []);
 
-  const handleTanggalChange = (event) => {
+  const handleTanggalChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setTanggal(event.target.value);
 
     // Ambil daftar sesi yang tersedia pada tanggal yang dipilih
-    const tanggalSesi = tanggalSesiList.find((val) => val.tanggal === event.target.value);
+    const tanggalSesi = tanggalSesiList.find((val: any) => val.tanggal === event.target.value);
     const bookedSessions = slot;
 
     // Hapus sesi yang sudah terisi dari daftar sesi yang tersedia
-    const availableSesi = tanggalSesi.sesi.filter((availableSession) => {
+    const availableSesi = tanggalSesi?.sesi.filter((availableSession: any) => {
       let isBooked = false;
-      bookedSessions[0]?.forEach((bookedSession) => {
+      bookedSessions[0]?.forEach((bookedSession: any) => {
         if (bookedSession[0] === event.target.value && bookedSession[1] === availableSession) {
           isBooked = true;
         }
@@ -84,7 +88,7 @@ function Konsultasi() {
     });
 
     // Update daftar sesi yang tersedia pada tanggal yang dipilih
-    const updatedTanggalSesiList = tanggalSesiList.map((val) => {
+    const updatedTanggalSesiList = tanggalSesiList.map((val: any) => {
       if (val.tanggal === event.target.value) {
         return { tanggal: val.tanggal, sesi: availableSesi };
       }
@@ -96,7 +100,7 @@ function Konsultasi() {
     setTanggalSesiList(updatedTanggalSesiList);
   };
 
-  const handleSesiChange = (event) => {
+  const handleSesiChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSesi(event.target.value);
   };
 
@@ -150,8 +154,9 @@ function Konsultasi() {
                           name="nama"
                           className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
                           onChange={(e) => setNama(e.target.value)}
-                          placeholder="Enter Your Name"
+                          placeholder="Masukkan nama anda"
                         />
+                        {errors.nama && <p className="text-red-500 text-xs italic">{errors.nama}</p>}
                       </div>
 
                       {/* gender */}
@@ -180,6 +185,7 @@ function Konsultasi() {
                           <p className="ml-2 text-xs">Perempuan</p>
                         </label>
                       </div>
+                      {errors.gender && <p className="text-red-500 text-xs italic">{errors.gender}</p>}
 
                       {/* phone number */}
                       <div className="mt-3">
@@ -194,6 +200,7 @@ function Konsultasi() {
                           placeholder="08xxxxxxxxxx"
                         />
                       </div>
+                      {errors.telepon && <p className="text-red-500 text-xs italic">{errors.telepon}</p>}
 
                       {/* Dokter */}
                       <div className="mt-4">
@@ -207,10 +214,11 @@ function Konsultasi() {
                           onChange={(e) => setNamaDokter(e.target.value)}
                         >
                           <option>Pilih Dokter</option>
-                          {allDoctor?.map((data, idx) => (
+                          {allDoctor?.map((data: any, idx: number) => (
                             <option key={idx} value={data.nama}>{data.nama}</option>
                           ))}
                         </select>
+                        {errors.namaDokter && <p className="text-red-500 text-xs italic">{errors.namaDokter}</p>}
                       </div>
 
                       {/* date */}
@@ -232,6 +240,7 @@ function Konsultasi() {
                             </option>
                           ))}
                         </select>
+                        {errors.tanggal && <p className="text-red-500 text-xs italic">{errors.tanggal}</p>}
                       </div>
 
                       {/* Antrian */}
@@ -247,13 +256,14 @@ function Konsultasi() {
                           onChange={handleSesiChange}
                         >
                           <option>Pilih sesi</option>
-                          {tanggalSesiList.find((tanggalSesi) => tanggalSesi.tanggal
+                          {tanggalSesiList.find((tanggalSesi: any) => tanggalSesi.tanggal
                           === tanggal)?.sesi.map((availableSesi) => (
                             <option key={availableSesi} value={availableSesi}>
                               {availableSesi}
                             </option>
                           ))}
                         </select>
+                        {errors.sesi && <p className="text-red-500 text-xs italic">{errors.sesi}</p>}
                       </div>
 
                       {/* keluhan */}
@@ -276,6 +286,7 @@ function Konsultasi() {
                           {' '}
                           / 100
                         </p>
+                        {errors.keluhan && <p className="text-red-500 text-xs italic">{errors.keluhan}</p>}
                       </div>
 
                       {/* submit */}

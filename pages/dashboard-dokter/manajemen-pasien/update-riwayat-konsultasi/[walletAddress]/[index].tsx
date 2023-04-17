@@ -13,6 +13,16 @@ import { ContractContext } from '../../../../../lib/contractProvider';
 import HasilKonsultasiDokter from '../../../../../components/dashboard-dokter/daftar-pasien/dok-hasil-konsultasi';
 import UpdateKonsultasiDokter from '../../../../../components/dashboard-dokter/manajemen-hasil-konsultasi/dok-update-konsultasi';
 
+interface DetailRiwayat {
+  nama: string;
+  namaDokter: string;
+  keluhan: string;
+  diagnosa: string;
+  tanggal: string;
+  tensi: string;
+  gula: string;
+}
+
 function UpdateRiwayatKonsultasiDoctorPage() {
   const [active, setActive] = useState('daftar-pasien');
   const router = useRouter();
@@ -27,7 +37,7 @@ function UpdateRiwayatKonsultasiDoctorPage() {
   } = useContext(ContractContext);
 
   const [riwayat, setRiwayat] = useState([]);
-  const [detailRiwayat, setDetailRiwayat] = useState([]);
+  const [detailRiwayat, setDetailRiwayat] = useState<DetailRiwayat[]>();
   const [address, setAddress] = useState('');
 
   useEffect(() => {
@@ -35,12 +45,12 @@ function UpdateRiwayatKonsultasiDoctorPage() {
   }, [getAllConsultation]);
 
   useEffect(() => {
-    setRiwayat(allConsultation?.filter((item) => item.some((data) => data
+    setRiwayat(allConsultation?.filter((item: any) => item.some((data: any) => data
       .wallet === walletAddress)));
   }, [allConsultation, walletAddress]);
 
   useEffect(() => {
-    const dataIndex = riwayat?.find((item) => item[0]);
+    const dataIndex = riwayat?.find((item: any) => item[0]);
     setDetailRiwayat(dataIndex);
     setIndex(index);
   }, [index, riwayat]);
@@ -48,11 +58,12 @@ function UpdateRiwayatKonsultasiDoctorPage() {
   useEffect(() => {
     getAllDoctor();
     const loggedInUser = localStorage.getItem('address');
-    const addressStorage = JSON.parse(loggedInUser);
+    const addressStorage = loggedInUser ? JSON.parse(loggedInUser) : '';
     setAddress(addressStorage);
   }, []);
 
-  const doctorData = allDoctor?.filter((dokter) => dokter.wallet === address);
+  const doctorData = allDoctor?.filter((dokter: any) => dokter.wallet === address);
+  const numberIndex = Number(index);
 
   return (
     <>
@@ -81,13 +92,13 @@ function UpdateRiwayatKonsultasiDoctorPage() {
               {active === 'daftar-pasien' && (
               <UpdateKonsultasiDokter
                 wallet={walletAddress}
-                name={detailRiwayat ? detailRiwayat[index]?.nama : null}
-                doctor={detailRiwayat ? detailRiwayat[index]?.namaDokter : null}
-                date={detailRiwayat ? detailRiwayat[index]?.tanggal : null}
-                keluhan={detailRiwayat ? detailRiwayat[index]?.keluhan : null}
-                diagnosa={detailRiwayat ? detailRiwayat[index]?.diagnosa : null}
-                tekanan={detailRiwayat ? detailRiwayat[index]?.tensi : null}
-                gula={detailRiwayat ? detailRiwayat[index]?.gula : null}
+                name={detailRiwayat ? detailRiwayat[numberIndex]?.nama : undefined}
+                doctor={detailRiwayat ? detailRiwayat[numberIndex]?.namaDokter : undefined}
+                date={detailRiwayat ? detailRiwayat[numberIndex]?.tanggal : undefined}
+                keluhan={detailRiwayat ? detailRiwayat[numberIndex]?.keluhan : undefined}
+                diagnosa={detailRiwayat ? detailRiwayat[numberIndex]?.diagnosa : undefined}
+                tekanan={detailRiwayat ? detailRiwayat[numberIndex]?.tensi : undefined}
+                gula={detailRiwayat ? detailRiwayat[numberIndex]?.gula : undefined}
               />
               )}
               {active === 'hasil-konsultasi' && <HasilKonsultasiDokter />}

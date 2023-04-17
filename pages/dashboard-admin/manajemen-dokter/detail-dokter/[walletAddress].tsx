@@ -25,12 +25,12 @@ function DetailDokterAdminPage() {
   const router = useRouter();
   const { walletAddress } = router.query;
   const [doctorData, setDoctorData] = useState(
-    allDoctor?.filter((dokter) => dokter.wallet === walletAddress),
+    allDoctor?.filter((dokter: any) => dokter.wallet === walletAddress),
   );
 
   useEffect(() => {
     getAllDoctor();
-    setDoctorData(allDoctor?.filter((dokter) => dokter.wallet === walletAddress));
+    setDoctorData(allDoctor?.filter((dokter: any) => dokter.wallet === walletAddress));
   }, [getAllDoctor]);
 
   const [active, setActive] = useState('manajemen-dokter');

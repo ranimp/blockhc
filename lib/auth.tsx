@@ -1,10 +1,10 @@
 import React, {
-  createContext, useState, useEffect, useMemo,
+  createContext, useState, useEffect, useMemo, ReactNode,
 } from 'react';
 import { ethers } from 'ethers';
 
 type AuthContextType = {
-  isLogged: boolean;
+  isLogged: any;
   redirect: { isRedirect: boolean; path: string };
   address: string | null;
   handleLogin: () => Promise<void>;
@@ -12,9 +12,13 @@ type AuthContextType = {
   loginStatus: () => void;
 };
 
+type AuthProviderProps = {
+  children: ReactNode;
+};
+
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [address, setAddress] = useState<string | null>(null);
   const [redirect, setRedirect] = useState<{ isRedirect: boolean; path: string }>({

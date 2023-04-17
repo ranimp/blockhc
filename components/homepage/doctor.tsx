@@ -18,7 +18,7 @@ const Doctor = () => {
       <div className="relative rounded-xl overflow-auto">
         <div className="mx-auto min-w-0 max-w-screen-xl">
           <div className="overflow-x-auto flex gap-12 scrollbar-hide">
-            {allDoctor?.map((data, idx) => (
+            {allDoctor?.map((data: any, idx: number) => (
               <DoctorCard img={data.img} key={idx} name={data.nama} title={data.cat} detailUrl={`/dokter/detail/${data.wallet}`} />
             ))}
           </div>

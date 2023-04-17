@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare */
 import {
   Fragment, useState, useContext, useEffect,
 } from 'react';
@@ -14,6 +15,16 @@ import withAuth from '../../../lib/withAuth';
 import Loading from '../../../components/loading/index';
 import { ContractContext } from '../../../lib/contractProvider';
 
+interface DetailRiwayat {
+  nama: string;
+  namaDokter: string;
+  keluhan: string;
+  diagnosa: string;
+  tanggal: string;
+  tensi: string;
+  gula: string;
+}
+
 function DetailKonsultasi() {
   const [active, setActive] = useState('riwayat');
   const router = useRouter();
@@ -23,6 +34,7 @@ function DetailKonsultasi() {
     allConsultation,
   } = useContext(ContractContext);
   const { index } = router.query;
+  const [detailRiwayat, setDetailRiwayat] = useState<DetailRiwayat[]>();
 
   useEffect(() => {
     getConsultationPasien();
@@ -31,6 +43,12 @@ function DetailKonsultasi() {
   useEffect(() => {
     getEvidanceRegistration();
   }, [getEvidanceRegistration]);
+
+  useEffect(() => {
+    setDetailRiwayat(allConsultation);
+  }, [allConsultation, index]);
+
+  const numberIndex = Number(index);
 
   return (
     <>
@@ -55,7 +73,7 @@ function DetailKonsultasi() {
                 <div className="flex justify-start">
                   <div className="w-1/9 md:w-1/3">
                     <div className="hidden md:block">
-                      <Profil name={nama} role={role} />
+                      <Profil name={nama} role={role ?? ''} />
                     </div>
                     <Sidebar menu2={active === 'riwayat' && true} onClickMenu1={() => setActive('bukti')} onClickMenu2={() => router.push('/dashboard')} menu1={active === 'bukti' && true} title2="Riwayat Hasil Konsultasi" title1="Bukti Pendaftaran" />
                   </div>
@@ -69,13 +87,13 @@ function DetailKonsultasi() {
                     <div>
                       {active === 'riwayat' && (
                       <DetailRiwayat
-                        name={allConsultation ? allConsultation[index]?.nama : null}
-                        doctor={allConsultation ? allConsultation[index]?.namaDokter : null}
-                        keluhan={allConsultation ? allConsultation[index]?.keluhan : null}
-                        diagnosa={allConsultation ? allConsultation[index]?.diagnosa : null}
-                        date={allConsultation ? allConsultation[index]?.tanggal : null}
-                        tekanan={allConsultation ? allConsultation[index]?.tensi : null}
-                        gula={allConsultation ? allConsultation[index]?.gula : null}
+                        name={detailRiwayat ? detailRiwayat[numberIndex]?.nama : undefined}
+                        doctor={detailRiwayat ? detailRiwayat[numberIndex]?.namaDokter : undefined}
+                        keluhan={detailRiwayat ? detailRiwayat[numberIndex]?.keluhan : undefined}
+                        diagnosa={detailRiwayat ? detailRiwayat[numberIndex]?.diagnosa : undefined}
+                        date={detailRiwayat ? detailRiwayat[numberIndex]?.tanggal : undefined}
+                        tekanan={detailRiwayat ? detailRiwayat[numberIndex]?.tensi : undefined}
+                        gula={detailRiwayat ? detailRiwayat[numberIndex]?.gula : undefined}
                       />
                       )}
                       {active === 'bukti' && <BuktiPendaftaran name={nama} doctor={namaDokter} keluhan={keluhan} date={tanggal} sesi={sesi} />}

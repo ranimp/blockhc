@@ -21,7 +21,7 @@ const RiwayatKonsultasiAdmin = ({ datas }: Props) => {
           </tr>
         </thead>
         <tbody>
-          {datas?.map((data, idx) => (
+          {datas?.map((data: any, idx: number) => (
             <Table key={idx} no={idx + 1} date={data?.tanggal} doctor={data?.namaDokter} link={`/dashboard-admin/manajemen-pasien/detail-riwayat-konsultasi/${data?.wallet}/${idx}`} updateUrl={`/dashboard-admin/manajemen-pasien/update-riwayat-konsultasi/${data?.wallet}/${idx}`} />
           ))}
         </tbody>

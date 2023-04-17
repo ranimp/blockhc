@@ -12,6 +12,7 @@ const TambahKonsultasiDokter: React.FC<AdminTambahEditKonsultasi> = ({
   tekanan, tekananName, tekananChange,
   gula, gulaName, gulaChange,
   onClick, wallet, walletName, walletChange,
+  error,
 }) => {
   const router = useRouter();
   return (
@@ -24,6 +25,7 @@ const TambahKonsultasiDokter: React.FC<AdminTambahEditKonsultasi> = ({
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="text" name={walletName} defaultValue={wallet} onChange={walletChange} placeholder="Nama Pasien" className="focus:outline-none bg-transparent w-full" />
+              {error.walletAddress && <p className="text-red-500 text-xs italic">{error.walletAddress}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -31,6 +33,7 @@ const TambahKonsultasiDokter: React.FC<AdminTambahEditKonsultasi> = ({
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="text" name={nameName} value={name} onChange={nameChange} placeholder="Nama Pasien" className="focus:outline-none bg-transparent w-full" />
+              {error.nama && <p className="text-red-500 text-xs italic">{error.nama}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -38,6 +41,7 @@ const TambahKonsultasiDokter: React.FC<AdminTambahEditKonsultasi> = ({
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base capitalize">
               <input type="text" name={doctorName} value={doctor} onChange={doctorChange} placeholder="Nama Dokter" className="focus:outline-none bg-transparent w-full" />
+              {error.namaDokter && <p className="text-red-500 text-xs italic">{error.namaDokter}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -45,6 +49,7 @@ const TambahKonsultasiDokter: React.FC<AdminTambahEditKonsultasi> = ({
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="date" name={dateName} value={date} onChange={dateChange} className="focus:outline-none bg-transparent w-fit" />
+              {error.tanggal && <p className="text-red-500 text-xs italic">{error.tanggal}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -52,6 +57,7 @@ const TambahKonsultasiDokter: React.FC<AdminTambahEditKonsultasi> = ({
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="text" maxLength={100} name={keluhanName} value={keluhan} onChange={keluhanChange} placeholder="Keluhan" className="focus:outline-none bg-transparent w-full" />
+              {error.keluhan && <p className="text-red-500 text-xs italic">{error.keluhan}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -59,6 +65,7 @@ const TambahKonsultasiDokter: React.FC<AdminTambahEditKonsultasi> = ({
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="text" maxLength={100} name={diagnosaName} value={diagnosa} onChange={diagnosaChange} placeholder="Diagnosa" className="focus:outline-none bg-transparent w-full" />
+              {error.diagnosa && <p className="text-red-500 text-xs italic">{error.diagnosa}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -74,8 +81,14 @@ const TambahKonsultasiDokter: React.FC<AdminTambahEditKonsultasi> = ({
             </td>
             <td className="text-xs sm:text-sm lg:text-base">
               <p className="invisible">nothing</p>
-              <p><input type="text" name={tekananName} value={tekanan} onChange={tekananChange} placeholder="Tekanan darah" className="focus:outline-none bg-transparent w-full" /></p>
-              <p><input type="text" name={gulaName} value={gula} onChange={gulaChange} placeholder="Gula darah" className="focus:outline-none bg-transparent w-full" /></p>
+              <p>
+                <input type="text" name={tekananName} value={tekanan} onChange={tekananChange} placeholder="Tekanan darah" className="focus:outline-none bg-transparent w-full" />
+                {error.tensi && <p className="text-red-500 text-xs italic">{error.tensi}</p>}
+              </p>
+              <p>
+                <input type="text" name={gulaName} value={gula} onChange={gulaChange} placeholder="Gula darah" className="focus:outline-none bg-transparent w-full" />
+                {error.gula && <p className="text-red-500 text-xs italic">{error.gula}</p>}
+              </p>
             </td>
           </tr>
         </tbody>

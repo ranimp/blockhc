@@ -11,10 +11,15 @@ import NavbarLogin from '../navbar/login';
 import { AuthContext } from '../../lib/auth';
 
 export default function Homepage() {
-  const { isLogged, loginStatus } = useContext(AuthContext);
+  // const { isLogged, loginStatus } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const isLogged = authContext?.isLogged;
+  const loginStatus = authContext?.loginStatus;
 
   useEffect(() => {
-    loginStatus();
+    if (loginStatus) {
+      loginStatus();
+    }
   }, []);
 
   return (
@@ -33,7 +38,7 @@ export default function Homepage() {
         <Doctor />
         <div className="flex flex-col items-center mb-16 lg:mb-36">
           <p className="md:text-xl">Daftar dan pilih dokter anda disini.</p>
-          <Link href="/" className="mt-2">
+          <Link href="/konsultasi" className="mt-2">
             <Button type="btn-wide-sm" title="registrasi sekarang" />
           </Link>
         </div>

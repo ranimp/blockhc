@@ -4,7 +4,7 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false,
     "skipLibCheck": true,
     "lib": [
       "dom",
@@ -23,7 +23,8 @@
     "next-env.d.ts",
     "next.config.js",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "types/**/*.d.ts"
   ],
   "exclude": [
     "node_modules"

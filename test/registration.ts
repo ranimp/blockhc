@@ -49,6 +49,7 @@ describe('ConsultationRegist', () => {
         true,
       );
       const registrations = await consultationRegist.connect(pasien1)
+      // @ts-ignore
         .getRegistrationEvidence(pasien1.getAddress());
       expect(registrations).to.have.lengthOf(1);
 
@@ -102,6 +103,7 @@ describe('ConsultationRegist', () => {
         false,
       );
       const registrations = await consultationRegist.connect(pasien1)
+      // @ts-ignore
         .getRegistrationEvidence(pasien1.getAddress());
       expect(registrations).to.have.lengthOf(1);
 
@@ -360,6 +362,7 @@ describe('ConsultationRegist', () => {
       );
 
       await expect(consultationRegist.connect(admin)
+      // @ts-ignore
         .getRegistrationEvidence(pasien1.getAddress())).to.be.revertedWith('Hanya pasien yang diizinkan untuk mengakses.');
     });
     it('should only admin or doctor can get all registration', async () => {

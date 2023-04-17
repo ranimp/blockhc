@@ -55,7 +55,7 @@ function Profil() {
           )
           : (
             <main className="px-4 lg:px-16 my-28">
-              <User name={nama} role={role} walletAddress={walletAddress} />
+              <User name={nama} role={role ?? ''} walletAddress={walletAddress} />
               <div className="flex justify-end mt-4 lg:mt-6">
                 <Link href="/profil/update" className="w-32 lg:w-60 text-xs lg:text-base">
                   <Button type="btn-normal" title="perbarui profil" />

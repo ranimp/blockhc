@@ -26,7 +26,7 @@ const DaftarPasienAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {allUser?.map((data, index) => (
+          {allUser?.map((data: any, index: number) => (
             <TablePasienDashboardAdmin
               key={index}
               no={index + 1}

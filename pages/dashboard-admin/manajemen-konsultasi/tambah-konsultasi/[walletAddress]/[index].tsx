@@ -32,6 +32,7 @@ function RiwayatKonsultasiAdminPage() {
     setIndex,
     handleAddConsultation,
     getAllConsultation,
+    errors,
   } = useContext(ContractContext);
 
   useEffect(() => {
@@ -78,7 +79,7 @@ function RiwayatKonsultasiAdminPage() {
               {active === 'manajemen-pasien' && <DaftarPasienAdmin />}
               {active === 'hasil-konsultasi' && (
               <TambahKonsultasiAdmin
-                wallet={setWalletAddress(walletAddress)}
+                wallet={setWalletAddress(walletAddress ? String(walletAddress) : '')}
                 walletName="walletAddress"
                 name={nama}
                 nameName="nama"
@@ -101,7 +102,8 @@ function RiwayatKonsultasiAdminPage() {
                 gula={gula}
                 gulaName="gula"
                 gulaChange={(e) => setGula(e.target.value)}
-                onClick={handleAddConsultation}
+                onClick={async () => handleAddConsultation}
+                error={errors}
               />
               )}
               {active === 'manajemen-dokter' && <DaftarDokterAdmin />}

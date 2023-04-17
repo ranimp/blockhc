@@ -1,7 +1,7 @@
 export interface ButtonProps {
   type: string;
   title: string;
-  onClick?: MouseEventHandler<HTMLElement>;
+  onClick?: React.MouseEventHandler<HTMLElement>;
   addClass?: string;
 }
 
@@ -9,7 +9,7 @@ export interface DoctorCardProps {
   name: string;
   img: string;
   title: string;
-  sch: string;
+  sch?: string;
   detailUrl?: string;
 }
 
@@ -19,16 +19,16 @@ export interface DashboardProfilProps {
 }
 
 export interface DashboardSidebarProps {
-  menu1: string;
-  menu2: string;
-  menu3: string;
-  onClickMenu1: () => void;
-  onClickMenu2: () => void;
-  onClickMenu3: () => void;
-  title1: string;
-  title2: string;
-  title3: string;
-  menu3Show: boolean;
+  menu1?: any;
+  menu2?: any;
+  menu3?: any;
+  onClickMenu1?: () => void;
+  onClickMenu2?: () => void;
+  onClickMenu3?: () => void;
+  title1?: string;
+  title2?: string;
+  title3?: string;
+  menu3Show?: boolean;
 }
 
 export interface DashboardTableProps {
@@ -41,19 +41,19 @@ export interface DashboardTableProps {
 }
 
 export interface NavbarProps {
-  home: boolean;
-  konsultasi: boolean;
-  tentang: boolean;
-  dokter: boolean;
+  home?: boolean;
+  konsultasi?: boolean;
+  tentang?: boolean;
+  dokter?: boolean;
 }
 
 export interface NavbarLoginProps {
-  home: boolean;
-  konsultasi: boolean;
-  tentang: boolean;
-  dokter: boolean;
-  profil: boolean;
-  dashboard: boolean;
+  home?: boolean;
+  konsultasi?: boolean;
+  tentang?: boolean;
+  dokter?: boolean;
+  profil?: boolean;
+  dashboard?: boolean;
 }
 
 export interface ProfilDataProps {
@@ -65,29 +65,31 @@ export interface ProfilDataProps {
 }
 
 export interface ProfilTambahEditProps {
-  name: string;
-  ttl: string;
-  email: string;
-  phone: string;
-  nameChange: React.ChangeEventHandler<HTMLInputElement>;
-  ttlChange: React.ChangeEventHandler<HTMLInputElement>;
-  emailChange: React.ChangeEventHandler<HTMLInputElement>;
-  phoneChange: React.ChangeEventHandler<HTMLInputElement>;
-  genderChange: React.ChangeEventHandler<HTMLInputElement>;
-  nameName: string;
-  ttlName: string;
-  emailName: string;
-  phoneName: string;
-  genderName: string;
-  maleValue: string;
-  femaleValue: string;
+  name?: string;
+  ttl?: string;
+  email?: string;
+  phone?: string;
+  nameChange?: React.ChangeEventHandler<HTMLInputElement>;
+  ttlChange?: React.ChangeEventHandler<HTMLInputElement>;
+  emailChange?: React.ChangeEventHandler<HTMLInputElement>;
+  phoneChange?: React.ChangeEventHandler<HTMLInputElement>;
+  genderChange?: React.ChangeEventHandler<HTMLInputElement>;
+  nameName?: string;
+  ttlName?: string;
+  emailName?: string;
+  phoneName?: string;
+  genderName?: string;
+  maleValue?: string;
+  femaleValue?: string;
+  error?: any;
+  gender?: any;
 }
 
 export interface ProfilUserProps {
-  name: string;
-  role: string;
+  name?: string;
+  role?: string;
   username?: string;
-  walletAddress: any;
+  walletAddress?: any;
 }
 
 export interface AdminDetailDokter {
@@ -119,7 +121,7 @@ export interface AdminUpdateDokter {
   strNumber: string;
   category: string;
   img: string;
-  status: boolean;
+  status?: boolean;
 }
 
 export interface AdminTambahEditKonsultasi {
@@ -148,6 +150,7 @@ export interface AdminTambahEditKonsultasi {
   wallet?: any;
   walletName?: string;
   walletChange?: React.ChangeEventHandler<HTMLInputElement>;
+  error?: any;
 }
 
 export interface AdminTableKonsultasi {
@@ -165,11 +168,12 @@ export interface AdminDetailPasien {
   ttl: string;
   email: string;
   phone: string;
-  linkRiwayat: string;
+  linkRiwayat: any;
 }
 
 export interface AdminDetailRiwayatPasien {
   name?: string;
+  nama?: string;
   gender?: string;
   dokter?: string;
   doctor?: string;

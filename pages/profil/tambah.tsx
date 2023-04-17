@@ -24,6 +24,7 @@ function TambahProfil() {
     gender,
     setGender,
     handleAddUser,
+    errors,
   } = useContext(ContractContext);
 
   return (
@@ -66,6 +67,7 @@ function TambahProfil() {
               phoneName="telepon"
               maleValue="laki-laki"
               femaleValue="perempuan"
+              error={errors}
             />
             <div className="mt-4">
               <Button type="btn-normal" title="Tambah data" onClick={handleAddUser} />

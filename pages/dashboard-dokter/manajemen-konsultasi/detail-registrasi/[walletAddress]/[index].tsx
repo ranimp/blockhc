@@ -13,6 +13,17 @@ import withAuth from '../../../../../lib/withAuth';
 import { ContractContext } from '../../../../../lib/contractProvider';
 import DaftarPasienDokter from '../../../../../components/dashboard-dokter/daftar-pasien/dok-daftar-pasien';
 
+interface DetailRegistrasi {
+  nama: string;
+  gender: string;
+  namaDokter: string;
+  telepon: string;
+  sesi: string;
+  tanggal: string;
+  keluhan: string;
+  wallet: string;
+}
+
 function DetailKonsultasiDokterPage() {
   const [active, setActive] = useState('hasil-konsultasi');
   const router = useRouter();
@@ -25,7 +36,7 @@ function DetailKonsultasiDokterPage() {
     allDoctor,
   } = useContext(ContractContext);
 
-  const [detailRegistrasi, setDetailRegistrasi] = useState([]);
+  const [detailRegistrasi, setDetailRegistrasi] = useState<DetailRegistrasi[]>();
   const [address, setAddress] = useState('');
 
   useEffect(() => {
@@ -39,11 +50,12 @@ function DetailKonsultasiDokterPage() {
   useEffect(() => {
     getAllDoctor();
     const loggedInUser = localStorage.getItem('address');
-    const addressStorage = JSON.parse(loggedInUser);
+    const addressStorage = loggedInUser ? JSON.parse(loggedInUser) : '';
     setAddress(addressStorage);
   }, []);
 
-  const doctorData = allDoctor?.filter((dokter) => dokter.wallet === address);
+  const doctorData = allDoctor?.filter((dokter: any) => dokter.wallet === address);
+  const numberIndex = Number(index);
 
   return (
     <>
@@ -72,15 +84,15 @@ function DetailKonsultasiDokterPage() {
               {active === 'daftar-pasien' && <DaftarPasienDokter />}
               {active === 'hasil-konsultasi' && (
               <DetailRegistrasiAdmin
-                nama={detailRegistrasi ? detailRegistrasi[index]?.nama : null}
-                gender={detailRegistrasi ? detailRegistrasi[index]?.gender : null}
-                dokter={detailRegistrasi ? detailRegistrasi[index]?.namaDokter : null}
-                telepon={detailRegistrasi ? detailRegistrasi[index]?.telepon : null}
-                sesi={detailRegistrasi ? detailRegistrasi[index]?.sesi : null}
-                tanggal={detailRegistrasi ? detailRegistrasi[index]?.tanggal : null}
-                keluhan={detailRegistrasi ? detailRegistrasi[index]?.keluhan : null}
-                wallet={detailRegistrasi ? detailRegistrasi[index]?.wallet : null}
-                status=""
+                nama={detailRegistrasi ? detailRegistrasi[numberIndex]?.nama : undefined}
+                gender={detailRegistrasi ? detailRegistrasi[numberIndex]?.gender : undefined}
+                dokter={detailRegistrasi ? detailRegistrasi[numberIndex]?.namaDokter : undefined}
+                telepon={detailRegistrasi ? detailRegistrasi[numberIndex]?.telepon : undefined}
+                sesi={detailRegistrasi ? detailRegistrasi[numberIndex]?.sesi : undefined}
+                tanggal={detailRegistrasi ? detailRegistrasi[numberIndex]?.tanggal : undefined}
+                keluhan={detailRegistrasi ? detailRegistrasi[numberIndex]?.keluhan : undefined}
+                wallet={detailRegistrasi ? detailRegistrasi[numberIndex]?.wallet : undefined}
+                // status=""
               />
               )}
             </div>

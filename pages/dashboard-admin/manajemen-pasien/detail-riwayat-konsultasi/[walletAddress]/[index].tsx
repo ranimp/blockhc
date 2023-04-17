@@ -16,6 +16,16 @@ import Button from '../../../../../components/button/index';
 import withAuth from '../../../../../lib/withAuth';
 import { ContractContext } from '../../../../../lib/contractProvider';
 
+interface DetailRiwayat {
+  nama: string;
+  namaDokter: string;
+  keluhan: string;
+  diagnosa: string;
+  tanggal: string;
+  tensi: string;
+  gula: string;
+}
+
 function RiwayatKonsultasiAdminPage() {
   const [active, setActive] = useState('manajemen-pasien');
   const router = useRouter();
@@ -27,22 +37,25 @@ function RiwayatKonsultasiAdminPage() {
   } = useContext(ContractContext);
 
   const [riwayat, setRiwayat] = useState([]);
-  const [detailRiwayat, setDetailRiwayat] = useState([]);
+  const [detailRiwayat, setDetailRiwayat] = useState<DetailRiwayat[]>();
 
   useEffect(() => {
     getAllConsultation();
   }, [getAllConsultation]);
 
   useEffect(() => {
-    setRiwayat(allConsultation?.filter((item) => item.some((data) => data
+    setRiwayat(allConsultation?.filter((item: any) => item.some((data: any) => data
       .wallet === walletAddress)));
   }, [allConsultation, walletAddress]);
 
   useEffect(() => {
-    const dataIndex = riwayat?.find((item) => item[0]);
-    setDetailRiwayat(dataIndex);
+    const dataIndex = riwayat?.find((item: any) => item[0]);
+    if (dataIndex !== undefined) {
+      setDetailRiwayat(dataIndex);
+    }
   }, [index, riwayat]);
 
+  const numberIndex = Number(index);
   return (
     <>
       <Head>
@@ -81,13 +94,13 @@ function RiwayatKonsultasiAdminPage() {
             <div>
               {active === 'manajemen-pasien' && (
               <DetailRiwayatAdmin
-                name={detailRiwayat ? detailRiwayat[index]?.nama : null}
-                doctor={detailRiwayat ? detailRiwayat[index]?.namaDokter : null}
-                keluhan={detailRiwayat ? detailRiwayat[index]?.keluhan : null}
-                diagnosa={detailRiwayat ? detailRiwayat[index]?.diagnosa : null}
-                date={detailRiwayat ? detailRiwayat[index]?.tanggal : null}
-                tekanan={detailRiwayat ? detailRiwayat[index]?.tensi : null}
-                gula={detailRiwayat ? detailRiwayat[index]?.gula : null}
+                name={detailRiwayat ? detailRiwayat[numberIndex]?.nama : undefined}
+                doctor={detailRiwayat ? detailRiwayat[numberIndex]?.namaDokter : undefined}
+                keluhan={detailRiwayat ? detailRiwayat[numberIndex]?.keluhan : undefined}
+                diagnosa={detailRiwayat ? detailRiwayat[numberIndex]?.diagnosa : undefined}
+                date={detailRiwayat ? detailRiwayat[numberIndex]?.tanggal : undefined}
+                tekanan={detailRiwayat ? detailRiwayat[numberIndex]?.tensi : undefined}
+                gula={detailRiwayat ? detailRiwayat[numberIndex]?.gula : undefined}
               />
               )}
               {active === 'hasil-konsultasi' && <HasilKonsultasiAdmin />}

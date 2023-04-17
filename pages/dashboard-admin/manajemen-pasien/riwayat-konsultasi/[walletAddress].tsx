@@ -32,7 +32,7 @@ function RiwayatKonsultasiAdminPage() {
   }, [getAllConsultation]);
 
   useEffect(() => {
-    setRiwayat(allConsultation?.filter((item) => item.some((data) => data
+    setRiwayat(allConsultation?.filter((item: any) => item.some((data: any) => data
       .wallet === walletAddress)));
   }, [allConsultation, walletAddress]);
 
@@ -72,7 +72,7 @@ function RiwayatKonsultasiAdminPage() {
               )}
             </div>
             <div>
-              {active === 'manajemen-pasien' && <RiwayatKonsultasiAdmin datas={riwayat ? riwayat[0] : null} />}
+              {active === 'manajemen-pasien' && riwayat && <RiwayatKonsultasiAdmin datas={riwayat[0]} />}
               {active === 'hasil-konsultasi' && <HasilKonsultasiAdmin />}
               {active === 'manajemen-dokter' && <DaftarDokterAdmin />}
             </div>

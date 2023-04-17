@@ -24,7 +24,7 @@ const DaftarPasienDokter = () => {
           </tr>
         </thead>
         <tbody>
-          {allPasien?.map((data, idx) => (
+          {allPasien?.map((data: any, idx: number) => (
             <TableDashboardDokter
               key={idx}
               no={idx + 1}

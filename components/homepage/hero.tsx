@@ -13,7 +13,7 @@ const Hero = () => (
           <span className="text-medium-blue"> Kondisi Kesehatanmu</span>
         </h2>
         <p className="md:text-xl md:leading-relaxed">Bagi kamu yang mengalami gejala penyakit tertentu dan ingin berkonsultasi atau memeriksakan diri, segera daftarkan diri disini dan dapatkan bantuan dari para dokter yang profesional.</p>
-        <Link href="/">
+        <Link href="/konsultasi">
           <Button type="btn-wide" title="registrasi sekarang" />
         </Link>
       </div>

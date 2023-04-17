@@ -25,7 +25,7 @@ const HasilKonsultasiAdmin = () => {
           </tr>
         </thead>
         <tbody>
-          {allRegistration?.map((data2, idx) => (
+          {allRegistration?.map((data2: any, idx: number) => (
             <TableKonsultasiDashboardAdmin
               key={idx}
               no={idx + 1}

@@ -8,10 +8,14 @@ import { AuthContext } from '../../lib/auth';
 import NavbarLogin from '../../components/navbar/login';
 
 export default function Tentang() {
-  const { isLogged, loginStatus } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const isLogged = authContext?.isLogged;
+  const loginStatus = authContext?.loginStatus;
 
   useEffect(() => {
-    loginStatus();
+    if (loginStatus) {
+      loginStatus();
+    }
   }, []);
 
   return (

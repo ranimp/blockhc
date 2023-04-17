@@ -24,6 +24,7 @@ function EditProfil() {
     gender,
     setGender,
     handleUpdateUser,
+    errors,
   } = useContext(ContractContext);
 
   return (
@@ -69,6 +70,7 @@ function EditProfil() {
               phoneName="telepon"
               maleValue="laki-laki"
               femaleValue="perempuan"
+              error={errors}
             />
             <div className="flex justify-end gap-2 mt-4 lg:mt-6">
               <div className="w-32 lg:w-60 text-xs lg:text-base">

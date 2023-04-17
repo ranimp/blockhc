@@ -6,7 +6,7 @@ import { DoctorCardProps } from '../../types/index';
 const Card: React.FC<DoctorCardProps> = ({
   img, name, title, sch, detailUrl,
 }) => (
-  <Link className="shadow-md w-5/12 sm:w-1/4 lg:w-1/5" href={detailUrl}>
+  <Link className="shadow-md w-5/12 sm:w-1/4 lg:w-1/5" href={detailUrl ?? ''}>
     <figure className="flex justify-center h-32 lg:h-52">
       <Image src={img || ''} alt="doctor" width={200} height={200} className="object-contain" />
     </figure>

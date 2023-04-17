@@ -25,12 +25,12 @@ function UpdateDokterAdminPage() {
   const router = useRouter();
   const { walletAddress } = router.query;
   const [doctorData, setDoctorData] = useState(
-    allDoctor?.filter((dokter) => dokter.wallet === walletAddress),
+    allDoctor?.filter((dokter: any) => dokter.wallet === walletAddress),
   );
 
   useEffect(() => {
     getAllDoctor();
-    setDoctorData(allDoctor?.filter((dokter) => dokter.wallet === walletAddress));
+    setDoctorData(allDoctor?.filter((dokter: any) => dokter.wallet === walletAddress));
   }, [getAllDoctor]);
 
   const [active, setActive] = useState('manajemen-dokter');
@@ -82,6 +82,7 @@ function UpdateDokterAdminPage() {
                 strNumber={doctorData ? doctorData[0].str : null}
                 img={doctorData ? doctorData[0].img : null}
                 category={doctorData ? doctorData[0].cat : null}
+                // status={doctorData ? doctorData[0].status : null}
               />
               )}
             </div>

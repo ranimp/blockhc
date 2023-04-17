@@ -32,18 +32,18 @@ function RiwayatKonsultasiDoctorPage() {
   }, [getAllConsultation]);
 
   useEffect(() => {
-    setRiwayat(allConsultation?.filter((item) => item.some((data) => data
+    setRiwayat(allConsultation?.filter((item: any) => item.some((data: any) => data
       .wallet === walletAddress)));
   }, [allConsultation, walletAddress]);
 
   useEffect(() => {
     getAllDoctor();
     const loggedInUser = localStorage.getItem('address');
-    const addressStorage = JSON.parse(loggedInUser);
+    const addressStorage = loggedInUser ? JSON.parse(loggedInUser) : '';
     setAddress(addressStorage);
   }, []);
 
-  const doctorData = allDoctor?.filter((dokter) => dokter.wallet === address);
+  const doctorData = allDoctor?.filter((dokter: any) => dokter.wallet === address);
 
   return (
     <>
@@ -69,7 +69,7 @@ function RiwayatKonsultasiDoctorPage() {
               <input type="text" placeholder="Pencarian" className="w-full focus:outline-none" />
             </div>
             <div>
-              {active === 'daftar-pasien' && <RiwayatKonsultasiDokter datas={riwayat ? riwayat[0] : null} />}
+              {active === 'daftar-pasien' && <RiwayatKonsultasiDokter datas={riwayat[0]} />}
               {active === 'hasil-konsultasi' && <HasilKonsultasiDokter />}
             </div>
           </div>

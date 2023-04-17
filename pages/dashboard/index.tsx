@@ -47,7 +47,7 @@ function DashboardUser() {
                 <div className="flex justify-start">
                   <div className="w-1/9 md:w-1/3">
                     <div className="hidden md:block">
-                      <Profil name={nama} role={role} />
+                      <Profil name={nama} role={role ?? ''} />
                     </div>
                     <Sidebar onClickMenu2={() => setActive('riwayat')} menu2={active === 'riwayat' && true} onClickMenu1={() => setActive('bukti')} menu1={active === 'bukti' && true} title2="Riwayat Hasil Konsultasi" title1="Bukti Pendaftaran" />
                   </div>

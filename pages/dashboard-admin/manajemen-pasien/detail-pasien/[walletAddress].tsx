@@ -25,12 +25,12 @@ function DetailPasienAdminPage() {
   const router = useRouter();
   const { walletAddress } = router.query;
   const [pasienData, setPasienData] = useState(
-    allUser?.filter((pasien) => pasien.wallet === walletAddress),
+    allUser?.filter((pasien: any) => pasien.wallet === walletAddress),
   );
 
   useEffect(() => {
     getAllDataUser();
-    setPasienData(allUser?.filter((pasien) => pasien.wallet === walletAddress));
+    setPasienData(allUser?.filter((pasien: any) => pasien.wallet === walletAddress));
   }, [getAllDataUser]);
 
   const [active, setActive] = useState('manajemen-pasien');

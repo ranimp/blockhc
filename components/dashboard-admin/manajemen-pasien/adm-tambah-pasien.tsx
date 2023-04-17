@@ -13,6 +13,7 @@ const TambahPasienAdmin = () => {
     setGender,
     setWalletAddress,
     handleAddUserAdmin,
+    errors,
   } = useContext(ContractContext);
 
   const router = useRouter();
@@ -26,6 +27,7 @@ const TambahPasienAdmin = () => {
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="text" name="nama" onChange={(e) => setNama(e.target.value)} placeholder="Nama Pasien" className="focus:outline-none bg-transparent w-full" />
+              {errors.nama && <p className="text-red-500 text-xs italic">{errors.nama}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -52,6 +54,7 @@ const TambahPasienAdmin = () => {
                 />
                 <p className="ml-2">Perempuan</p>
               </label>
+              {errors.gender && <p className="text-red-500 text-xs italic">{errors.gender}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -59,6 +62,7 @@ const TambahPasienAdmin = () => {
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="text" name="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="focus:outline-none bg-transparent w-full" />
+              {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -66,6 +70,7 @@ const TambahPasienAdmin = () => {
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="text" name="telepon" onChange={(e) => setTelepon(e.target.value)} placeholder="08xxxx" className="focus:outline-none bg-transparent w-full" />
+              {errors.telepon && <p className="text-red-500 text-xs italic">{errors.telepon}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -73,6 +78,7 @@ const TambahPasienAdmin = () => {
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="text" name="walletAddress" onChange={(e) => setWalletAddress(e.target.value)} placeholder="0x00000000" className="focus:outline-none bg-transparent w-full" />
+              {errors.walletAddress && <p className="text-red-500 text-xs italic">{errors.walletAddress}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
@@ -80,17 +86,19 @@ const TambahPasienAdmin = () => {
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
               <input type="date" name="ttl" onChange={(e) => setTtl(e.target.value)} className="focus:outline-none bg-transparent w-fit" />
+              {errors.ttl && <p className="text-red-500 text-xs italic">{errors.ttl}</p>}
             </td>
           </tr>
           <tr className="odd:bg-odd-blue even:bg-even-blue">
             <td className="py-3 pl-3 text-xs lg:text-base">Status</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base pr-4">
-              <select className="focus:outline-none bg-transparent w-full" name="status" onChange={(e) => setStatus(e.target.value)}>
+              <select className="focus:outline-none bg-transparent w-full" name="status" onChange={(e) => setStatus(e.target.value === 'true' ? 'aktif' : 'tidak aktif')}>
                 <option>Pilih status</option>
-                <option value="True">Aktif</option>
-                <option value="False">Tidak Aktif</option>
+                <option value="true">Aktif</option>
+                <option value="false">Tidak Aktif</option>
               </select>
+              {errors.status && <p className="text-red-500 text-xs italic">{errors.status}</p>}
             </td>
           </tr>
         </tbody>

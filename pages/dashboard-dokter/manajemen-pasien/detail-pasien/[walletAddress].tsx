@@ -33,12 +33,12 @@ function DetailPasienDoctorPage() {
   useEffect(() => {
     getAllDoctor();
     const loggedInUser = localStorage.getItem('address');
-    const addressStorage = JSON.parse(loggedInUser);
+    const addressStorage = loggedInUser ? JSON.parse(loggedInUser) : '';
     setAddress(addressStorage);
   }, [address]);
 
-  const doctorData = allDoctor?.filter((dokter) => dokter.wallet === address);
-  const pasienData = allUser?.filter((pasien) => pasien.wallet === walletAddress);
+  const doctorData = allDoctor?.filter((dokter: any) => dokter.wallet === address);
+  const pasienData = allUser?.filter((pasien: any) => pasien.wallet === walletAddress);
   return (
     <>
       <Head>

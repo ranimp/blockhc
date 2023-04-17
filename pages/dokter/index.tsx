@@ -9,10 +9,14 @@ import NavbarLogin from '../../components/navbar/login';
 import { ContractContext } from '../../lib/contractProvider';
 
 export default function Dokter() {
-  const { isLogged, loginStatus } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const isLogged = authContext?.isLogged;
+  const loginStatus = authContext?.loginStatus;
 
   useEffect(() => {
-    loginStatus();
+    if (loginStatus) {
+      loginStatus();
+    }
   }, []);
 
   const {
@@ -37,7 +41,7 @@ export default function Dokter() {
         <h2 className="text-center text-medium-blue text-2xl md:text-4xl font-bold mb-4 md:mb-8">Profil Dokter</h2>
         <Search />
         <div className="mt-10 lg:mt-16 flex flex-wrap justify-center gap-8">
-          {allDoctor?.map((data, idx) => (
+          {allDoctor?.map((data: any, idx: number) => (
             <Card img={data.img} key={idx} name={data.nama} title={data.cat} detailUrl={`/dokter/detail/${data.wallet}`} />
           ))}
         </div>

@@ -13,7 +13,15 @@ import NavbarLogin from '../../../components/navbar/login';
 import { ContractContext } from '../../../lib/contractProvider';
 
 export default function DetailDokter() {
-  const { isLogged, loginStatus } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const isLogged = authContext?.isLogged;
+  const loginStatus = authContext?.loginStatus;
+
+  useEffect(() => {
+    if (loginStatus) {
+      loginStatus();
+    }
+  }, []);
   const {
     getAllDoctor,
     allDoctor,
@@ -22,17 +30,14 @@ export default function DetailDokter() {
   const router = useRouter();
   const { walletAddress } = router.query;
   const [doctorData, setDoctorData] = useState(
-    allDoctor?.filter((dokter) => dokter[9] === walletAddress),
+    allDoctor?.filter((dokter: any) => dokter[9] === walletAddress),
   );
 
   useEffect(() => {
     getAllDoctor();
-    setDoctorData(allDoctor?.filter((dokter) => dokter[9] === walletAddress));
+    setDoctorData(allDoctor?.filter((dokter: any) => dokter[9] === walletAddress));
   }, [getAllDoctor]);
 
-  useEffect(() => {
-    loginStatus();
-  }, []);
   return (
     <>
       <Head>

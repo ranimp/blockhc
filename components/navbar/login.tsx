@@ -11,7 +11,9 @@ const NavbarLogin: React.FC<NavbarLoginProps> = ({
 }) => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [profilOpen, setProfilOpen] = useState(false);
-  const { handleLogout } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const { handleLogout } = authContext || { handleLogout: () => null };
+
   const { role, checkRoles } = useContext(ContractContext);
   useEffect(() => {
     checkRoles();

@@ -32,6 +32,7 @@ function RiwayatKonsultasiDokterPage() {
     getAllConsultation,
     getAllDoctor,
     allDoctor,
+    errors,
   } = useContext(ContractContext);
 
   useEffect(() => {
@@ -42,11 +43,11 @@ function RiwayatKonsultasiDokterPage() {
   useEffect(() => {
     getAllDoctor();
     const loggedInUser = localStorage.getItem('address');
-    const addressStorage = JSON.parse(loggedInUser);
+    const addressStorage = loggedInUser ? JSON.parse(loggedInUser) : '';
     setAddress(addressStorage);
   }, []);
 
-  const doctorData = allDoctor?.filter((dokter) => dokter.wallet === address);
+  const doctorData = allDoctor?.filter((dokter: any) => dokter.wallet === address);
 
   return (
     <>
@@ -75,7 +76,7 @@ function RiwayatKonsultasiDokterPage() {
               {active === 'manajemen-pasien' && <DaftarPasienAdmin />}
               {active === 'hasil-konsultasi' && (
               <TambahKonsultasiDokter
-                wallet={setWalletAddress(walletAddress)}
+                wallet={setWalletAddress(walletAddress ? String(walletAddress) : '')}
                 walletName="walletAddress"
                 name={nama}
                 nameName="nama"
@@ -98,7 +99,8 @@ function RiwayatKonsultasiDokterPage() {
                 gula={gula}
                 gulaName="gula"
                 gulaChange={(e) => setGula(e.target.value)}
-                onClick={handleAddConsultation}
+                onClick={async () => handleAddConsultation}
+                error={errors}
               />
               )}
             </div>

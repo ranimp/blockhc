@@ -24,7 +24,7 @@ const Riwayat = () => {
           </tr>
         </thead>
         <tbody>
-          {allConsultation?.map((data, idx) => (
+          {allConsultation?.map((data: any, idx: number) => (
             <tr className="text-center odd:bg-odd-blue even:bg-even-blue" key={idx}>
               <td className="text-xs sm:text-sm lg:text-base">{idx + 1}</td>
               <td className="text-xs sm:text-sm lg:text-base">{data?.tanggal}</td>
