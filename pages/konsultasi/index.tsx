@@ -193,7 +193,7 @@ function Konsultasi() {
                           Nomor Telepon
                         </p>
                         <input
-                          type="tel"
+                          type="text"
                           name="telepon"
                           className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
                           onChange={(e) => setTelepon(e.target.value)}

@@ -209,6 +209,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
         alert('Gunakan akun yang digunakan saat login.');
       }
     } catch (error) {
+      console.log(error);
       alert('Transaksi dibatalkan oleh pengguna');
     }
   };

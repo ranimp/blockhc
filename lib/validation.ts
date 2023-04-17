@@ -1,4 +1,6 @@
+/* eslint-disable no-prototype-builtins */
 interface FormValues {
+  [key: string]: any;
   nama?: string;
   email?: string;
   telepon?: string;
@@ -43,62 +45,63 @@ interface Errors {
 }
 
 const validation = (values: FormValues): Errors => {
-  const errors: Errors = {};
-  if (!values.nama) {
+  // eslint-disable-next-line prefer-const
+  let errors: Errors = {};
+  if (values.hasOwnProperty('nama') && !values.nama) {
     errors.nama = 'Nama wajib diisi';
   }
-  if (!values.email) {
+  if (values.hasOwnProperty('email') && !values.email) {
     errors.email = 'Email wajib diisi';
   }
-  if (!values.telepon) {
+  if (values.hasOwnProperty('telepon') && !values.telepon) {
     errors.telepon = 'Nomor telepon wajib diisi';
   }
-  if (!values.gender) {
+  if (values.hasOwnProperty('gender') && !values.gender) {
     errors.gender = 'Gender wajib diisi';
   }
-  if (!values.ttl) {
+  if (values.hasOwnProperty('ttl') && !values.ttl) {
     errors.ttl = 'Tanggal lahir wajib diisi';
   }
-  if (!values.walletAddress) {
+  if (values.hasOwnProperty('walletAddress') && !values.walletAddress) {
     errors.walletAddress = 'Wallet address wajib diisi';
   }
-  if (!values.status) {
+  if (values.hasOwnProperty('status') && !values.status) {
     errors.status = 'Status wajib diisi';
   }
-  if (!values.namaDokter) {
+  if (values.hasOwnProperty('namaDokter') && !values.namaDokter) {
     errors.namaDokter = 'Nama Dokter wajib diisi';
   }
-  if (!values.pendidikan) {
+  if (values.hasOwnProperty('pendidikan') && !values.pendidikan) {
     errors.pendidikan = 'Pendidikan wajib diisi';
   }
-  if (!values.strNumber) {
+  if (values.hasOwnProperty('strNumber') && !values.strNumber) {
     errors.strNumber = 'Nomor STR wajib diisi';
   }
-  if (!values.category) {
+  if (values.hasOwnProperty('category') && !values.category) {
     errors.category = 'Kategori wajib diisi';
   }
-  if (!values.img) {
+  if (values.hasOwnProperty('img') && !values.img) {
     errors.img = 'Gambar wajib diisi';
   }
-  if (!values.address) {
+  if (values.hasOwnProperty('address') && !values.address) {
     errors.address = 'Wallet address wajib diisi';
   }
-  if (!values.sesi) {
+  if (values.hasOwnProperty('sesi') && !values.sesi) {
     errors.sesi = 'Sesi wajib diisi';
   }
-  if (!values.tanggal) {
+  if (values.hasOwnProperty('tanggal') && !values.tanggal) {
     errors.tanggal = 'Tanggal wajib diisi';
   }
-  if (!values.keluhan) {
+  if (values.hasOwnProperty('keluhan') && !values.keluhan) {
     errors.keluhan = 'Keluhan wajib diisi';
   }
-  if (!values.diagnosa) {
+  if (values.hasOwnProperty('diagnosa') && !values.diagnosa) {
     errors.diagnosa = 'Diagnosa wajib diisi';
   }
-  if (!values.tensi) {
+  if (values.hasOwnProperty('tensi') && !values.tensi) {
     errors.tensi = 'Tensi wajib diisi';
   }
-  if (!values.gula) {
+  if (values.hasOwnProperty('gula') && !values.gula) {
     errors.gula = 'Gula wajib diisi';
   }
   return errors;
