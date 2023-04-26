@@ -99,7 +99,7 @@ function RiwayatKonsultasiDokterPage() {
                 gula={gula}
                 gulaName="gula"
                 gulaChange={(e) => setGula(e.target.value)}
-                onClick={async () => handleAddConsultation}
+                onClick={handleAddConsultation}
                 error={errors}
               />
               )}

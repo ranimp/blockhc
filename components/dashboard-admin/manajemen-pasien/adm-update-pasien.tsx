@@ -10,16 +10,11 @@ const UpdatePasienAdmin: React.FC<AdminUpdatePasien> = ({
   ttl,
   email,
   walletAddress,
+  gender,
 }) => {
   const {
-    setNama,
-    setTelepon,
-    setTtl,
-    setEmail,
-    setStatus,
-    setGender,
-    setWalletAddress,
     handleUpdateUserAdmin,
+    setStatus,
     errors,
   } = useContext(ContractContext);
 
@@ -33,7 +28,7 @@ const UpdatePasienAdmin: React.FC<AdminUpdatePasien> = ({
             <td className="py-3 pl-3 text-xs lg:text-base">Nama</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <input type="text" name="nama" defaultValue={nama} onChange={(e) => setNama(e.target.value)} placeholder="Nama Pasien" className="focus:outline-none bg-transparent w-full" />
+              <input type="text" name="nama" value={nama} readOnly placeholder="Nama Pasien" className="focus:outline-none bg-transparent w-full" />
               {errors.nama && <p className="text-red-500 text-xs italic">{errors.nama}</p>}
             </td>
           </tr>
@@ -41,26 +36,7 @@ const UpdatePasienAdmin: React.FC<AdminUpdatePasien> = ({
             <td className="py-3 pl-3 text-xs lg:text-base">Jenis Kelamin</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <label className="inline-flex items-center" htmlFor="gender">
-                <input
-                  type="radio"
-                  className="form-radio"
-                  name="gender"
-                  value="laki-laki"
-                  onChange={(e) => setGender(e.target.value)}
-                />
-                <p className="ml-2">Laki-laki</p>
-              </label>
-              <label className="inline-flex items-center ml-4" htmlFor="gender">
-                <input
-                  type="radio"
-                  className="form-radio"
-                  name="gender"
-                  value="perempuan"
-                  onChange={(e) => setGender(e.target.value)}
-                />
-                <p className="ml-2">Perempuan</p>
-              </label>
+              <input type="text" name="nama" value={gender} readOnly className="focus:outline-none bg-transparent w-full" />
               {errors.gender && <p className="text-red-500 text-xs italic">{errors.gender}</p>}
             </td>
           </tr>
@@ -68,7 +44,7 @@ const UpdatePasienAdmin: React.FC<AdminUpdatePasien> = ({
             <td className="py-3 pl-3 text-xs lg:text-base">Email</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <input type="text" name="email" defaultValue={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="focus:outline-none bg-transparent w-full" />
+              <input type="text" name="email" value={email} readOnly placeholder="Email" className="focus:outline-none bg-transparent w-full" />
               {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
             </td>
           </tr>
@@ -76,7 +52,7 @@ const UpdatePasienAdmin: React.FC<AdminUpdatePasien> = ({
             <td className="py-3 pl-3 text-xs lg:text-base">No. Telepon</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <input type="text" name="telepon" defaultValue={telepon} onChange={(e) => setTelepon(e.target.value)} placeholder="08xxxx" className="focus:outline-none bg-transparent w-full" />
+              <input type="text" name="telepon" value={telepon} placeholder="08xxxx" className="focus:outline-none bg-transparent w-full" />
               {errors.telepon && <p className="text-red-500 text-xs italic">{errors.telepon}</p>}
             </td>
           </tr>
@@ -84,7 +60,7 @@ const UpdatePasienAdmin: React.FC<AdminUpdatePasien> = ({
             <td className="py-3 pl-3 text-xs lg:text-base">ID Wallet</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <input type="text" name="walletAddress" defaultValue={walletAddress} onChange={(e) => setWalletAddress(e.target.value)} placeholder="0x00000000" className="focus:outline-none bg-transparent w-full" />
+              <input type="text" name="walletAddress" value={walletAddress} placeholder="0x00000000" className="focus:outline-none bg-transparent w-full" />
               {errors.walletAddress && <p className="text-red-500 text-xs italic">{errors.walletAddress}</p>}
             </td>
           </tr>
@@ -92,7 +68,7 @@ const UpdatePasienAdmin: React.FC<AdminUpdatePasien> = ({
             <td className="py-3 pl-3 text-xs lg:text-base">Tanggal Lahir</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base">
-              <input type="date" name="ttl" defaultValue={ttl} onChange={(e) => setTtl(e.target.value)} className="focus:outline-none bg-transparent w-fit" />
+              <input type="text" name="ttl" value={ttl} className="focus:outline-none bg-transparent w-fit" />
               {errors.ttl && <p className="text-red-500 text-xs italic">{errors.ttl}</p>}
             </td>
           </tr>

@@ -1,7 +1,7 @@
 export interface ButtonProps {
   type: string;
   title: string;
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  onClick?: any;
   addClass?: string;
 }
 
@@ -146,7 +146,7 @@ export interface AdminTambahEditKonsultasi {
   gula?: string;
   gulaName?: string;
   gulaChange?: React.ChangeEventHandler<HTMLInputElement>;
-  onClick?: () => void;
+  onClick?: any;
   wallet?: any;
   walletName?: string;
   walletChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -205,6 +205,7 @@ export interface AdminUpdatePasien {
   ttl: string;
   email: string;
   status?: boolean;
+  gender?: string;
   walletAddress: any;
 }
 

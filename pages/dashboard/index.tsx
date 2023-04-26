@@ -16,14 +16,19 @@ import Loading from '../../components/loading/index';
 function DashboardUser() {
   const [active, setActive] = useState('bukti');
   const {
-    user, loading, isRegist, role, nama, namaDokter, keluhan, tanggal,
-    sesi, getEvidanceRegistration,
+    user, loading, isRegist, isRiwayat, role, nama, namaDokter, keluhan, tanggal,
+    sesi, getEvidanceRegistration, getConsultationPasien, getDataUser, checkRoles,
   } = useContext(ContractContext);
 
   useEffect(() => {
     getEvidanceRegistration();
-  }, [getEvidanceRegistration]);
+    getConsultationPasien();
+  }, [getEvidanceRegistration, getConsultationPasien]);
 
+  useEffect(() => {
+    getDataUser();
+    checkRoles();
+  }, []);
   return (
     <>
       <Head>
@@ -60,10 +65,10 @@ function DashboardUser() {
                     </div>
                     <div>
 
+                      { isRiwayat
+                        ? active === 'riwayat' && <Riwayat /> : active === 'riwayat' && <p className="text-center my-20">Belum ada data konsultasi yang tersimpan.</p>}
                       { isRegist
-                        ? active === 'riwayat' && <Riwayat /> : active === 'riwayat' && <p className="text-center my-20">Belum ada data registrasi yang tersimpan.</p>}
-                      { isRegist
-                        ? active === 'bukti' && <BuktiPendaftaran name={nama} doctor={namaDokter} keluhan={keluhan} date={tanggal} sesi={sesi} /> : active === 'bukti' && <p className="text-center my-20">Belum ada data konsultasi yang tersimpan.</p>}
+                        ? active === 'bukti' && <BuktiPendaftaran name={nama} doctor={namaDokter} keluhan={keluhan} date={tanggal} sesi={sesi} /> : active === 'bukti' && <p className="text-center my-20">Belum ada data registrasi yang tersimpan.</p>}
                     </div>
                   </div>
                 </div>

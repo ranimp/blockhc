@@ -76,7 +76,7 @@ function DetailPasienAdminPage() {
                 telepon={pasienData ? pasienData[0].telepon : null}
                 ttl={pasienData ? pasienData[0].tanggalLahir : null}
                 email={pasienData ? pasienData[0].email : null}
-                // status={pasienData ? pasienData[0].status : null}
+                gender={pasienData ? pasienData[0].gender : null}
                 walletAddress={pasienData ? pasienData[0].wallet : null}
               />
               )}

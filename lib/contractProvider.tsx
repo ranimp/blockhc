@@ -88,6 +88,7 @@ type ContextValues = {
   allPasien: any,
   setAllPasien : any,
   errors: any,
+  isRiwayat: any,
 };
 
 export const ContractContext = createContext<ContextValues>({} as ContextValues);
@@ -116,6 +117,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
   const [role, setRole] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [isRegist, setIsRegist] = useState<boolean>(false);
+  const [isRiwayat, setIsRiwayat] = useState<boolean>(false);
   const [slot, setSlot] = useState<string>('');
   const [index, setIndex] = useState<string>('');
   const [errors, setErrors] = useState<any>({});
@@ -204,7 +206,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
         await tx[0].wait();
         await tx[1].wait();
         alert('Transaksi anda berhasil');
-        router.back();
+        router.push('/profil');
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
@@ -213,7 +215,6 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       alert('Transaksi dibatalkan oleh pengguna');
     }
   };
-
   const handleUpdateUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const errorsMsg = validation({
@@ -242,14 +243,13 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
         alert('transaksi anda sedang diproses');
         await tx[0].wait();
         alert('transaksi anda berhasil');
-        router.back();
+        router.push('/profil');
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
     } catch (error) {
       alert('Transaksi dibatalkan oleh pengguna');
     }
-    // setErrors(validation(values));
   };
   const getDataUser = async () => {
     // Buatlah sebuah provider yang terhubung ke Metamask
@@ -267,10 +267,10 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
         const data = await contract.getUser(address);
         setWalletAddress(data[0]);
         setNama(data[1]);
-        setTelepon(data[2]);
-        setEmail(data[3]);
-        setTtl(data[4]);
-        setGender(data[5]);
+        setTelepon(data[3]);
+        setEmail(data[2]);
+        setTtl(data[5]);
+        setGender(data[4]);
         if (!data[1]) {
           setUser(false);
         } else {
@@ -329,7 +329,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
         await tx[0].wait();
         await tx[1].wait();
         alert('transaksi anda berhasil');
-        router.push('/profil');
+        router.back();
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
@@ -381,7 +381,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
         alert('transaksi anda sedang diproses');
         await tx[0].wait();
         alert('transaksi anda berhasil');
-        router.push('/profil');
+        router.back();
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
@@ -716,7 +716,6 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
   const handleAddConsultation = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const errorsMsg = validation({
-      walletAddress,
       nama,
       namaDokter,
       tanggal,
@@ -748,7 +747,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       // Panggil fungsi addRegistration pada kontrak
       checkRoles();
       if (address === signerAddress && (role === 'admin' || role === 'dokter')) {
-        const [addConsultationTx, updateRegistrationTx] = await Promise.all([
+        const tx = await Promise.all([
           contract.addConsultation(
             walletAddress,
             nama,
@@ -773,7 +772,8 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
           ),
         ]);
         alert('transaksi anda sedang diproses');
-        await Promise.all([addConsultationTx.wait(), updateRegistrationTx.wait()]);
+        await tx[0].wait();
+        await tx[1].wait();
         alert('transaksi anda berhasil');
         router.back();
       }
@@ -850,6 +850,9 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       if (address === signerAddress) {
         const data = await contract.getConsultationsPasien();
         setAllConsultation(data);
+        if (data.length > 0) {
+          setIsRiwayat(true);
+        }
       }
     } catch (error) {
       console.log('getConsultationPasien', error);
@@ -891,6 +894,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
         setRole,
         slot,
         isRegist,
+        isRiwayat,
         walletAddress,
         setWalletAddress,
         nama,
