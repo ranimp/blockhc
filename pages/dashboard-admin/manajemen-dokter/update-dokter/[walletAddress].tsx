@@ -20,6 +20,16 @@ function UpdateDokterAdminPage() {
   const {
     getAllDoctor,
     allDoctor,
+    setNamaDokter,
+    setTelepon,
+    setEmail,
+    setWalletAddress,
+    setPendidikan,
+    setStrNumber,
+    setStatus,
+    setImg,
+    setCategory,
+    handleUpdateDoctor,
   } = useContext(ContractContext);
 
   const router = useRouter();
@@ -31,7 +41,7 @@ function UpdateDokterAdminPage() {
   useEffect(() => {
     getAllDoctor();
     setDoctorData(allDoctor?.filter((dokter: any) => dokter.wallet === walletAddress));
-  }, [getAllDoctor]);
+  }, [getAllDoctor, doctorData, walletAddress]);
 
   const [active, setActive] = useState('manajemen-dokter');
   return (
@@ -74,15 +84,36 @@ function UpdateDokterAdminPage() {
               {active === 'hasil-konsultasi' && <HasilKonsultasiAdmin />}
               {active === 'manajemen-dokter' && (
               <UpdateDokterAdmin
-                namaDokter={doctorData ? doctorData[0].nama : null}
-                telepon={doctorData ? doctorData[0].telepon : null}
-                email={doctorData ? doctorData[0].email : null}
-                walletAddress={doctorData ? doctorData[0].wallet : null}
-                pendidikan={doctorData ? doctorData[0].pendidikan : null}
-                strNumber={doctorData ? doctorData[0].str : null}
-                img={doctorData ? doctorData[0].img : null}
-                category={doctorData ? doctorData[0].cat : null}
-                // status={doctorData ? doctorData[0].status : null}
+                namaDokter={doctorData ? doctorData[0]?.nama : undefined}
+                telepon={doctorData ? doctorData[0]?.telepon : undefined}
+                email={doctorData ? doctorData[0]?.email : undefined}
+                walletAddress={walletAddress}
+                pendidikan={doctorData ? doctorData[0]?.pendidikan : undefined}
+                strNumber={doctorData ? doctorData[0]?.str : undefined}
+                img={doctorData ? doctorData[0]?.img : undefined}
+                category={doctorData ? doctorData[0]?.cat : undefined}
+                status={doctorData ? doctorData[0]?.status : null}
+                namaDokterName="namaDokter"
+                teleponName="telepon"
+                emailName="email"
+                walletName="walletAddress"
+                pendidikanName="pendidikan"
+                strName="strNumber"
+                imgName="img"
+                catName="category"
+                statusName="status"
+                namaDokterChange={(e) => setNamaDokter(e.target.value)}
+                teleponChange={(e) => setTelepon(e.target.value)}
+                emailChange={(e) => setEmail(e.target.value)}
+                walletChange={(e) => setWalletAddress(e.target.value)}
+                pendidikanChange={(e) => setPendidikan(e.target.value)}
+                strChange={(e) => setStrNumber(e.target.value)}
+                imgChange={(e) => setImg(e.target.value)}
+                catChange={(e) => setCategory(e.target.value)}
+                statusChange={(e) => setStatus(e.target.value === 'true' ? 'aktif' : 'tidak aktif')}
+                trueValue="true"
+                falseValue="false"
+                handle={handleUpdateDoctor}
               />
               )}
             </div>

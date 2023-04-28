@@ -102,7 +102,7 @@ const UpdateDokterAdmin: React.FC<AdminUpdateDokter> = ({
             <td className="py-3 pl-3 text-xs lg:text-base">Status</td>
             <td className="text-xs sm:text-sm lg:text-base">:</td>
             <td className="text-xs sm:text-sm lg:text-base pr-4">
-              <select className="focus:outline-none bg-transparent w-full" name="status" onChange={(e) => setStatus(e.target.value === 'true' ? 'aktif' : 'tidak aktif')}>
+              <select className="focus:outline-none bg-transparent w-full" name="status" onChange={(e) => setStatus(e.target.value === 'true')}>
                 <option>Pilih status</option>
                 <option value="true">Aktif</option>
                 <option value="false">Tidak Aktif</option>

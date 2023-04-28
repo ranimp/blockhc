@@ -72,12 +72,12 @@ function DetailPasienAdminPage() {
             <div>
               {active === 'manajemen-pasien' && (
               <UpdatePasienAdmin
-                nama={pasienData ? pasienData[0].nama : null}
-                telepon={pasienData ? pasienData[0].telepon : null}
-                ttl={pasienData ? pasienData[0].tanggalLahir : null}
-                email={pasienData ? pasienData[0].email : null}
-                gender={pasienData ? pasienData[0].gender : null}
-                walletAddress={pasienData ? pasienData[0].wallet : null}
+                nama={pasienData ? pasienData[0].nama : ''}
+                telepon={pasienData ? pasienData[0].telepon : ''}
+                ttl={pasienData ? pasienData[0].tanggalLahir : ''}
+                email={pasienData ? pasienData[0].email : ''}
+                gender={pasienData ? pasienData[0].gender : ''}
+                walletAddress={pasienData ? pasienData[0].wallet : ''}
               />
               )}
               {active === 'hasil-konsultasi' && <HasilKonsultasiAdmin />}

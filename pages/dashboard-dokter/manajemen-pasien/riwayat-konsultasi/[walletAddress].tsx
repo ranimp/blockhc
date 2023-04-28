@@ -69,7 +69,7 @@ function RiwayatKonsultasiDoctorPage() {
               <input type="text" placeholder="Pencarian" className="w-full focus:outline-none" />
             </div>
             <div>
-              {active === 'daftar-pasien' && <RiwayatKonsultasiDokter datas={riwayat[0]} />}
+              {active === 'daftar-pasien' && <RiwayatKonsultasiDokter datas={riwayat ? riwayat[0] : null} />}
               {active === 'hasil-konsultasi' && <HasilKonsultasiDokter />}
             </div>
           </div>

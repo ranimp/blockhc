@@ -24,6 +24,7 @@ interface DetailRiwayat {
   tanggal: string;
   tensi: string;
   gula: string;
+  wallet: any;
 }
 
 function UpdateRiwayatKonsultasiAdminPage() {
@@ -53,7 +54,7 @@ function UpdateRiwayatKonsultasiAdminPage() {
     const dataIndex = riwayat?.find((item: any) => item[0]);
     setDetailRiwayat(dataIndex);
     setIndex(index);
-  }, [index, riwayat]);
+  }, [index, riwayat, detailRiwayat]);
 
   const numberIndex = Number(index);
 
@@ -95,7 +96,7 @@ function UpdateRiwayatKonsultasiAdminPage() {
             <div>
               {active === 'manajemen-pasien' && (
               <UpdateKonsultasiAdmin
-                wallet={walletAddress}
+                wallet={detailRiwayat ? detailRiwayat[numberIndex]?.wallet : undefined}
                 name={detailRiwayat ? detailRiwayat[numberIndex]?.nama : undefined}
                 doctor={detailRiwayat ? detailRiwayat[numberIndex]?.namaDokter : undefined}
                 date={detailRiwayat ? detailRiwayat[numberIndex]?.tanggal : undefined}

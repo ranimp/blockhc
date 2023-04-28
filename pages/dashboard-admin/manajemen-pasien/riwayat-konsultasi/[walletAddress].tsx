@@ -72,7 +72,7 @@ function RiwayatKonsultasiAdminPage() {
               )}
             </div>
             <div>
-              {active === 'manajemen-pasien' && riwayat && <RiwayatKonsultasiAdmin datas={riwayat[0]} />}
+              {active === 'manajemen-pasien' && riwayat && <RiwayatKonsultasiAdmin datas={riwayat ? riwayat[0] : null} />}
               {active === 'hasil-konsultasi' && <HasilKonsultasiAdmin />}
               {active === 'manajemen-dokter' && <DaftarDokterAdmin />}
             </div>

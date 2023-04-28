@@ -20,8 +20,8 @@ type ContextValues = {
   setRole: any;
   slot: any;
   isRegist: boolean;
-  walletAddress: string;
-  setWalletAddress: React.Dispatch<React.SetStateAction<string>>;
+  walletAddress: any;
+  setWalletAddress: any;
   nama: string;
   setNama: React.Dispatch<React.SetStateAction<string>>;
   telepon: string;
@@ -96,14 +96,10 @@ export const ContractContext = createContext<ContextValues>({} as ContextValues)
 export const ContractProvider = ({ children }: ContractProviderProps) => {
   const router = useRouter();
   // contract address
-  // const rolesAddress = '0x2c161963073Ba0d9f3930563d4E7B8C081a09d37';
-  const rolesAddress = '0x61b213Cf581159A208a1D2DF8e98C5eAdc4DFbf6';
-  // const userAddress = '0xf8Aa18d6620Cd256d4105862a7aBb73Ad843Afe1';
-  const userAddress = '0xCBa94Ed3ecFb9Ab70C053a90BAfD637914D93903';
-  // const registrationAddress = '0xcb13ecEc525796f8736446Ffc9206ddf9c083a58';
-  const registrationAddress = '0x5210b961E215422C29C28a3dcE26FbE2f48e2830';
-  // const consultationAddress = '0xecDbb16A89F61dFddc54a3bd0623D8458FcE91D4';
-  const consultationAddress = '0x72F2dA42A6fe101D1E723232cDd47BE4213141bc';
+  const rolesAddress = '0xB4109e4F3e02b71eFcDCB4Dd34Dd0a3CC996EB2f';
+  const userAddress = '0x3B3ec218db5A97C8bf91B2B697891Cc4062525b5';
+  const registrationAddress = '0x4Be430b4f899E523EACB0407588204158D46261B';
+  const consultationAddress = '0x3664948215b309cc66279ad7568c1F21256a17AE';
 
   // getAllData
   const [allDoctor, setAllDoctor] = useState<any>();
@@ -119,11 +115,11 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
   const [isRegist, setIsRegist] = useState<boolean>(false);
   const [isRiwayat, setIsRiwayat] = useState<boolean>(false);
   const [slot, setSlot] = useState<string>('');
-  const [index, setIndex] = useState<string>('');
+  const [index, setIndex] = useState<any>('');
   const [errors, setErrors] = useState<any>({});
 
   // data user
-  const [walletAddress, setWalletAddress] = useState<string>('');
+  const [walletAddress, setWalletAddress] = useState<any>('');
   const [nama, setNama] = useState<string>('');
   const [telepon, setTelepon] = useState<string>('');
   const [ttl, setTtl] = useState<string>('');
@@ -340,19 +336,6 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
   };
   const handleUpdateUserAdmin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const errorsMsg = validation({
-      walletAddress,
-      nama,
-      email,
-      telepon,
-      gender,
-      ttl,
-      status,
-    });
-    if (Object.keys(errorsMsg).length > 0) {
-      setErrors(errorsMsg);
-      return;
-    }
     try {
       // Buatlah sebuah provider yang terhubung ke Metamask
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -386,6 +369,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
         alert('Gunakan akun yang digunakan saat login.');
       }
     } catch (error) {
+      console.log(error);
       alert('Transaksi dibatalkan oleh pengguna');
     }
     // setErrors(validation(values));
@@ -476,21 +460,6 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
   };
   const handleUpdateDoctor = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const errorsMsg = validation({
-      namaDokter,
-      email,
-      telepon,
-      pendidikan,
-      strNumber,
-      category,
-      img,
-      walletAddress,
-      status,
-    });
-    if (Object.keys(errorsMsg).length > 0) {
-      setErrors(errorsMsg);
-      return;
-    }
     try {
       // Buatlah sebuah provider yang terhubung ke Metamask
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -504,8 +473,6 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       const signerAddress = await signer.getAddress();
       checkRoles();
       if ((signerAddress === address) && role === 'admin') {
-        console.log('masuk');
-        // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
         const tx = await contract.updateDoctor(
           namaDokter,
           email,
@@ -530,7 +497,6 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       console.log(error);
       alert('Transaksi dibatalkan oleh pengguna');
     }
-    // setErrors(validation(values));
   };
   const getAllDoctor = async () => {
     // Buatlah sebuah provider yang terhubung ke Metamask
@@ -784,20 +750,6 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
   };
   const handleUpdateConsultation = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const errorsMsg = validation({
-      walletAddress,
-      nama,
-      namaDokter,
-      tanggal,
-      keluhan,
-      diagnosa,
-      tensi,
-      gula,
-    });
-    if (Object.keys(errorsMsg).length > 0) {
-      setErrors(errorsMsg);
-      return;
-    }
     try {
       // Buatlah sebuah provider yang terhubung ke Metamask
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -829,9 +781,9 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
         router.back();
       }
     } catch (error) {
+      console.log(error);
       alert('Transaksi dibatalkan oleh pengguna');
     }
-    // setErrors(validation(values));
   };
   const getConsultationPasien = async () => {
     // Buatlah sebuah provider yang terhubung ke Metamask

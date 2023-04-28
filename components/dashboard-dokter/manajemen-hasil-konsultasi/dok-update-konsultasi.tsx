@@ -40,14 +40,7 @@ const UpdateKonsultasiDokter: React.FC<AdminTambahEditKonsultasi> = ({
                 type="text"
                 name="walletAddress"
                 defaultValue={wallet}
-                onChange={(e) => {
-                  if (wallet === null) {
-                    // eslint-disable-next-line no-console
-                    console.log(e.target.value);
-                  } else {
-                    setWalletAddress(wallet);
-                  }
-                }}
+                onChange={setWalletAddress(wallet)}
                 placeholder="Nama Pasien"
                 className="focus:outline-none bg-transparent w-full"
               />
