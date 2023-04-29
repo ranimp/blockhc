@@ -20,16 +20,6 @@ function UpdateDokterAdminPage() {
   const {
     getAllDoctor,
     allDoctor,
-    setNamaDokter,
-    setTelepon,
-    setEmail,
-    setWalletAddress,
-    setPendidikan,
-    setStrNumber,
-    setStatus,
-    setImg,
-    setCategory,
-    handleUpdateDoctor,
   } = useContext(ContractContext);
 
   const router = useRouter();
@@ -92,28 +82,7 @@ function UpdateDokterAdminPage() {
                 strNumber={doctorData ? doctorData[0]?.str : undefined}
                 img={doctorData ? doctorData[0]?.img : undefined}
                 category={doctorData ? doctorData[0]?.cat : undefined}
-                status={doctorData ? doctorData[0]?.status : null}
-                namaDokterName="namaDokter"
-                teleponName="telepon"
-                emailName="email"
-                walletName="walletAddress"
-                pendidikanName="pendidikan"
-                strName="strNumber"
-                imgName="img"
-                catName="category"
-                statusName="status"
-                namaDokterChange={(e) => setNamaDokter(e.target.value)}
-                teleponChange={(e) => setTelepon(e.target.value)}
-                emailChange={(e) => setEmail(e.target.value)}
-                walletChange={(e) => setWalletAddress(e.target.value)}
-                pendidikanChange={(e) => setPendidikan(e.target.value)}
-                strChange={(e) => setStrNumber(e.target.value)}
-                imgChange={(e) => setImg(e.target.value)}
-                catChange={(e) => setCategory(e.target.value)}
-                statusChange={(e) => setStatus(e.target.value === 'true' ? 'aktif' : 'tidak aktif')}
-                trueValue="true"
-                falseValue="false"
-                handle={handleUpdateDoctor}
+                status={doctorData ? doctorData[0]?.status : undefined}
               />
               )}
             </div>

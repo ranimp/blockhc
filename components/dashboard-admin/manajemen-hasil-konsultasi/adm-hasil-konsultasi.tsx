@@ -14,7 +14,7 @@ const HasilKonsultasiAdmin = () => {
 
   return (
     <div className="overflow-x-auto">
-      {allRegistration.length > 0 ? (
+      {allRegistration?.length > 0 ? (
         <table className="w-full text-black border-separate border-spacing-y-2">
           <thead>
             <tr className="border-b-2 border-slate-200">
