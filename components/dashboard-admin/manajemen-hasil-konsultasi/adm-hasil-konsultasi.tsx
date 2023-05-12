@@ -10,7 +10,7 @@ const HasilKonsultasiAdmin = () => {
 
   useEffect(() => {
     getAllRegistration();
-  }, []);
+  }, [allRegistration, getAllRegistration]);
 
   return (
     <div className="overflow-x-auto">

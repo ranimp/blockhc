@@ -15,7 +15,7 @@ const TableDashboardDokter: React.FC<DokterTable> = ({
       </div>
     </td>
     <td className="text-xs sm:text-sm lg:text-base">{name}</td>
-    <td className="text-xs sm:text-sm lg:text-base">{date}</td>
+    <td className={hasil ? 'text-xs sm:text-sm lg:text-base' : 'hidden'}>{date}</td>
     <td className="py-3 flex justify-center gap-2">
       <Link href={detailUrl ?? ''}>
         <button className="hover:text-medium-blue">

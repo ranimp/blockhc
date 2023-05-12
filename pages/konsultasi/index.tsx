@@ -11,9 +11,9 @@ function Konsultasi() {
   const router = useRouter();
   const {
     user,
-    setNama,
-    setTelepon,
-    setGender,
+    nama,
+    telepon,
+    gender,
     setNamaDokter,
     setSesi,
     tanggal, setTanggal,
@@ -23,7 +23,12 @@ function Konsultasi() {
     getAllDoctor,
     allDoctor,
     errors,
+    getDataUser,
   } = useContext(ContractContext);
+
+  useEffect(() => {
+    getDataUser();
+  }, []);
 
   useEffect(() => {
     getAllDoctor();
@@ -153,8 +158,7 @@ function Konsultasi() {
                           type="text"
                           name="nama"
                           className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
-                          onChange={(e) => setNama(e.target.value)}
-                          placeholder="Masukkan nama anda"
+                          value={nama}
                         />
                         {errors.nama && <p className="text-red-500 text-xs italic">{errors.nama}</p>}
                       </div>
@@ -164,26 +168,12 @@ function Konsultasi() {
                         <p className="label text-sm font-bold text-black block">
                           Jenis Kelamin
                         </p>
-                        <label className="inline-flex items-center label text-sm font-bold text-black" htmlFor="gender">
-                          <input
-                            type="radio"
-                            className="form-radio"
-                            name="gender"
-                            value="laki-laki"
-                            onChange={(e) => setGender(e.target.value)}
-                          />
-                          <p className="ml-2 text-xs">Laki-laki</p>
-                        </label>
-                        <label className="inline-flex items-center ml-4 label text-sm font-bold text-black" htmlFor="gender">
-                          <input
-                            type="radio"
-                            className="form-radio"
-                            name="gender"
-                            value="perempuan"
-                            onChange={(e) => setGender(e.target.value)}
-                          />
-                          <p className="ml-2 text-xs">Perempuan</p>
-                        </label>
+                        <input
+                          type="text"
+                          name="gender"
+                          className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
+                          value={gender}
+                        />
                       </div>
                       {errors.gender && <p className="text-red-500 text-xs italic">{errors.gender}</p>}
 
@@ -196,7 +186,7 @@ function Konsultasi() {
                           type="text"
                           name="telepon"
                           className="w-full bg-white rounded-lg border border-gray-400 focus:border-medium-blue focus:ring-2 focus:ring-medium-blue text-sm outline-none text-gray-800 py-1 px-3 leading-6 transition-colors duration-200 ease-in-out"
-                          onChange={(e) => setTelepon(e.target.value)}
+                          value={telepon}
                           placeholder="08xxxxxxxxxx"
                         />
                       </div>

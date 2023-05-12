@@ -52,9 +52,13 @@ const validation = (values: FormValues): Errors => {
   }
   if (values.hasOwnProperty('email') && !values.email) {
     errors.email = 'Email wajib diisi';
+  } else if (values.hasOwnProperty('email') && !/\S+@\S+\.\S+/.test(values.email)) {
+    errors.email = 'Format email tidak tepat';
   }
   if (values.hasOwnProperty('telepon') && !values.telepon) {
     errors.telepon = 'Nomor telepon wajib diisi';
+  } else if (values.hasOwnProperty('telepon') && !/^(\+62|62|0)[0-9]{6,}$/.test(values.telepon)) {
+    errors.telepon = 'Nomor telepon harus berisi angka';
   }
   if (values.hasOwnProperty('gender') && !values.gender) {
     errors.gender = 'Gender wajib diisi';

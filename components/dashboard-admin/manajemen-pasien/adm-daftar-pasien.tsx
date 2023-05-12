@@ -11,7 +11,7 @@ const DaftarPasienAdmin = () => {
 
   useEffect(() => {
     getAllDataUser();
-  }, []);
+  }, [allUser, getAllDataUser]);
 
   return (
     <div className="overflow-x-auto">

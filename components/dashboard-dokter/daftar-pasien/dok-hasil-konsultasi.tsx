@@ -10,7 +10,7 @@ const HasilKonsultasiDokter = () => {
 
   useEffect(() => {
     getRegistrationDoctor();
-  }, []);
+  }, [allRegistration, getRegistrationDoctor]);
   return (
     <div className="overflow-x-auto">
       {allRegistration?.length > 0 ? (

@@ -67,6 +67,7 @@ type ContextValues = {
   getEvidanceRegistration: () => Promise<void>;
   getAllRegistration: () => Promise<void>;
   getRegistrationDoctor: () => Promise<void>;
+  getPasienDoctor: () => Promise<void>;
   getAllSession: () => Promise<void>;
   handleAddUserAdmin: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<void>;
   handleUpdateUserAdmin: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => Promise<void>;
@@ -664,7 +665,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       getAllDoctor();
       if (address === signerAddress && (role === 'dokter')) {
         const doctor = allDoctor?.filter((dokter: any) => dokter.wallet === address);
-        const filteredDoctor = doctor[0].nama;
+        const filteredDoctor = doctor[0]?.nama;
         const data = await contract.getAllRegistrations();
         const filteredData = data.filter((pasien: any) => pasien
           .some((item: any) => item.namaDokter === filteredDoctor));
@@ -674,6 +675,40 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       }
     } catch (error) {
       console.log('getRegistrationDoctor', error);
+      alert('terjadi kesalahan');
+    }
+  };
+  const getPasienDoctor = async () => {
+    // Buatlah sebuah provider yang terhubung ke Metamask
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    const signer = provider.getSigner();
+    const loggedInUser = localStorage.getItem('address');
+    const address = loggedInUser ? JSON.parse(loggedInUser) : '';
+    const signerAddress = await signer.getAddress();
+    // Buat instance kontrak yang terhubung ke provider
+    const contract = new ethers.Contract(userAddress, contractAbi.abi, signer);
+    const contractRegist = new ethers.Contract(registrationAddress, registContractAbi.abi, signer);
+    // const contractRoles = new ethers.Contract(rolesAddress, rolesContractAbi.abi, signer);
+    // Mendapatkan data registrasi
+    try {
+      checkRoles();
+      getAllDoctor();
+      if (address === signerAddress && (role === 'dokter')) {
+        const doctor = allDoctor?.filter((dokter: any) => dokter.wallet === address);
+        const filteredDoctor = doctor[0]?.nama;
+        const data = await contractRegist.getAllRegistrations();
+        const filteredData = data.filter((pasien: any) => pasien
+          .some((item: any) => item.namaDokter === filteredDoctor));
+        const displayedData = filteredData.flat().filter((item: any) => item.status === true);
+        setAllRegistration(displayedData);
+        const userData = await contract.getUserAdmin();
+        const filteredUserData = userData.filter((pasien: any) => pasien
+          .some((item: any) => item.wallet === filteredData[0].wallet));
+        setAllPasien(filteredUserData);
+      }
+    } catch (error) {
+      console.log('getAllDataUser', error);
       alert('terjadi kesalahan');
     }
   };
@@ -894,6 +929,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
         getEvidanceRegistration,
         getAllRegistration,
         getRegistrationDoctor,
+        getPasienDoctor,
         getAllSession,
         handleAddUserAdmin,
         handleUpdateUserAdmin,

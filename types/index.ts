@@ -222,7 +222,7 @@ export interface DokterTable {
   no: number;
   walletAddress: any;
   name: string;
-  date: string;
+  date?: string;
   tambahUrl?: string;
   detailUrl?: string;
   hasil?: boolean;
