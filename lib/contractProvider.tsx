@@ -181,10 +181,12 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       return;
     }
     try {
+      // Buatlah sebuah provider yang terhubung ke Metamask
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send('eth_requestAccounts', []);
       const signer = provider.getSigner();
 
+      // Buat instance kontrak yang terhubung ke provider
       const contract = new ethers.Contract(userAddress, contractAbi.abi, signer);
       const contractRoles = new ethers.Contract(rolesAddress, rolesContractAbi.abi, signer);
       const loggedInUser = localStorage.getItem('address');
@@ -192,26 +194,24 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       const signerAddress = await signer.getAddress();
 
       if (signerAddress === address) {
-        const tx1Promise = contract.addUser(nama, email, telepon, gender, ttl, true);
-        const tx2Promise = contractRoles.setDefaultRole();
-
-        const [tx1Result, tx2Result] = await Promise.allSettled([tx1Promise, tx2Promise]);
-
-        if (tx1Result.status === 'fulfilled' && tx2Result.status === 'fulfilled') {
-          alert('Transaksi anda berhasil');
-          router.push('/profil');
-        } else {
-          alert('Transaksi dibatalkan oleh pengguna');
-        }
+        // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
+        const tx = await Promise.all([
+          contract.addUser(nama, email, telepon, gender, ttl, true),
+          contractRoles.setDefaultRole(),
+        ]);
+        alert('Transaksi anda sedang diproses');
+        await tx[0].wait();
+        await tx[1].wait();
+        alert('Transaksi anda berhasil');
+        router.push('/profil');
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
     } catch (error) {
       console.log(error);
-      alert('Transaksi anda gagal');
+      alert('Transaksi dibatalkan oleh pengguna');
     }
   };
-
   const handleUpdateUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const errorsMsg = validation({
@@ -308,46 +308,32 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       const address = loggedInUser ? JSON.parse(loggedInUser) : '';
       const signerAddress = await signer.getAddress();
       checkRoles();
-      // Validasi apakah wallet sudah terdaftar sebagai pengguna sebelumnya
       if ((signerAddress === address) && role === 'admin') {
-        const userData = await contract.getUser(walletAddress);
-        if (userData[0] !== '0x0000000000000000000000000000000000000000') {
-          alert('Wallet sudah terdaftar sebagai pengguna.');
-          return;
-        }
-        const dokterData = await contractRoles.isDokter(walletAddress);
-        if (dokterData === true) {
-          alert('Wallet sudah terdaftar sebagai dokter.');
-          return;
-        }
         // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
-        const tx1Promise = contract.addUserAdmin(
-          walletAddress,
-          nama,
-          email,
-          telepon,
-          gender,
-          ttl,
-          status,
-        );
-
-        const tx2Promise = contractRoles.setRole(walletAddress, 'pasien');
-
-        const [tx1Result, tx2Result] = await Promise.allSettled([tx1Promise, tx2Promise]);
-
-        if (tx1Result.status === 'fulfilled' && tx2Result.status === 'fulfilled') {
-          alert('Transaksi anda berhasil');
-          router.back();
-        } else {
-          alert('Transaksi anda dibatalkan oleh pengguna');
-        }
+        const tx = await Promise.all([
+          contract.addUserAdmin(
+            walletAddress,
+            nama,
+            email,
+            telepon,
+            gender,
+            ttl,
+            status,
+          ),
+          contractRoles.setRole(walletAddress, 'pasien'),
+        ]);
+        alert('transaksi anda sedang diproses');
+        await tx[0].wait();
+        await tx[1].wait();
+        alert('transaksi anda berhasil');
+        router.back();
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
     } catch (error) {
-      alert('Transaksi anda gagal');
-      console.log(error);
+      alert('Transaksi dibatalkan oleh pengguna');
     }
+    // setErrors(validation(values));
   };
   const handleUpdateUserAdmin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -387,6 +373,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       console.log(error);
       alert('Transaksi dibatalkan oleh pengguna');
     }
+    // setErrors(validation(values));
   };
   const getAllDataUser = async () => {
     // Buatlah sebuah provider yang terhubung ke Metamask
@@ -398,6 +385,7 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
     const signerAddress = await signer.getAddress();
     // Buat instance kontrak yang terhubung ke provider
     const contract = new ethers.Contract(userAddress, contractAbi.abi, signer);
+    // const contractRoles = new ethers.Contract(rolesAddress, rolesContractAbi.abi, signer);
     // Mendapatkan data registrasi
     try {
       checkRoles();
@@ -428,62 +416,49 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       return;
     }
     try {
+      // Buatlah sebuah provider yang terhubung ke Metamask
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send('eth_requestAccounts', []);
       const signer = provider.getSigner();
 
+      // Buat instance kontrak yang terhubung ke provider
       const contract = new ethers.Contract(userAddress, contractAbi.abi, signer);
       const contractRoles = new ethers.Contract(rolesAddress, rolesContractAbi.abi, signer);
       const loggedInUser = localStorage.getItem('address');
       const address = loggedInUser ? JSON.parse(loggedInUser) : '';
       const signerAddress = await signer.getAddress();
       checkRoles();
-
       if ((signerAddress === address) && role === 'admin') {
-        const userData = await contract.getUser(walletAddress);
-        if (userData[0] !== '0x0000000000000000000000000000000000000000') {
-          alert('Wallet sudah terdaftar sebagai pasien.');
-          return;
-        }
-        const dokterData = await contractRoles.isDokter(walletAddress);
-        if (dokterData === true) {
-          alert('Wallet sudah terdaftar sebagai dokter.');
-          return;
-        }
-
-        const tx1Promise = contract.addDoctor(
-          namaDokter,
-          email,
-          telepon,
-          '',
-          '',
-          pendidikan,
-          strNumber,
-          category,
-          img,
-          walletAddress,
-          status,
-        );
-
-        const tx2Promise = contractRoles.setRole(walletAddress, 'dokter');
-
-        const [tx1Result, tx2Result] = await Promise.allSettled([tx1Promise, tx2Promise]);
-
-        if (tx1Result.status === 'fulfilled' && tx2Result.status === 'fulfilled') {
-          alert('Transaksi anda berhasil');
-          router.back();
-        } else {
-          alert('Transaksi dibatalkan oleh pengguna');
-        }
+        // Kirim dua transaksi sekaligus dan tunggu hingga keduanya selesai dieksekusi
+        const [tx1, tx2] = await Promise.all([
+          contract.addDoctor(
+            namaDokter,
+            email,
+            telepon,
+            '',
+            '',
+            pendidikan,
+            strNumber,
+            category,
+            img,
+            walletAddress,
+            status,
+          ),
+          contractRoles.setRole(walletAddress, 'dokter'),
+        ]);
+        alert('transaksi anda sedang diproses');
+        await Promise.all([tx1.wait(), tx2.wait()]);
+        alert('transaksi anda berhasil');
+        router.back();
       } else {
         alert('Gunakan akun yang digunakan saat login.');
       }
     } catch (error) {
       console.log(error);
-      alert('Transaksi anda gagal');
+      alert('Transaksi dibatalkan oleh pengguna');
     }
+    // setErrors(validation(values));
   };
-
   const handleUpdateDoctor = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
@@ -755,59 +730,57 @@ export const ContractProvider = ({ children }: ContractProviderProps) => {
       return;
     }
     try {
+      // Buatlah sebuah provider yang terhubung ke Metamask
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send('eth_requestAccounts', []);
       const signer = provider.getSigner();
 
+      // Buat instance kontrak yang terhubung ke provider
       const contract = new ethers.Contract(consultationAddress, consultContractAbi.abi, signer);
       const contractRegist = new ethers.Contract(
         registrationAddress,
         registContractAbi.abi,
-
         signer,
       );
       const loggedInUser = localStorage.getItem('address');
       const address = loggedInUser ? JSON.parse(loggedInUser) : '';
       const signerAddress = await signer.getAddress();
+      // Panggil fungsi addRegistration pada kontrak
       checkRoles();
-
       if (address === signerAddress && (role === 'admin' || role === 'dokter')) {
-        const tx1Promise = contract.addConsultation(
-          walletAddress,
-          nama,
-          namaDokter,
-          tanggal,
-          keluhan,
-          diagnosa,
-          tensi,
-          gula,
-        );
-
-        const tx2Promise = contractRegist.updateRegistration(
-          walletAddress,
-          index,
-          nama,
-          '',
-          namaDokter,
-          '',
-          tanggal,
-          keluhan,
-          gender,
-          false,
-        );
-
-        const [tx1Result, tx2Result] = await Promise.allSettled([tx1Promise, tx2Promise]);
-
-        if (tx1Result.status === 'fulfilled' && tx2Result.status === 'fulfilled') {
-          alert('Transaksi anda berhasil');
-          router.back();
-        } else {
-          alert('Transaksi dibatalkan oleh pengguna');
-        }
+        const tx = await Promise.all([
+          contract.addConsultation(
+            walletAddress,
+            nama,
+            namaDokter,
+            tanggal,
+            keluhan,
+            diagnosa,
+            tensi,
+            gula,
+          ),
+          contractRegist.updateRegistration(
+            walletAddress,
+            index,
+            nama,
+            '',
+            namaDokter,
+            '',
+            tanggal,
+            keluhan,
+            gender,
+            false,
+          ),
+        ]);
+        alert('transaksi anda sedang diproses');
+        await tx[0].wait();
+        await tx[1].wait();
+        alert('transaksi anda berhasil');
+        router.back();
       }
     } catch (error) {
       console.log(error);
-      alert('Transaksi anda gagal');
+      alert('Transaksi dibatalkan oleh pengguna');
     }
   };
   const handleUpdateConsultation = async (e: React.MouseEvent<HTMLButtonElement>) => {
